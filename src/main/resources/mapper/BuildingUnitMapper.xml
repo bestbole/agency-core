@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.house.building.mapper.IBuildingUnitMapper">
+	<resultMap type="com.house.building.entity.BuildingUnit" id="buildingUnitResult">
+		<id column="ID" property="id" jdbcType="VARCHAR" />
+		<result column="BUILDING_ID" property="buildingId" jdbcType="VARCHAR" />
+<result column="NAME" property="name" jdbcType="VARCHAR" />
+<result column="FLOOR" property="floor" jdbcType="VARCHAR" />
+<result column="STATUS" property="status" jdbcType="VARCHAR" />
+<result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+<result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+<result column="REMARKS" property="remarks" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<sql id="sqlQuery">
+		FROM BUILDING_UNIT a where 1=1
+		<if test="param.name != null and param.name != ''">
+			and a.NAME = #{param.name}
+		</if>
+		and a.BUILDING_ID = #{param.buildingId}
+	</sql>
+	
+	<select id="getDataById" resultMap="buildingUnitResult">
+		SELECT * FROM BUILDING_UNIT WHERE ID = #{id, jdbcType=VARCHAR}
+	</select>
+	<select id="count" resultType="java.lang.Integer">
+		SELECT COUNT(1) <include refid="sqlQuery"/>
+	</select>
+	<select id="query" resultMap="buildingUnitResult">
+		SELECT a.* <include refid="sqlQuery"/>
+			order by a.CREATE_TIME desc limit #{start}, #{end}
+	</select>
+	
+	<insert id="save" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO ACCOUNT (ID, USER_ID, NAME, STATUS, BALANCE, CREATE_TIME, REMARKS)
+		VALUES (
+#{id, jdbcType=VARCHAR},
+#{userId, jdbcType=VARCHAR},
+#{name, jdbcType=VARCHAR},
+#{status, jdbcType=VARCHAR},
+#{balance, jdbcType=NUMERIC},
+#{createTime, jdbcType=TIMESTAMP},
+#{remarks, jdbcType=VARCHAR})
+	</insert>
+	
+	<update id="update">
+		update BUILDING_UNIT
+		<set>
+<if test="param.name != null and param.name != ''">
+	NAME = #{param.name, jdbcType=VARCHAR},
+</if>
+<if test="param.floor != null and param.floor != ''">
+	FLOOR = #{param.floor, jdbcType=VARCHAR},
+</if>
+UPDATE_TIME = #{param.updateTime, jdbcType=TIMESTAMP},
+		</set>
+		where id = #{param.id, jdbcType=VARCHAR}
+	</update>
+	
+	<delete id="deleteById">
+		delete from BUILDING_UNIT a where a.ID = #{id, jdbcType=VARCHAR}
+	</delete>
+</mapper>

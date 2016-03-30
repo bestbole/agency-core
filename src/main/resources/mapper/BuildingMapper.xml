@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.house.building.mapper.IBuildingMapper">
+	<resultMap type="com.house.building.entity.Building" id="buildingResult">
+		<id column="ID" property="id" jdbcType="VARCHAR" />
+<result column="BUILDING_NAME" property="buildingName" jdbcType="VARCHAR" />
+<result column="BUILDING_YEAR" property="buildingYear" jdbcType="VARCHAR" />
+<result column="BUILDING_FLOOR" property="buildingFloor" jdbcType="VARCHAR" />
+<result column="BUILDING_ADDRESS" property="buildingAddress" jdbcType="VARCHAR" />
+<result column="STATUS" property="status" jdbcType="VARCHAR" />
+<result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+<result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+<result column="REMARKS" property="remarks" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<sql id="sqlQuery">
+		FROM BUILDING a where 1=1
+		<if test="param.buildingName != null and param.buildingName != ''">
+			and a.BUILDING_NAME = #{param.buildingName}
+		</if>
+	</sql>
+	
+	<select id="getDataById" resultMap="buildingResult">
+		SELECT * FROM BUILDING WHERE ID = #{id, jdbcType=VARCHAR}
+	</select>
+	<select id="count" resultType="java.lang.Integer">
+		SELECT COUNT(1) <include refid="sqlQuery"/>
+	</select>
+	<select id="query" resultMap="buildingResult">
+		SELECT a.* <include refid="sqlQuery"/>
+			order by a.CREATE_TIME desc limit #{start, jdbcType=INTEGER}, #{end, jdbcType=INTEGER}
+	</select>
+	<select id="list" resultMap="buildingResult">
+		SELECT a.* <include refid="sqlQuery"/>
+			order by a.CREATE_TIME desc
+	</select>
+	
+	<insert id="save" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO BUILDING (ID, BUILDING_NAME, BUILDING_ADDRESS, STATUS, CREATE_TIME, REMARKS)
+		VALUES (
+#{param.id, jdbcType=VARCHAR},
+#{param.buildingName, jdbcType=VARCHAR},
+#{param.buildingAddress, jdbcType=VARCHAR},
+#{param.status, jdbcType=VARCHAR},
+#{param.createTime, jdbcType=TIMESTAMP},
+#{param.remarks, jdbcType=VARCHAR})
+	</insert>
+	
+	<update id="update">
+		update BUILDING
+		<set>
+<if test="param.buildingName != null and param.buildingName != ''">
+	BUILDING_NAME = #{param.buildingName, jdbcType=VARCHAR},
+</if>
+<if test="param.buildingAddress != null and param.buildingAddress != ''">
+	BUILDING_ADDRESS = #{param.buildingAddress, jdbcType=VARCHAR},
+</if>
+UPDATE_TIME = #{param.updateTime, jdbcType=TIMESTAMP},
+		</set>
+		where id = #{param.id, jdbcType=VARCHAR}
+	</update>
+	
+	<delete id="deleteById">
+		delete from BUILDING a where a.ID = #{id, jdbcType=VARCHAR}
+	</delete>
+</mapper>
