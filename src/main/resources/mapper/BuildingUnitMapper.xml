@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.house.building.mapper.IBuildingUnitMapper">
-	<resultMap type="com.house.building.entity.BuildingUnit" id="buildingUnitResult">
+<mapper namespace="com.house.agency.mapper.IBuildingUnitMapper">
+	<resultMap type="com.house.agency.entity.BuildingUnit" id="buildingUnitResult">
 		<id column="ID" property="id" jdbcType="VARCHAR" />
 		<result column="BUILDING_ID" property="buildingId" jdbcType="VARCHAR" />
 <result column="NAME" property="name" jdbcType="VARCHAR" />
@@ -32,15 +32,22 @@
 	</select>
 	
 	<insert id="save" useGeneratedKeys="true" keyProperty="id">
-		INSERT INTO ACCOUNT (ID, USER_ID, NAME, STATUS, BALANCE, CREATE_TIME, REMARKS)
+		INSERT INTO BUILDING_UNIT
+		  (ID,
+		   BUILDING_ID,
+		   NAME,
+		   FLOOR,
+		   STATUS,
+		   CREATE_TIME,
+		   REMARKS)
 		VALUES (
-#{id, jdbcType=VARCHAR},
-#{userId, jdbcType=VARCHAR},
-#{name, jdbcType=VARCHAR},
-#{status, jdbcType=VARCHAR},
-#{balance, jdbcType=NUMERIC},
-#{createTime, jdbcType=TIMESTAMP},
-#{remarks, jdbcType=VARCHAR})
+		  	#{param.id, jdbcType=VARCHAR},
+		  	#{param.buildingId, jdbcType=VARCHAR},
+		  	#{param.name, jdbcType=VARCHAR},
+		  	#{param.floor, jdbcType=INTEGER},
+		  	#{param.status, jdbcType=VARCHAR},
+          	#{param.createTime, jdbcType=TIMESTAMP},
+          	#{param.remarks, jdbcType=VARCHAR})
 	</insert>
 	
 	<update id="update">

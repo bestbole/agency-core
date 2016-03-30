@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.house.agency.mapper.IHouseMapper">
-	<resultMap type="com.house.agency.entity.House" id="houseResult">
+<mapper namespace="com.house.agency.mapper.ITradeMapper">
+	<resultMap type="com.house.agency.entity.Trade" id="tradeResult">
 		<id column="ID" property="id" jdbcType="VARCHAR" />
 <result column="STATUS" property="status" jdbcType="VARCHAR" />
 <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
@@ -10,51 +10,45 @@
 	</resultMap>
 
 	<sql id="sqlQuery">
-		FROM HOUSE a where 1=1
+		FROM TRADE a where 1=1
 	</sql>
 	
-	<select id="getDataById" resultMap="houseResult">
-		SELECT * FROM HOUSE WHERE ID = #{id, jdbcType=VARCHAR}
+	<select id="getDataById" resultMap="tradeResult">
+		SELECT * FROM TRADE WHERE ID = #{id, jdbcType=VARCHAR}
 	</select>
 	<select id="count" resultType="java.lang.Integer">
 		SELECT COUNT(1) <include refid="sqlQuery"/>
 	</select>
-	<select id="query" resultMap="houseResult">
+	<select id="query" resultMap="tradeResult">
 		SELECT a.* <include refid="sqlQuery"/>
 			order by a.CREATE_TIME desc limit #{start, jdbcType=INTEGER}, #{end, jdbcType=INTEGER}
 	</select>
 	
 	<insert id="save" useGeneratedKeys="true" keyProperty="id">
-		INSERT INTO HOUSE
+		INSERT INTO TRADE
 		  (ID,
-		   BUILDING_UNIT_ID,
-		   AREA,
-		   FLOOR,
-		   ROOM,
-		   SALOON,
-		   TOILET,
-		   KITCHEN,
-		   FACE,
+		   HOUSE_ID,
+		   USER_ID,
+		   PRICE,
+		   TITLE,
+		   TYPE,
 		   STATUS,
 		   CREATE_TIME,
 		   REMARKS)
 		VALUES (
 		  	#{param.id, jdbcType=VARCHAR},
-		  	#{param.buildingUnitId, jdbcType=VARCHAR},
-		  	#{param.area, jdbcType=INTEGER},
-		  	#{param.floor, jdbcType=INTEGER},
-		  	#{param.room, jdbcType=INTEGER},
-		  	#{param.saloon, jdbcType=INTEGER},
-			#{param.toilet, jdbcType=INTEGER},
-			#{param.kitchen, jdbcType=INTEGER},
-			#{param.face, jdbcType=VARCHAR},
+		  	#{param.houseId, jdbcType=VARCHAR},
+		  	#{param.userId, jdbcType=VARCHAR},
+		  	#{param.price, jdbcType=INTEGER},
+		  	#{param.title, jdbcType=VARCHAR},
+		  	#{param.type, jdbcType=VARCHAR},
 		  	#{param.status, jdbcType=VARCHAR},
           	#{param.createTime, jdbcType=TIMESTAMP},
           	#{param.remarks, jdbcType=VARCHAR})
 	</insert>
 	
 	<update id="update">
-		update HOUSE
+		update TRADE
 		<set>
 UPDATE_TIME = #{param.updateTime, jdbcType=TIMESTAMP},
 		</set>
@@ -62,6 +56,6 @@ UPDATE_TIME = #{param.updateTime, jdbcType=TIMESTAMP},
 	</update>
 	
 	<delete id="deleteById">
-		delete from HOUSE a where a.ID = #{id, jdbcType=VARCHAR}
+		delete from TRADE a where a.ID = #{id, jdbcType=VARCHAR}
 	</delete>
 </mapper>
