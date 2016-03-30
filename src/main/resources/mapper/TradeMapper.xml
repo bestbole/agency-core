@@ -21,7 +21,7 @@
 	</select>
 	<select id="query" resultMap="tradeResult">
 		SELECT a.* <include refid="sqlQuery"/>
-			order by a.CREATE_TIME desc limit #{start, jdbcType=INTEGER}, #{end, jdbcType=INTEGER}
+			order by a.RELEASE_TIME desc limit #{start, jdbcType=INTEGER}, #{end, jdbcType=INTEGER}
 	</select>
 	
 	<insert id="save" useGeneratedKeys="true" keyProperty="id">
@@ -32,6 +32,7 @@
 		   PRICE,
 		   TITLE,
 		   TYPE,
+		   RELEASE_TIME,
 		   STATUS,
 		   CREATE_TIME,
 		   REMARKS)
@@ -42,6 +43,7 @@
 		  	#{param.price, jdbcType=INTEGER},
 		  	#{param.title, jdbcType=VARCHAR},
 		  	#{param.type, jdbcType=VARCHAR},
+		  	#{param.releaseTime, jdbcType=TIMESTAMP},
 		  	#{param.status, jdbcType=VARCHAR},
           	#{param.createTime, jdbcType=TIMESTAMP},
           	#{param.remarks, jdbcType=VARCHAR})
