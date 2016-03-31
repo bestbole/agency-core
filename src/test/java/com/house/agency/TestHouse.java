@@ -4,10 +4,10 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.house.agency.entity.House;
-import com.house.agency.entity.HouseImage;
+import com.house.agency.entity.Image;
 import com.house.agency.param.HouseQueryParam;
-import com.house.agency.service.IHouseImageService;
 import com.house.agency.service.IHouseService;
+import com.house.agency.service.IImageService;
 
 public class TestHouse extends BaseJunitTest {
 
@@ -15,7 +15,7 @@ public class TestHouse extends BaseJunitTest {
 	private IHouseService houseService;
 	
 	@Autowired
-	private IHouseImageService houseImageService;
+	private IImageService imageService;
 	
 	@Test
 	public void testSaveHouse() {
@@ -37,10 +37,12 @@ public class TestHouse extends BaseJunitTest {
 	
 	@Test
 	public void testSaveHouseImage() {
-		HouseImage param = new HouseImage();
-		param.setHouseId("a24882153c65581f28000");
+		Image param = new Image();
+		param.setForeignId("a24882153c65581f28000");
 		param.setUserId("1870dc153c592f7578000");
-		param.setUrl("/images/1.jpg");
-		houseImageService.save(param);
+		param.setType("2");
+		param.setUrl("/images/2.jpg");
+		param.setTitle("卧室图");
+		imageService.save(param);
 	}
 }
