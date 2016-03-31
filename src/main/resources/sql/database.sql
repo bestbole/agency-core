@@ -156,7 +156,14 @@ SELECT d.BUILDING_NAME, c.NAME, b.*, a.*, e.TITLE, e.URL
     ON c.BUILDING_ID = d.ID
   LEFT JOIN IMAGE e
     ON a.IMAGE_ID = e.ID;
-    
+
+SELECT a.*
+  FROM IMAGE a
+  JOIN TRADE_IMAGE b
+    on a.ID = b.IMAGE_ID
+ where b.TRADE_ID = '10f9d8153c6b57da38000'
+   AND a.TYPE = '2';
+
 CREATE TABLE TRADE
 (
     ID VARCHAR(50) NOT NULL,

@@ -41,8 +41,8 @@ public class TestHouse extends BaseJunitTest {
 		param.setForeignId("a24882153c65581f28000");
 		param.setUserId("1870dc153c592f7578000");
 		param.setType("2");
-		param.setUrl("/images/2.jpg");
-		param.setTitle("卧室图");
+		param.setUrl("/images/3.jpg");
+		param.setTitle("户型图");
 		imageService.save(param);
 	}
 }
