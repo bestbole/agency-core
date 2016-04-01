@@ -44,8 +44,7 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	public User getDataById(String id) {
-		// TODO Auto-generated method stub
-		return null;
+		return userDao.getDataById(id);
 	}
 
 	@Override
