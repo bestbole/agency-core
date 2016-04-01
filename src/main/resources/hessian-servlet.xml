@@ -3,29 +3,29 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
 	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans  http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
-						http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
-      					http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+	http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 
 	<bean name="/buildingService" class="org.springframework.remoting.caucho.HessianServiceExporter"> 
-        <property name="service" ref="buildingService" />  
-        <property name="serviceInterface" value="com.house.agency.service.IBuildingService" />  
-    </bean>
-    <bean name="/buildingUnitService" class="org.springframework.remoting.caucho.HessianServiceExporter"> 
-        <property name="service" ref="buildingUnitService" />  
-        <property name="serviceInterface" value="com.house.agency.service.IBuildingUnitService" />  
-    </bean>
-    <bean name="/houseService" class="org.springframework.remoting.caucho.HessianServiceExporter"> 
-        <property name="service" ref="houseService" />  
-        <property name="serviceInterface" value="com.house.agency.service.IHouseService" />  
-    </bean>
-    <bean name="/imageService" class="org.springframework.remoting.caucho.HessianServiceExporter">
-        <property name="service" ref="imageService" />
-        <property name="serviceInterface" value="com.house.agency.service.IImageService" />
-    </bean>
-    <bean name="/userService" class="org.springframework.remoting.caucho.HessianServiceExporter">
-        <property name="service" ref="userService" />
-        <property name="serviceInterface" value="com.house.agency.service.IUserService" />
-    </bean>
-    <!-- hessian-servlet-conf -->
+		<property name="service" ref="buildingService" />  
+		<property name="serviceInterface" value="com.house.agency.service.IBuildingService" />  
+	</bean>
+	<bean name="/buildingUnitService" class="org.springframework.remoting.caucho.HessianServiceExporter"> 
+		<property name="service" ref="buildingUnitService" />  
+		<property name="serviceInterface" value="com.house.agency.service.IBuildingUnitService" />  
+	</bean>
+	<bean name="/houseService" class="org.springframework.remoting.caucho.HessianServiceExporter"> 
+		<property name="service" ref="houseService" />  
+		<property name="serviceInterface" value="com.house.agency.service.IHouseService" />  
+	</bean>
+	<bean name="/imageService" class="org.springframework.remoting.caucho.HessianServiceExporter">
+		<property name="service" ref="imageService" />
+		<property name="serviceInterface" value="com.house.agency.service.IImageService" />
+	</bean>
+	<bean name="/userService" class="org.springframework.remoting.caucho.HessianServiceExporter">
+		<property name="service" ref="userService" />
+		<property name="serviceInterface" value="com.house.agency.service.IUserService" />
+	</bean>
+	<!-- hessian-servlet-conf -->
 	
 </beans>
