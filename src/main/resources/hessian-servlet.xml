@@ -18,6 +18,10 @@
 		<property name="service" ref="houseService" />  
 		<property name="serviceInterface" value="com.house.agency.service.IHouseService" />  
 	</bean>
+	<bean name="/tradeService" class="org.springframework.remoting.caucho.HessianServiceExporter"> 
+    <property name="service" ref="tradeService" />  
+    <property name="serviceInterface" value="com.house.agency.service.ITradeService" />  
+  </bean>
 	<bean name="/imageService" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="imageService" />
 		<property name="serviceInterface" value="com.house.agency.service.IImageService" />

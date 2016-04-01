@@ -8,10 +8,33 @@
 <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
 <result column="REMARKS" property="remarks" jdbcType="VARCHAR" />
 	</resultMap>
+	
+	<resultMap type="com.house.agency.data.TradeData" id="tradeDataResult">
+    <id column="ID" property="tradeId" jdbcType="VARCHAR" />
+<result column="TITLE" property="title" jdbcType="VARCHAR" />
+<result column="URL" property="url" jdbcType="VARCHAR" />
+<result column="BUILDING_NAME" property="buildingName" jdbcType="VARCHAR" />
+<result column="BUILDING_ADDRESS" property="buildingAddress" jdbcType="VARCHAR" />
+<result column="AREA" property="area" jdbcType="INTEGER" />
+<result column="ROOM" property="room" jdbcType="INTEGER" />
+<result column="SALOON" property="saloon" jdbcType="INTEGER" />
+<result column="TOILET" property="toilet" jdbcType="INTEGER" />
+  </resultMap>
 
 	<sql id="sqlQuery">
-		FROM TRADE a where 1=1
+  		FROM TRADE a where 1=1
 	</sql>
+	<sql id="sqlQueryData">
+      FROM TRADE a
+    JOIN HOUSE b
+      ON a.HOUSE_ID = b.ID
+    JOIN BUILDING_UNIT c
+      ON b.BUILDING_UNIT_ID = c.ID
+    JOIN BUILDING d
+      ON c.BUILDING_ID = d.ID
+    LEFT JOIN IMAGE e
+      ON a.IMAGE_ID = e.ID 
+  </sql>
 	
 	<select id="getDataById" resultMap="tradeResult">
 		SELECT * FROM TRADE WHERE ID = #{id, jdbcType=VARCHAR}
@@ -20,9 +43,27 @@
 		SELECT COUNT(1) <include refid="sqlQuery"/>
 	</select>
 	<select id="query" resultMap="tradeResult">
-		SELECT a.* <include refid="sqlQuery"/>
-			order by a.RELEASE_TIME desc limit #{start, jdbcType=INTEGER}, #{end, jdbcType=INTEGER}
+		SELECT a.*
+        <include refid="sqlQuery"/>
+			order by a.CREATE_TIME desc limit #{start, jdbcType=INTEGER}, #{end, jdbcType=INTEGER}
 	</select>
+	<select id="countData" resultType="java.lang.Integer">
+    SELECT COUNT(1) <include refid="sqlQueryData"/>
+  </select>
+	<select id="queryData" resultMap="tradeDataResult">
+    SELECT 
+       a.ID,
+       e.TITLE,
+       e.URL,
+       d.BUILDING_NAME,
+       d.BUILDING_ADDRESS, 
+       b.AREA,
+       b.ROOM,
+       b.SALOON,
+       b.TOILET
+      <include refid="sqlQueryData"/>
+      order by a.RELEASE_TIME desc limit #{start, jdbcType=INTEGER}, #{end, jdbcType=INTEGER}
+  </select>
 	
 	<insert id="save" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO TRADE
