@@ -26,6 +26,10 @@
 		<property name="service" ref="imageService" />
 		<property name="serviceInterface" value="com.house.agency.service.IImageService" />
 	</bean>
+	<bean name="/regionService" class="org.springframework.remoting.caucho.HessianServiceExporter">
+    <property name="service" ref="regionService" />
+    <property name="serviceInterface" value="com.house.agency.service.IRegionService" />
+  </bean>
 	<bean name="/userService" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="userService" />
 		<property name="serviceInterface" value="com.house.agency.service.IUserService" />
