@@ -28,7 +28,12 @@
 	</select>
 	<select id="list" resultMap="regionResult">
     select a.* FROM REGION a join REGION b on a.PARENT_ID = b.ID WHERE 1=1
-      AND b.CODE = #{param.code, jdbcType=VARCHAR}
+      <if test="param.parentId != null and param.parentId != ''">
+        AND a.PARENT_ID = #{param.parentId, jdbcType=VARCHAR}
+      </if>
+      <if test="param.code != null and param.code != ''">
+        AND b.CODE = #{param.code, jdbcType=VARCHAR}
+      </if>
       order by a.SEQ asc
   </select>
 	
