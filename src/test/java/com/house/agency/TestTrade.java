@@ -36,13 +36,13 @@ public class TestTrade extends BaseJunitTest {
 		for (int i = 0; i < datas.length; i++) {
 			String[] data = datas[i].split("-");
 			Trade param = new Trade();
-			param.setId(data[0] + "04");
+			param.setId(data[0] + "05");
 			param.setStatus("1");
 			param.setCreateTime(new Date());
 			param.setHouseId(data[0] + "03");
 			param.setUserId(userId);
 			param.setImageId(data[0] + "02");
-			param.setPrice(10000 * (i+1));
+			param.setPrice(20000 * (i+1));
 			param.setType("1");
 			param.setTitle(data[1]);
 			param.setReleaseTime(new Date());
