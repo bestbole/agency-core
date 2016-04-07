@@ -11,8 +11,9 @@
 	
 	<resultMap type="com.house.agency.data.TradeData" id="tradeDataResult">
     <id column="ID" property="tradeId" jdbcType="VARCHAR" />
-<result column="TITLE" property="title" jdbcType="VARCHAR" />
+<result column="IMG_TITLE" property="imgTitle" jdbcType="VARCHAR" />
 <result column="URL" property="url" jdbcType="VARCHAR" />
+<result column="TITLE" property="title" jdbcType="VARCHAR" />
 <result column="BUILDING_NAME" property="buildingName" jdbcType="VARCHAR" />
 <result column="BUILDING_ADDRESS" property="buildingAddress" jdbcType="VARCHAR" />
 <result column="AREA" property="area" jdbcType="INTEGER" />
@@ -53,8 +54,9 @@
 	<select id="queryData" resultMap="tradeDataResult">
     SELECT 
        a.ID,
-       e.TITLE,
+       e.TITLE IMG_TITLE,
        e.URL,
+       a.TITLE,
        d.BUILDING_NAME,
        d.BUILDING_ADDRESS, 
        b.AREA,

@@ -64,6 +64,7 @@ public class TestRegion extends BaseJunitTest {
 	
 	@Test
 	public void testSaveRegionTowns() {
+		//a528c2153e550ee9a8000
 		String[] districts = {"皇岗-HG", "景田-JT", "梅林-ML", "华强-HQ", "香蜜湖-XMH"};
 		for (int i = 0; i < districts.length; i++) {
 			String[] district = districts[i].split("-");
