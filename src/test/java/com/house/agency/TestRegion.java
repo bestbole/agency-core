@@ -10,6 +10,18 @@ import com.house.agency.entity.Region;
 import com.myself.common.utils.UIDGeneratorUtil;
 
 public class TestRegion extends BaseJunitTest {
+	
+	private String cityId = "53f67e153e44203258000";
+	
+	private String[] datas = { "5bdc50153ef6bbe1f7a-福田-FT",
+			"dd3812153ef6bbe1f7b-南山-NS", "8c436b153ef6bbe1f7c-罗湖-LH",
+			"9e5c73153ef6bbe1f7d-宝安-BA", "c791b9153ef6bbe1f7e-盐田-YT",
+			"3020ad153ef6bbe1f7f-坪山新区-PSXQ", "b15692153ef6bbe1f7g-光明新区-GMXQ",
+			"aa9f99153ef6bbe1f7h-大鹏新区-DPXQ", "d42d08153ef6bbe1f7i-龙华新区-LHXQ" };
+	
+	private String[] towns = { "5bdc50153ef6bbe1f6a-皇岗-HG",
+			"dd3812153ef6bbe1f6b-景田-JT", "8c436b153ef6bbe1f6c-梅林-ML",
+			"9e5c73153ef6bbe1f6d-华强-HQ", "c791b9153ef6bbe1f6e-香蜜湖-XMH" };
 
 	@Autowired
 	private IRegionDao regionDao;
@@ -17,7 +29,7 @@ public class TestRegion extends BaseJunitTest {
 	@Test
 	public void testSaveRegionCity() {
 		Region param = new Region();
-		param.setId("53f67e153e44203258000");
+		param.setId(cityId);
 		param.setStatus("1");
 		param.setCreateTime(new Date());
 		param.setName("深圳");
@@ -28,56 +40,37 @@ public class TestRegion extends BaseJunitTest {
 	}
 	
 	@Test
-	public void testSaveRegionDistrict() {
-		Region param = new Region();
-		param.setId("06d69c153e68d1f2a8000");
-		param.setParentId("53f67e153e44203258000");
-		param.setStatus("1");
-		param.setCreateTime(new Date());
-		param.setName("福田");
-		param.setCode("FT");
-		param.setLevel("3");
-		param.setSeq(1);
-		regionDao.save(param);
-	}
-	
-	@Test
 	public void testSaveRegionDistricts() {
-		String[] districts = {"南山-NS", "罗湖-LH", "宝安-BA", "盐田-YT", "坪山新区-PSXQ", "光明新区-GMXQ", "大鹏新区-DPXQ", "龙华新区-LHXQ"};
-		for (int i = 0; i < districts.length; i++) {
-			String[] district = districts[i].split("-");
-			String districtName = district[0];
-			String districtCode = district[1];
-			
+		for (int i = 0; i < datas.length; i++) {
+			String[] data = datas[i].split("-");
 			Region param = new Region();
-			param.setId(UIDGeneratorUtil.getUID());
-			param.setParentId("53f67e153e44203258000");
+			param.setId(data[0] + "10");
+			param.setParentId(cityId);
 			param.setStatus("1");
 			param.setCreateTime(new Date());
-			param.setName(districtName);
-			param.setCode(districtCode);
+			param.setName(data[1]);
+			param.setCode(data[2]);
 			param.setLevel("3");
-			param.setSeq((i+2));
+			param.setSeq((i+1));
 			regionDao.save(param);
 		}
+		
 	}
+	
 	
 	@Test
 	public void testSaveRegionTowns() {
-		//a528c2153e550ee9a8000
-		String[] districts = {"皇岗-HG", "景田-JT", "梅林-ML", "华强-HQ", "香蜜湖-XMH"};
-		for (int i = 0; i < districts.length; i++) {
-			String[] district = districts[i].split("-");
-			String districtName = district[0];
-			String districtCode = district[1];
-			
+		String[] district = datas[0].split("-");
+		for (int i = 0; i < towns.length; i++) {
+			String[] data = towns[i].split("-");
+
 			Region param = new Region();
-			param.setId(UIDGeneratorUtil.getUID());
-			param.setParentId("06d69c153e68d1f2a8000");
+			param.setId(data[0] + "00");
+			param.setParentId(district[0] + "10");
 			param.setStatus("1");
 			param.setCreateTime(new Date());
-			param.setName(districtName);
-			param.setCode(districtCode);
+			param.setName(data[1]);
+			param.setCode(data[2]);
 			param.setLevel("4");
 			param.setSeq((i+1));
 			regionDao.save(param);
