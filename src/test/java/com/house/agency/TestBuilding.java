@@ -42,7 +42,7 @@ public class TestBuilding extends BaseJunitTest {
 			param.setId(data[0] + "00");
 			param.setStatus("1");
 			param.setCreateTime(new Date());
-			param.setTownId("a528c2153e550ee9a8000");
+			param.setTownId("5bdc50153ef6bbe1f6a00");
 			param.setBuildingName(data[1]);
 			param.setBuildingYear(data[2]);
 			param.setBuildingAddress(data[3]);

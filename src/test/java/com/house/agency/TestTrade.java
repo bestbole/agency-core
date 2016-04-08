@@ -17,9 +17,9 @@ public class TestTrade extends BaseJunitTest {
 	private String[] datas = {"5bdc50153ef6bbe1f7a-来座山 实用的户型 南北通透 业主低于市场价15万急卖",
 			"dd3812153ef6bbe1f7b-慢城 大四房 楼王位置 三面采光 业主急卖 还是看山景的",
 			"8c436b153ef6bbe1f7c-大赠送 拥有自己的装修风格 还是看山景的",
-			"9e5c73153ef6bbe1f7d-南北通透 全新装修 还是看山景的",
-			"c791b9153ef6bbe1f7e-来座山 全新毛坯 大增送123送60平 实用",
-			"3020ad153ef6bbe1f7f-城铁沿线91平570万元业主急售!",
+			//"9e5c73153ef6bbe1f7d-南北通透 全新装修 还是看山景的",
+			//"c791b9153ef6bbe1f7e-来座山 全新毛坯 大增送123送60平 实用",
+			//"3020ad153ef6bbe1f7f-城铁沿线91平570万元业主急售!",
 			"b15692153ef6bbe1f7g-友邻公寓性价比高,总价,诚意出售!",
 			"aa9f99153ef6bbe1f7h-一手业主享受高端高尔夫美景你值得拥有",
 			"d42d08153ef6bbe1f7i-名匠设计,豪华装修,满五,业主诚心出售",
@@ -36,10 +36,10 @@ public class TestTrade extends BaseJunitTest {
 		for (int i = 0; i < datas.length; i++) {
 			String[] data = datas[i].split("-");
 			Trade param = new Trade();
-			param.setId(data[0] + "05");
+			param.setId(data[0] + "15");
 			param.setStatus("1");
 			param.setCreateTime(new Date());
-			param.setHouseId(data[0] + "03");
+			param.setHouseId(data[0] + "13");
 			param.setUserId(userId);
 			param.setImageId(data[0] + "02");
 			param.setPrice(20000 * (i+1));

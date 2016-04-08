@@ -15,13 +15,17 @@
 <result column="URL" property="url" jdbcType="VARCHAR" />
 <result column="TITLE" property="title" jdbcType="VARCHAR" />
 <result column="TYPE" property="type" jdbcType="VARCHAR" />
-<result column="PRICE" property="price" jdbcType="INTEGER" />
+<result column="TOWN_NAME" property="townName" jdbcType="VARCHAR" />
 <result column="BUILDING_NAME" property="buildingName" jdbcType="VARCHAR" />
 <result column="BUILDING_ADDRESS" property="buildingAddress" jdbcType="VARCHAR" />
+<result column="BUILDING_YEAR" property="buildingYear" jdbcType="VARCHAR" />
+<result column="BUILDING_FLOOR" property="buildingFloor" jdbcType="INTEGER" />
+<result column="PRICE" property="price" jdbcType="INTEGER" />
 <result column="AREA" property="area" jdbcType="INTEGER" />
 <result column="ROOM" property="room" jdbcType="INTEGER" />
 <result column="SALOON" property="saloon" jdbcType="INTEGER" />
 <result column="TOILET" property="toilet" jdbcType="INTEGER" />
+<result column="FLOOR" property="floor" jdbcType="INTEGER" />
   </resultMap>
 
 	<sql id="sqlQuery">
@@ -35,8 +39,21 @@
       ON b.BUILDING_UNIT_ID = c.ID
     JOIN BUILDING d
       ON c.BUILDING_ID = d.ID
-    LEFT JOIN IMAGE e
-      ON a.IMAGE_ID = e.ID 
+    JOIN REGION e
+      ON e.ID = d.TOWN_ID
+    LEFT JOIN IMAGE f
+      ON f.ID = a.IMAGE_ID
+      WHERE 1=1
+      <if test="param.pattern != 0 and param.symbol != null and param.symbol != ''">
+        AND b.ROOM <![CDATA[>]]> #{param.pattern}
+      </if>
+      <if test="param.pattern != 0 and param.symbol == null or param.symbol == ''">
+        AND b.ROOM = #{param.pattern}
+      </if>
+      <if test="param.areaBegin != 0 and param.areaEnd != 0">
+      	AND b.AREA <![CDATA[>=]]> #{param.areaBegin}
+      	AND b.AREA <![CDATA[<=]]> #{param.areaEnd}
+      </if>
   </sql>
 	
 	<select id="getDataById" resultMap="tradeResult">
@@ -56,17 +73,21 @@
 	<select id="queryData" resultMap="tradeDataResult">
     SELECT 
        a.ID,
-       e.TITLE IMG_TITLE,
-       e.URL,
+       f.TITLE IMG_TITLE,
+       f.URL,
        a.TITLE,
        a.TYPE,
-       a.PRICE,
+       e.NAME TOWN_NAME, 
        d.BUILDING_NAME,
        d.BUILDING_ADDRESS, 
+       d.BUILDING_YEAR,
+       c.FLOOR BUILDING_FLOOR,
+       a.PRICE,
        b.AREA,
        b.ROOM,
        b.SALOON,
-       b.TOILET
+       b.TOILET,
+       b.FLOOR
       <include refid="sqlQueryData"/>
       order by a.RELEASE_TIME desc limit #{start, jdbcType=INTEGER}, #{end, jdbcType=INTEGER}
   </select>

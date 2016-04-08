@@ -1,3 +1,7 @@
+http://datatables.club/
+java -cp ../lib/hsqldb.jar org.hsqldb.Server -database.0 agencydb -dbname.0 agency_db
+java -cp ../lib/hsqldb.jar org.hsqldb.util.DatabaseManager -url jdbc:hsqldb:hsql://localhost/agency_db
+http://www.gbtags.com/gb/debug/new.htm
 CREATE TABLE USER
 (
     ID VARCHAR(50) NOT NULL,
@@ -374,3 +378,16 @@ ON
     c.permission_id = d.id
 
 http://itindex.net/detail/50593-web-%E9%A1%B9%E7%9B%AE-%E5%BA%94%E7%94%A8
+
+
+
+INSERT INTO BUILDING (ID, TOWN_ID, BUILDING_NAME, BUILDING_YEAR, BUILDING_ADDRESS, COORDINATE_X, COORDINATE_Y, TYPE, STATUS, CREATE_TIME, UPDATE_TIME, REMARKS) VALUES ('3020ad153ef6bbe1f7f00', '5bdc50153ef6bbe1f6a00', '银庄大厦', '2005', '福田区金田南路1013号', null, null, '1', '1', now(), null, null);
+INSERT INTO BUILDING (ID, TOWN_ID, BUILDING_NAME, BUILDING_YEAR, BUILDING_ADDRESS, COORDINATE_X, COORDINATE_Y, TYPE, STATUS, CREATE_TIME, UPDATE_TIME, REMARKS) VALUES ('5bdc50153ef6bbe1f7a00', '5bdc50153ef6bbe1f6a00', '皇庭世纪', '2011', '福田滨河大道与益田路交汇处', null, null, '1', '1', now(), null, null);
+INSERT INTO BUILDING (ID, TOWN_ID, BUILDING_NAME, BUILDING_YEAR, BUILDING_ADDRESS, COORDINATE_X, COORDINATE_Y, TYPE, STATUS, CREATE_TIME, UPDATE_TIME, REMARKS) VALUES ('8c436b153ef6bbe1f7c00', '5bdc50153ef6bbe1f6a00', '水畔紫云阁', '1999', '福田滨河路以南（皇岗口岸以东）', null, null, '1', '1', now(), null, null);
+INSERT INTO BUILDING (ID, TOWN_ID, BUILDING_NAME, BUILDING_YEAR, BUILDING_ADDRESS, COORDINATE_X, COORDINATE_Y, TYPE, STATUS, CREATE_TIME, UPDATE_TIME, REMARKS) VALUES ('9e5c73153ef6bbe1f7d00', '5bdc50153ef6bbe1f6a00', '晨晖家园', '2000', '皇岗公园一街', null, null, '1', '1', now(), null, null);
+INSERT INTO BUILDING (ID, TOWN_ID, BUILDING_NAME, BUILDING_YEAR, BUILDING_ADDRESS, COORDINATE_X, COORDINATE_Y, TYPE, STATUS, CREATE_TIME, UPDATE_TIME, REMARKS) VALUES ('aa9f99153ef6bbe1f7h00', '5bdc50153ef6bbe1f6a00', '皇御苑三期', '1998', '福田福田南路7号', null, null, '1', '1', now(), null, null);
+INSERT INTO BUILDING (ID, TOWN_ID, BUILDING_NAME, BUILDING_YEAR, BUILDING_ADDRESS, COORDINATE_X, COORDINATE_Y, TYPE, STATUS, CREATE_TIME, UPDATE_TIME, REMARKS) VALUES ('b15692153ef6bbe1f7g00', '5bdc50153ef6bbe1f6a00', '皇岗花园', '2010', '福田福田南彩田南路', null, null, '1', '1', now(), null, null);
+INSERT INTO BUILDING (ID, TOWN_ID, BUILDING_NAME, BUILDING_YEAR, BUILDING_ADDRESS, COORDINATE_X, COORDINATE_Y, TYPE, STATUS, CREATE_TIME, UPDATE_TIME, REMARKS) VALUES ('c791b9153ef6bbe1f7e00', '5bdc50153ef6bbe1f6a00', '高发城驰苑', '2003', '福田区福民路与益田路交汇处东南', null, null, '1', '1', now(), null, null);
+INSERT INTO BUILDING (ID, TOWN_ID, BUILDING_NAME, BUILDING_YEAR, BUILDING_ADDRESS, COORDINATE_X, COORDINATE_Y, TYPE, STATUS, CREATE_TIME, UPDATE_TIME, REMARKS) VALUES ('d42d08153ef6bbe1f7i00', '5bdc50153ef6bbe1f6a00', '皇庭彩园', '2006', '福田金田路与福民路的交汇处', null, null, '1', '1', now(), null, null);
+INSERT INTO BUILDING (ID, TOWN_ID, BUILDING_NAME, BUILDING_YEAR, BUILDING_ADDRESS, COORDINATE_X, COORDINATE_Y, TYPE, STATUS, CREATE_TIME, UPDATE_TIME, REMARKS) VALUES ('d86fd3153ef6bbe1f7j00', '5bdc50153ef6bbe1f6a00', '骏皇名居', '2004', '福田丹桂路与金桂路交汇处', null, null, '1', '1', now(), null, null);
+INSERT INTO BUILDING (ID, TOWN_ID, BUILDING_NAME, BUILDING_YEAR, BUILDING_ADDRESS, COORDINATE_X, COORDINATE_Y, TYPE, STATUS, CREATE_TIME, UPDATE_TIME, REMARKS) VALUES ('dd3812153ef6bbe1f7b00', '5bdc50153ef6bbe1f6a00', '江南名苑', '2001', '福田福强路2143号', null, null, '1', '1', now(), null, null);
