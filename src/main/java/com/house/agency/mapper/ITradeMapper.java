@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.house.agency.data.TradeData;
 import com.house.agency.entity.Trade;
 import com.house.agency.param.TradeQueryParam;
 
@@ -17,8 +16,5 @@ public interface ITradeMapper {
 	
 	int count(@Param("param") TradeQueryParam param);
 	List<Trade> query(@Param("param") TradeQueryParam param,
-			@Param("start") int start, @Param("end") int end);
-	int countData(@Param("param") TradeQueryParam param);
-	List<TradeData> queryData(@Param("param") TradeQueryParam param,
 			@Param("start") int start, @Param("end") int end);
 }

@@ -6,7 +6,6 @@ import org.springframework.stereotype.Repository;
 
 import com.house.agency.dao.BaseDao;
 import com.house.agency.dao.ITradeDao;
-import com.house.agency.data.TradeData;
 import com.house.agency.entity.Trade;
 import com.house.agency.mapper.ITradeMapper;
 import com.house.agency.param.TradeQueryParam;
@@ -49,17 +48,4 @@ public class TradeDaoImpl extends BaseDao<ITradeMapper> implements ITradeDao {
 		ITradeMapper mapper = getMapper(ITradeMapper.class);
 		return mapper.query(param, start, end);
 	}
-
-	@Override
-	public int countData(TradeQueryParam param) {
-		ITradeMapper mapper = getMapper(ITradeMapper.class);
-		return mapper.countData(param);
-	}
-
-	@Override
-	public List<TradeData> queryData(TradeQueryParam param, int start, int end) {
-		ITradeMapper mapper = getMapper(ITradeMapper.class);
-		return mapper.queryData(param, start, end);
-	}
-
 }

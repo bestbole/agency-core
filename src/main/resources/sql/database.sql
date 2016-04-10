@@ -15,6 +15,8 @@ http://www.gbtags.com/gb/debug/new.htm
 
 mysql -u root -p
 
+CentOS release 6.5
+
 CREATE DATABASE `agency_db`  
 CHARACTER SET 'utf8'  
 COLLATE 'utf8_general_ci';

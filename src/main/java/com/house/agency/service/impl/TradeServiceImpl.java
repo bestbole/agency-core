@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.house.agency.dao.ITradeDao;
-import com.house.agency.data.TradeData;
 import com.house.agency.entity.Trade;
 import com.house.agency.page.IPage;
 import com.house.agency.page.Page;
@@ -63,20 +62,6 @@ public class TradeServiceImpl implements ITradeService {
 			list = tradeDao.query(param, start, end);
 		}
 		return new Page<Trade>(list, count, page, rows);
-	}
-
-	@Override
-	public IPage<TradeData> queryData(TradeQueryParam param, int page, int rows) {
-		List<TradeData> list = null;
-		page = page <= 0 ? 1 : page;
-		rows = rows <= 0 ? 10 : rows;
-		int count = tradeDao.countData(param);
-		if (count > 0) {
-			int start = (page - 1) * rows;
-			int end = start + rows;
-			list = tradeDao.queryData(param, start, end);
-		}
-		return new Page<TradeData>(list, count, page, rows);
 	}
 
 }

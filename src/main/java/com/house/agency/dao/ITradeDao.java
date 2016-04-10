@@ -2,7 +2,6 @@ package com.house.agency.dao;
 
 import java.util.List;
 
-import com.house.agency.data.TradeData;
 import com.house.agency.entity.Trade;
 import com.house.agency.param.TradeQueryParam;
 
@@ -15,6 +14,4 @@ public interface ITradeDao {
 	
 	int count(TradeQueryParam param);
 	List<Trade> query(TradeQueryParam param, int start, int end);
-	int countData(TradeQueryParam param);
-	List<TradeData> queryData(TradeQueryParam param, int start, int end);
 }

@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.house.agency.dao.IHouseDao;
+import com.house.agency.data.HouseDetailData;
+import com.house.agency.data.HouseListData;
 import com.house.agency.entity.House;
 import com.house.agency.page.IPage;
 import com.house.agency.page.Page;
@@ -20,7 +22,7 @@ public class HouseServiceImpl implements IHouseService {
 
 	@Autowired
 	private IHouseDao houseDao;
-	
+
 	@Override
 	public void save(House param) {
 		param.setId(UIDGeneratorUtil.getUID());
@@ -66,5 +68,24 @@ public class HouseServiceImpl implements IHouseService {
 			list = houseDao.query(param, start, end);
 		}
 		return new Page<House>(list, count, page, rows);
+	}
+
+	@Override
+	public IPage<HouseListData> queryData(HouseQueryParam param, int page, int rows) {
+		List<HouseListData> list = null;
+		page = page <= 0 ? 1 : page;
+		rows = rows <= 0 ? 10 : rows;
+		int count = houseDao.countData(param);
+		if (count > 0) {
+			int start = (page - 1) * rows;
+			int end = start + rows;
+			list = houseDao.queryData(param, start, end);
+		}
+		return new Page<HouseListData>(list, count, page, rows);
+	}
+
+	@Override
+	public HouseDetailData getData(String tradeId) {
+		return houseDao.getData(tradeId);
 	}
 }

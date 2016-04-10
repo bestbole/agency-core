@@ -8,10 +8,88 @@
 <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
 <result column="REMARKS" property="remarks" jdbcType="VARCHAR" />
 	</resultMap>
+	
+	<resultMap type="com.house.agency.data.HouseListData" id="houseListDataResult">
+    <id column="TRADE_ID" property="tradeId" jdbcType="VARCHAR" />
+<result column="IMG_TITLE" property="imgTitle" jdbcType="VARCHAR" />
+<result column="URL" property="url" jdbcType="VARCHAR" />
+<result column="TITLE" property="title" jdbcType="VARCHAR" />
+<result column="TYPE" property="type" jdbcType="VARCHAR" />
+<result column="TOWN_NAME" property="townName" jdbcType="VARCHAR" />
+<result column="BUILDING_NAME" property="buildingName" jdbcType="VARCHAR" />
+<result column="BUILDING_ADDRESS" property="buildingAddress" jdbcType="VARCHAR" />
+<result column="BUILDING_YEAR" property="buildingYear" jdbcType="VARCHAR" />
+<result column="BUILDING_FLOOR" property="buildingFloor" jdbcType="INTEGER" />
+<result column="PRICE" property="price" jdbcType="INTEGER" />
+<result column="AREA" property="area" jdbcType="INTEGER" />
+<result column="ROOM" property="room" jdbcType="INTEGER" />
+<result column="SALOON" property="saloon" jdbcType="INTEGER" />
+<result column="TOILET" property="toilet" jdbcType="INTEGER" />
+<result column="FLOOR" property="floor" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <resultMap type="com.house.agency.data.HouseDetailData" id="houseDetailDataResult">
+    <id column="TRADE_ID" property="tradeId" jdbcType="VARCHAR" />
+<result column="TITLE" property="title" jdbcType="VARCHAR" />
+<result column="TYPE" property="type" jdbcType="VARCHAR" />
+<result column="TOWN_NAME" property="townName" jdbcType="VARCHAR" />
+<result column="BUILDING_NAME" property="buildingName" jdbcType="VARCHAR" />
+<result column="BUILDING_ADDRESS" property="buildingAddress" jdbcType="VARCHAR" />
+<result column="BUILDING_YEAR" property="buildingYear" jdbcType="VARCHAR" />
+<result column="BUILDING_FLOOR" property="buildingFloor" jdbcType="INTEGER" />
+<result column="PRICE" property="price" jdbcType="INTEGER" />
+<result column="AREA" property="area" jdbcType="INTEGER" />
+<result column="ROOM" property="room" jdbcType="INTEGER" />
+<result column="SALOON" property="saloon" jdbcType="INTEGER" />
+<result column="TOILET" property="toilet" jdbcType="INTEGER" />
+<result column="FLOOR" property="floor" jdbcType="INTEGER" />
+  </resultMap>
 
 	<sql id="sqlQuery">
 		FROM HOUSE a where 1=1
 	</sql>
+	<sql id="sqlQueryData">
+      FROM TRADE a
+    JOIN HOUSE b
+      ON a.HOUSE_ID = b.ID
+    JOIN BUILDING_UNIT c
+      ON b.BUILDING_UNIT_ID = c.ID
+    JOIN BUILDING d
+      ON c.BUILDING_ID = d.ID
+    JOIN REGION e
+      ON e.ID = d.TOWN_ID
+    JOIN REGION f
+      ON f.ID = e.PARENT_ID
+    LEFT JOIN IMAGE g
+      ON g.ID = a.IMAGE_ID
+      WHERE 1=1
+      <if test="param.districtId != null and param.districtId != ''">
+        AND f.ID = #{param.districtId}
+      </if>
+      <if test="param.townId != null and param.townId != ''">
+        AND e.ID = #{param.townId}
+      </if>
+      <if test="param.priceBegin != 0 and param.priceEnd != 0">
+        AND a.PRICE <![CDATA[>=]]> #{param.priceBegin}
+        AND a.PRICE <![CDATA[<=]]> #{param.priceEnd}
+      </if>
+      <if test="param.pattern != 0 and param.symbol != null and param.symbol != ''">
+        AND b.ROOM <![CDATA[>]]> #{param.pattern}
+      </if>
+      <if test="param.pattern != 0 and param.symbol == null or param.symbol == ''">
+        AND b.ROOM = #{param.pattern}
+      </if>
+      <if test="param.areaBegin != 0 and param.areaEnd != 0">
+        AND b.AREA <![CDATA[>=]]> #{param.areaBegin}
+        AND b.AREA <![CDATA[<=]]> #{param.areaEnd}
+      </if>
+      <if test="param.subway != 0">
+        AND d.SUBWAY = #{param.subway}
+      </if>
+      <if test="param.buildingName != null and param.buildingName != ''">
+        AND d.BUILDING_NAME like '%${param.buildingName}%'
+      </if>
+  </sql>
 	
 	<select id="getDataById" resultMap="houseResult">
 		SELECT * FROM HOUSE WHERE ID = #{id, jdbcType=VARCHAR}
@@ -23,6 +101,73 @@
 		SELECT a.* <include refid="sqlQuery"/>
 			order by a.CREATE_TIME desc limit #{start, jdbcType=INTEGER}, #{end, jdbcType=INTEGER}
 	</select>
+	<select id="countData" resultType="java.lang.Integer">
+    SELECT COUNT(1) <include refid="sqlQueryData"/>
+  </select>
+	<select id="queryData" resultMap="houseListDataResult">
+    SELECT 
+       a.ID TRADE_ID,
+       g.TITLE IMG_TITLE,
+       g.URL,
+       a.TITLE,
+       a.TYPE,
+       e.NAME TOWN_NAME, 
+       d.BUILDING_NAME,
+       d.BUILDING_ADDRESS, 
+       d.BUILDING_YEAR,
+       c.FLOOR BUILDING_FLOOR,
+       a.PRICE,
+       b.AREA,
+       b.ROOM,
+       b.SALOON,
+       b.TOILET,
+       b.FLOOR
+      <include refid="sqlQueryData"/>
+      order by 
+      <if test="param.tag != null and param.tag == 'price'">
+        a.PRICE ${param.sort}
+      </if>
+      <if test="param.tag != null and param.tag == 'area'">
+        b.AREA ${param.sort}
+      </if>
+      <if test="param.tag != null and param.tag == 'release'">
+        a.RELEASE_TIME ${param.sort}
+      </if>
+      <if test="param.tag == null or param.tag == ''">
+        a.RELEASE_TIME desc
+      </if>
+      limit #{start, jdbcType=INTEGER}, #{end, jdbcType=INTEGER}
+  </select>
+  
+  <select id="getData" resultMap="houseDetailDataResult">
+    SELECT 
+       a.ID TRADE_ID,
+       a.TITLE,
+       a.TYPE,
+       e.NAME TOWN_NAME, 
+       d.BUILDING_NAME,
+       d.BUILDING_ADDRESS, 
+       d.BUILDING_YEAR,
+       c.FLOOR BUILDING_FLOOR,
+       a.PRICE,
+       b.AREA,
+       b.ROOM,
+       b.SALOON,
+       b.TOILET,
+       b.FLOOR
+      FROM TRADE a
+    JOIN HOUSE b
+      ON a.HOUSE_ID = b.ID
+    JOIN BUILDING_UNIT c
+      ON b.BUILDING_UNIT_ID = c.ID
+    JOIN BUILDING d
+      ON c.BUILDING_ID = d.ID
+    JOIN REGION e
+      ON e.ID = d.TOWN_ID
+    JOIN REGION f
+      ON f.ID = e.PARENT_ID
+    WHERE a.ID = #{tradeId, jdbcType=VARCHAR}
+   </select>
 	
 	<insert id="save" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO HOUSE

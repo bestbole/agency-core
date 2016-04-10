@@ -6,6 +6,8 @@ import org.springframework.stereotype.Repository;
 
 import com.house.agency.dao.BaseDao;
 import com.house.agency.dao.IHouseDao;
+import com.house.agency.data.HouseDetailData;
+import com.house.agency.data.HouseListData;
 import com.house.agency.entity.House;
 import com.house.agency.mapper.IHouseMapper;
 import com.house.agency.param.HouseQueryParam;
@@ -47,5 +49,23 @@ public class HouseDaoImpl extends BaseDao<IHouseMapper> implements IHouseDao {
 	public List<House> query(HouseQueryParam param, int start, int end) {
 		IHouseMapper mapper = getMapper(IHouseMapper.class);
 		return mapper.query(param, start, end);
+	}
+
+	@Override
+	public int countData(HouseQueryParam param) {
+		IHouseMapper mapper = getMapper(IHouseMapper.class);
+		return mapper.countData(param);
+	}
+
+	@Override
+	public List<HouseListData> queryData(HouseQueryParam param, int start, int end) {
+		IHouseMapper mapper = getMapper(IHouseMapper.class);
+		return mapper.queryData(param, start, end);
+	}
+
+	@Override
+	public HouseDetailData getData(String tradeId) {
+		IHouseMapper mapper = getMapper(IHouseMapper.class);
+		return mapper.getData(tradeId);
 	}
 }
