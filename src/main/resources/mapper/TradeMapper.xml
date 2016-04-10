@@ -41,9 +41,21 @@
       ON c.BUILDING_ID = d.ID
     JOIN REGION e
       ON e.ID = d.TOWN_ID
-    LEFT JOIN IMAGE f
-      ON f.ID = a.IMAGE_ID
+    JOIN REGION f
+      ON f.ID = e.PARENT_ID
+    LEFT JOIN IMAGE g
+      ON g.ID = a.IMAGE_ID
       WHERE 1=1
+      <if test="param.districtId != null and param.districtId != ''">
+        AND f.ID = #{param.districtId}
+      </if>
+      <if test="param.townId != null and param.townId != ''">
+        AND e.ID = #{param.townId}
+      </if>
+      <if test="param.priceBegin != 0 and param.priceEnd != 0">
+        AND a.PRICE <![CDATA[>=]]> #{param.priceBegin}
+        AND a.PRICE <![CDATA[<=]]> #{param.priceEnd}
+      </if>
       <if test="param.pattern != 0 and param.symbol != null and param.symbol != ''">
         AND b.ROOM <![CDATA[>]]> #{param.pattern}
       </if>
@@ -53,6 +65,12 @@
       <if test="param.areaBegin != 0 and param.areaEnd != 0">
       	AND b.AREA <![CDATA[>=]]> #{param.areaBegin}
       	AND b.AREA <![CDATA[<=]]> #{param.areaEnd}
+      </if>
+      <if test="param.subway != 0">
+        AND d.SUBWAY = #{param.subway}
+      </if>
+      <if test="param.buildingName != null and param.buildingName != ''">
+        AND d.BUILDING_NAME like '%${param.buildingName}%'
       </if>
   </sql>
 	
@@ -73,8 +91,8 @@
 	<select id="queryData" resultMap="tradeDataResult">
     SELECT 
        a.ID,
-       f.TITLE IMG_TITLE,
-       f.URL,
+       g.TITLE IMG_TITLE,
+       g.URL,
        a.TITLE,
        a.TYPE,
        e.NAME TOWN_NAME, 
@@ -89,7 +107,20 @@
        b.TOILET,
        b.FLOOR
       <include refid="sqlQueryData"/>
-      order by a.RELEASE_TIME desc limit #{start, jdbcType=INTEGER}, #{end, jdbcType=INTEGER}
+      order by 
+      <if test="param.tag != null and param.tag == 'price'">
+        a.PRICE ${param.sort}
+      </if>
+      <if test="param.tag != null and param.tag == 'area'">
+        b.AREA ${param.sort}
+      </if>
+      <if test="param.tag != null and param.tag == 'release'">
+        a.RELEASE_TIME ${param.sort}
+      </if>
+      <if test="param.tag == null or param.tag == ''">
+        a.RELEASE_TIME desc
+      </if>
+      limit #{start, jdbcType=INTEGER}, #{end, jdbcType=INTEGER}
   </select>
 	
 	<insert id="save" useGeneratedKeys="true" keyProperty="id">

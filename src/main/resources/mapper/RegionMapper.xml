@@ -17,7 +17,7 @@
 	</sql>
 	
 	<select id="getDataById" resultMap="regionResult">
-		SELECT * FROM IMAGE WHERE ID = #{id, jdbcType=VARCHAR}
+		SELECT * FROM REGION WHERE ID = #{id, jdbcType=VARCHAR}
 	</select>
 	<select id="count" resultType="java.lang.Integer">
 		SELECT COUNT(1) <include refid="sqlQuery"/>

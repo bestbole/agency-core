@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.house.agency.dao.IBuildingDao;
+import com.house.agency.data.BuildingData;
 import com.house.agency.entity.Building;
 import com.house.agency.page.IPage;
 import com.house.agency.page.Page;
@@ -69,7 +70,7 @@ public class BuildingServiceImpl implements IBuildingService {
 	}
 
 	@Override
-	public List<Building> list(BuildingQueryParam param) {
+	public List<BuildingData> list(BuildingQueryParam param) {
 		return buildingDao.list(param);
 	}
 }

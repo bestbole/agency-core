@@ -27,14 +27,14 @@ public class RegionDaoImpl extends BaseDao<IRegionMapper> implements IRegionDao 
 
 	@Override
 	public int deleteById(String id) {
-		// TODO Auto-generated method stub
+		IRegionMapper mapper = getMapper(IRegionMapper.class);
 		return 0;
 	}
 
 	@Override
 	public Region getDataById(String id) {
-		// TODO Auto-generated method stub
-		return null;
+		IRegionMapper mapper = getMapper(IRegionMapper.class);
+		return mapper.getDataById(id);
 	}
 
 	@Override

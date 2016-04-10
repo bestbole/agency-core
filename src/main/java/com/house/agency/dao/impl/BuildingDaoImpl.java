@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import com.house.agency.dao.BaseDao;
 import com.house.agency.dao.IBuildingDao;
+import com.house.agency.data.BuildingData;
 import com.house.agency.entity.Building;
 import com.house.agency.mapper.IBuildingMapper;
 import com.house.agency.param.BuildingQueryParam;
@@ -51,7 +52,7 @@ public class BuildingDaoImpl extends BaseDao<IBuildingMapper> implements IBuildi
 	}
 
 	@Override
-	public List<Building> list(BuildingQueryParam param) {
+	public List<BuildingData> list(BuildingQueryParam param) {
 		IBuildingMapper mapper = getMapper(IBuildingMapper.class);
 		return mapper.list(param);
 	}

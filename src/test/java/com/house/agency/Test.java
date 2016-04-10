@@ -11,16 +11,15 @@ public class Test {
 		for (int i = 0; i < 10; i++) {
 			System.out.println(UIDGeneratorUtil.getUID());
 		}
-		/*5bdc50153ef6bbe1f8000
-		dd3812153ef6bbe1f7fff
-		8c436b153ef6bbe1f7ffe
-		9e5c73153ef6bbe1f7ffd
-		c791b9153ef6bbe1f7ffc
-		3020ad153ef6bbe1f7ffb
-		b15692153ef6bbe1f7ffa
-		aa9f99153ef6bbe1f7ff9
-		d42d08153ef6bbe1f7ff8
-		d86fd3153ef6bbe1f7ff7*/
+		/*a1cd57153fb08a44b7fff
+		012ddd153fb08a44b7ffe
+		2b958e153fb08a44b7ffd
+		b44e46153fb08a44b7ffc
+		04e3b2153fb08a44b7ffb
+		5f550a153fb08a44b7ffa
+		6b2d4a153fb08a44b7ff9
+		91993f153fb08a44b7ff8
+		4af82c153fb08a44b7ff7*/
 	}
 
 }

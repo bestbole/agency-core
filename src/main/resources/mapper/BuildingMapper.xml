@@ -12,11 +12,17 @@
 <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
 <result column="REMARKS" property="remarks" jdbcType="VARCHAR" />
 	</resultMap>
+	
+	<resultMap type="com.house.agency.data.BuildingData" id="buildingDataResult">
+	   <result column="LABEL" property="label" jdbcType="VARCHAR" />
+	   <result column="DISTRICT_NAME" property="districtName" jdbcType="VARCHAR" />
+	   <result column="TOWN_NAME" property="townName" jdbcType="VARCHAR" />
+	</resultMap>
 
 	<sql id="sqlQuery">
 		FROM BUILDING a where 1=1
 		<if test="param.buildingName != null and param.buildingName != ''">
-			and a.BUILDING_NAME = #{param.buildingName}
+			and a.BUILDING_NAME like '%${param.buildingName}%'
 		</if>
 	</sql>
 	
@@ -30,10 +36,28 @@
 		SELECT a.* <include refid="sqlQuery"/>
 			order by a.CREATE_TIME desc limit #{start, jdbcType=INTEGER}, #{end, jdbcType=INTEGER}
 	</select>
-	<select id="list" resultMap="buildingResult">
-		SELECT a.* <include refid="sqlQuery"/>
+	<select id="list" resultMap="buildingDataResult">
+		SELECT 
+		  a.BUILDING_NAME LABEL,
+		  c.NAME DISTRICT_NAME,
+      b.NAME TOWN_NAME
+		FROM BUILDING a 
+		JOIN REGION b
+      ON b.ID = a.TOWN_ID
+    JOIN REGION c
+      ON c.ID = b.PARENT_ID where 1=1
+    <if test="param.districtId != null and param.districtId != ''">
+      AND c.ID = #{param.districtId}
+    </if>
+    <if test="param.townId != null and param.townId != ''">
+      AND b.ID = #{param.townId}
+    </if>
+    <if test="param.buildingName != null and param.buildingName != ''">
+      and a.BUILDING_NAME like '%${param.buildingName}%'
+    </if>
 			order by a.CREATE_TIME desc
 	</select>
+	
 	
 	<insert id="save" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO BUILDING
@@ -43,6 +67,7 @@
 		   BUILDING_YEAR,
 		   BUILDING_ADDRESS,
 		   TYPE,
+		   SUBMAY,
 		   STATUS,
 		   CREATE_TIME,
 		   REMARKS)
@@ -53,9 +78,10 @@
 		  	#{param.buildingYear, jdbcType=VARCHAR},
 		  	#{param.buildingAddress, jdbcType=VARCHAR},
 		  	#{param.type, jdbcType=VARCHAR},
+		  	#{param.subway, jdbcType=INTEGER},
 		  	#{param.status, jdbcType=VARCHAR},
-          	#{param.createTime, jdbcType=TIMESTAMP},
-          	#{param.remarks, jdbcType=VARCHAR})
+        #{param.createTime, jdbcType=TIMESTAMP},
+        #{param.remarks, jdbcType=VARCHAR})
 	</insert>
 	
 	<update id="update">

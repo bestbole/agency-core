@@ -2,6 +2,7 @@ package com.house.agency.dao;
 
 import java.util.List;
 
+import com.house.agency.data.BuildingData;
 import com.house.agency.entity.Building;
 import com.house.agency.param.BuildingQueryParam;
 
@@ -15,5 +16,5 @@ public interface IBuildingDao {
 	
 	int count(BuildingQueryParam param);
 	List<Building> query(BuildingQueryParam param, int start, int end);
-	List<Building> list(BuildingQueryParam param);
+	List<BuildingData> list(BuildingQueryParam param);
 }
