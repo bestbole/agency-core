@@ -3,6 +3,8 @@
 <mapper namespace="com.house.agency.mapper.IImageMapper">
 	<resultMap type="com.house.agency.entity.Image" id="imageResult">
 		<id column="ID" property="id" jdbcType="VARCHAR" />
+		<result column="TITLE" property="title" jdbcType="VARCHAR" />
+		<result column="URL" property="url" jdbcType="VARCHAR" />
 <result column="STATUS" property="status" jdbcType="VARCHAR" />
 <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
 <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
@@ -21,8 +23,45 @@
 	</select>
 	<select id="query" resultMap="imageResult">
 		SELECT a.* <include refid="sqlQuery"/>
-			order by a.RELEASE_TIME desc limit #{start, jdbcType=INTEGER}, #{end, jdbcType=INTEGER}
+			order by a.CREATE_TIME desc limit #{start, jdbcType=INTEGER}, #{end, jdbcType=INTEGER}
 	</select>
+	<select id="queryData" resultMap="imageResult">
+    SELECT
+        a.*
+    FROM
+        IMAGE a
+    JOIN
+        TRADE_IMAGE b
+    ON
+        a.ID = b.IMAGE_ID
+    WHERE
+        b.TRADE_ID = #{param.tradeId, jdbcType=VARCHAR}
+      order by a.CREATE_TIME desc
+  </select>
+  <select id="listData" resultMap="imageResult">
+    SELECT a.* FROM IMAGE a where 1=1
+    <if test="param.foreignId != null and param.foreignId != ''">
+      AND a.FOREIGN_ID = #{param.foreignId, jdbcType=VARCHAR}
+    </if>
+    <if test="param.userId != null and param.userId != ''">
+      AND a.USER_ID = #{param.userId, jdbcType=VARCHAR}
+    </if>
+    <if test="param.type != null and param.type != ''">
+      AND a.TYPE = #{param.type, jdbcType=VARCHAR}
+    </if>
+      AND a.ID not in (SELECT a.ID
+        FROM
+            IMAGE a
+        JOIN
+            TRADE_IMAGE b
+        ON
+            a.ID = b.IMAGE_ID
+        WHERE
+            b.TRADE_ID = #{param.tradeId, jdbcType=VARCHAR})
+      AND (a.USER_ID IS NULL or a.USER_ID = '')
+      order by a.CREATE_TIME desc
+  </select>
+  
 	
 	<insert id="save" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO IMAGE
@@ -43,8 +82,8 @@
 		  	#{param.url, jdbcType=VARCHAR},
 		  	#{param.type, jdbcType=VARCHAR},
 		  	#{param.status, jdbcType=VARCHAR},
-          	#{param.createTime, jdbcType=TIMESTAMP},
-          	#{param.remarks, jdbcType=VARCHAR})
+        #{param.createTime, jdbcType=TIMESTAMP},
+        #{param.remarks, jdbcType=VARCHAR})
 	</insert>
 	
 	<update id="update">

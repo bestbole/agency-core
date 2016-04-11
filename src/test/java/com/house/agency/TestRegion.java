@@ -10,15 +10,6 @@ import com.house.agency.entity.Region;
 
 public class TestRegion extends BaseJunitTest {
 
-	private String cityId = "53f67e153e44203258000";
-
-	private String[] datas = { "5bdc50153ef6bbe1f7a-福田-FT", "dd3812153ef6bbe1f7b-南山-NS", "8c436b153ef6bbe1f7c-罗湖-LH",
-			"9e5c73153ef6bbe1f7d-宝安-BA", "c791b9153ef6bbe1f7e-盐田-YT", "3020ad153ef6bbe1f7f-坪山新区-PSXQ",
-			"b15692153ef6bbe1f7g-光明新区-GMXQ", "aa9f99153ef6bbe1f7h-大鹏新区-DPXQ", "d42d08153ef6bbe1f7i-龙华新区-LHXQ" };
-
-	private String[] towns = { "5bdc50153ef6bbe1f6a-皇岗-HG", "dd3812153ef6bbe1f6b-景田-JT", "8c436b153ef6bbe1f6c-梅林-ML",
-			"9e5c73153ef6bbe1f6d-华强-HQ", "c791b9153ef6bbe1f6e-香蜜湖-XMH" };
-
 	@Autowired
 	private IRegionDao regionDao;
 

@@ -428,3 +428,40 @@ INSERT INTO BUILDING (ID, TOWN_ID, BUILDING_NAME, BUILDING_YEAR, BUILDING_ADDRES
 INSERT INTO BUILDING (ID, TOWN_ID, BUILDING_NAME, BUILDING_YEAR, BUILDING_ADDRESS, COORDINATE_X, COORDINATE_Y, TYPE, STATUS, CREATE_TIME, UPDATE_TIME, REMARKS) VALUES ('d42d08153ef6bbe1f7i00', '5bdc50153ef6bbe1f6a00', '皇庭彩园', '2006', '福田金田路与福民路的交汇处', null, null, '1', '1', now(), null, null);
 INSERT INTO BUILDING (ID, TOWN_ID, BUILDING_NAME, BUILDING_YEAR, BUILDING_ADDRESS, COORDINATE_X, COORDINATE_Y, TYPE, STATUS, CREATE_TIME, UPDATE_TIME, REMARKS) VALUES ('d86fd3153ef6bbe1f7j00', '5bdc50153ef6bbe1f6a00', '骏皇名居', '2004', '福田丹桂路与金桂路交汇处', null, null, '1', '1', now(), null, null);
 INSERT INTO BUILDING (ID, TOWN_ID, BUILDING_NAME, BUILDING_YEAR, BUILDING_ADDRESS, COORDINATE_X, COORDINATE_Y, TYPE, STATUS, CREATE_TIME, UPDATE_TIME, REMARKS) VALUES ('dd3812153ef6bbe1f7b00', '5bdc50153ef6bbe1f6a00', '江南名苑', '2001', '福田福强路2143号', null, null, '1', '1', now(), null, null);
+
+
+(SELECT
+    a.*
+FROM
+    image a
+JOIN
+    trade_image b
+ON
+    a.ID = b.image_id
+WHERE
+    b.trade_ID = '91993f153fb08a44b7001')
+union
+(select a.* FROM IMAGE a where 1=1 AND a.FOREIGN_ID = '6b2d4a153fb08a44b7001' AND a.TYPE = '2' AND a.USER_ID IS NULL AND
+a.ID not in (SELECT
+    a.ID
+FROM
+    image a
+JOIN
+    trade_image b
+ON
+    a.ID = b.image_id
+WHERE
+    b.trade_ID = '91993f153fb08a44b7001') order by a.CREATE_TIME desc)
+union
+(select a.* FROM IMAGE a where 1=1 AND a.FOREIGN_ID = 'b44e46153fb08a44b7001' AND a.TYPE = '1' AND a.USER_ID IS NULL AND
+a.ID not in (SELECT
+    a.ID
+FROM
+    image a
+JOIN
+    trade_image b
+ON
+    a.ID = b.image_id
+WHERE
+    b.trade_ID = '91993f153fb08a44b7001') order by a.CREATE_TIME desc)
+ 

@@ -1,6 +1,7 @@
 package com.house.agency.service.impl;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,6 +53,16 @@ public class ImageServiceImpl implements IImageService {
 	public IPage<Image> query(ImageQueryParam param, int page, int rows) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public List<Image> listData(ImageQueryParam param) {
+		return imageDao.listData(param);
+	}
+
+	@Override
+	public List<Image> queryData(ImageQueryParam param) {
+		return imageDao.queryData(param);
 	}
 
 }

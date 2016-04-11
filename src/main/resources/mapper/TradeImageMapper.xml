@@ -39,8 +39,8 @@
 		  	#{param.imageId, jdbcType=VARCHAR},
 		  	#{param.type, jdbcType=VARCHAR},
 		  	#{param.status, jdbcType=VARCHAR},
-          	#{param.createTime, jdbcType=TIMESTAMP},
-          	#{param.remarks, jdbcType=VARCHAR})
+        #{param.createTime, jdbcType=TIMESTAMP},
+        #{param.remarks, jdbcType=VARCHAR})
 	</insert>
 	
 	<update id="update">

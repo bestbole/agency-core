@@ -14,4 +14,6 @@ public interface IImageDao {
 	
 	int count(ImageQueryParam param);
 	List<Image> query(ImageQueryParam param, int start, int end);
+	List<Image> queryData(ImageQueryParam param);
+	List<Image> listData(ImageQueryParam param);
 }

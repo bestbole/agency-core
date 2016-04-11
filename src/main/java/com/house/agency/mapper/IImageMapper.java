@@ -17,4 +17,6 @@ public interface IImageMapper {
 	int count(@Param("param") ImageQueryParam param);
 	List<Image> query(@Param("param") ImageQueryParam param,
 			@Param("start") int start, @Param("end") int end);
+	List<Image> queryData(@Param("param") ImageQueryParam param);
+	List<Image> listData(@Param("param") ImageQueryParam param);
 }
