@@ -39,14 +39,20 @@
 		<result column="BUILDING_NAME" property="buildingName" jdbcType="VARCHAR" />
 		<result column="BUILDING_ADDRESS" property="buildingAddress" jdbcType="VARCHAR" />
 		<result column="BUILDING_YEAR" property="buildingYear" jdbcType="VARCHAR" />
+		<result column="BUILDING_TYPE" property="buildingType" jdbcType="VARCHAR" />
 		<result column="BUILDING_FLOOR" property="buildingFloor" jdbcType="INTEGER" />
 		<result column="PRICE" property="price" jdbcType="INTEGER" />
+		<result column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="ENCODE" property="encode" jdbcType="VARCHAR" />
 		<result column="AREA" property="area" jdbcType="INTEGER" />
 		<result column="ROOM" property="room" jdbcType="INTEGER" />
 		<result column="SALOON" property="saloon" jdbcType="INTEGER" />
 		<result column="TOILET" property="toilet" jdbcType="INTEGER" />
 		<result column="FLOOR" property="floor" jdbcType="INTEGER" />
 		<result column="FACE" property="face" jdbcType="INTEGER" />
+		<result column="FITMENT" property="fitment" jdbcType="INTEGER" />
+		<result column="OWNER" property="owner" jdbcType="INTEGER" />
+		<result column="RELEASE_TIME" property="releaseTime" jdbcType="TIMESTAMP" />
 		<result column="USERNAME" property="username" jdbcType="VARCHAR" />
 		<result column="PHONE" property="phone" jdbcType="VARCHAR" />
   </resultMap>
@@ -157,14 +163,20 @@
        d.BUILDING_NAME,
        d.BUILDING_ADDRESS, 
        d.BUILDING_YEAR,
+       d.TYPE BUILDING_TYPE,
        c.FLOOR BUILDING_FLOOR,
        a.PRICE,
+       b.CODE,
+       b.ENCODE,
        b.AREA,
        b.ROOM,
        b.SALOON,
        b.TOILET,
        b.FLOOR,
        b.FACE,
+       b.FITMENT,
+       b.OWNER,
+       a.RELEASE_TIME,
        g.USERNAME,
        g.PHONE
       FROM TRADE a
@@ -194,6 +206,8 @@
 		   TOILET,
 		   KITCHEN,
 		   FACE,
+		   CODE,
+		   ENCODE,
 		   STATUS,
 		   CREATE_TIME,
 		   REMARKS)
@@ -204,12 +218,14 @@
 		  	#{param.floor, jdbcType=INTEGER},
 		  	#{param.room, jdbcType=INTEGER},
 		  	#{param.saloon, jdbcType=INTEGER},
-			#{param.toilet, jdbcType=INTEGER},
-			#{param.kitchen, jdbcType=INTEGER},
-			#{param.face, jdbcType=VARCHAR},
+			  #{param.toilet, jdbcType=INTEGER},
+			  #{param.kitchen, jdbcType=INTEGER},
+			  #{param.face, jdbcType=VARCHAR},
+			  #{param.code, jdbcType=VARCHAR},
+			  #{param.encode, jdbcType=VARCHAR},
 		  	#{param.status, jdbcType=VARCHAR},
-          	#{param.createTime, jdbcType=TIMESTAMP},
-          	#{param.remarks, jdbcType=VARCHAR})
+        #{param.createTime, jdbcType=TIMESTAMP},
+        #{param.remarks, jdbcType=VARCHAR})
 	</insert>
 	
 	<update id="update">

@@ -37,7 +37,7 @@ public class TestHouse extends BaseJunitTest {
 			param.setRoom(room);
 			param.setSaloon(1);
 			param.setToilet(1);
-			param.setFace("1");
+			param.setFace(1);
 			houseDao.save(param);
 		}
 		
