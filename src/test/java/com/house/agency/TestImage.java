@@ -27,7 +27,7 @@ public class TestImage extends BaseJunitTest {
 			param.setStatus("1");
 			param.setCreateTime(new Date());
 			param.setForeignId(Data.houseId + "001");
-			param.setUserId("1870dc153c592f7578000");
+			//param.setUserId(null);
 			param.setType("2");
 			param.setUrl(data[0]);
 			param.setTitle(data[1]);
