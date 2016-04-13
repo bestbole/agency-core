@@ -13,6 +13,13 @@ http://www.gbtags.com/gb/debug/new.htm
 启动：net start mysql
 前提MYSQL已经安装为windows服务
 
+当我修改了/etc/profile文件，我想让它立刻生效，而不用重新登录；这时就想到用source命令，如:source /etc/profile
+
+rm-rf目录名字
+
+./shutdown.sh
+./startup.sh
+
 mysql -u root -p
 
 CentOS release 6.5
