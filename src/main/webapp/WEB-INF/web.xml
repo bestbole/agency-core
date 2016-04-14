@@ -11,6 +11,10 @@
 		<param-name>log4jConfigLocation</param-name>  
 		<param-value>classpath:log4j.properties</param-value>  
 	</context-param>
+	<context-param>
+    <param-name>webAppRootKey</param-name>
+    <param-value>agency-core.root</param-value>
+  </context-param>
 
 	<!-- 开启spring功能 -->
 	<listener>
