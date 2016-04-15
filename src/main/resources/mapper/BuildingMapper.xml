@@ -14,9 +14,10 @@
 	</resultMap>
 	
 	<resultMap type="com.house.agency.data.BuildingData" id="buildingDataResult">
-	   <result column="LABEL" property="label" jdbcType="VARCHAR" />
-	   <result column="DISTRICT_NAME" property="districtName" jdbcType="VARCHAR" />
-	   <result column="TOWN_NAME" property="townName" jdbcType="VARCHAR" />
+		<result column="BUILDING_ID" property="buildingId" jdbcType="VARCHAR" />
+	  <result column="LABEL" property="label" jdbcType="VARCHAR" />
+	  <result column="DISTRICT_NAME" property="districtName" jdbcType="VARCHAR" />
+	  <result column="TOWN_NAME" property="townName" jdbcType="VARCHAR" />
 	</resultMap>
 
 	<sql id="sqlQuery">
@@ -38,6 +39,7 @@
 	</select>
 	<select id="list" resultMap="buildingDataResult">
 		SELECT 
+		  a.ID BUILDING_ID,
 		  a.BUILDING_NAME LABEL,
 		  c.NAME DISTRICT_NAME,
       b.NAME TOWN_NAME

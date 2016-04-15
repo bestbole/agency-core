@@ -26,6 +26,7 @@
 		<result column="SALOON" property="saloon" jdbcType="INTEGER" />
 		<result column="TOILET" property="toilet" jdbcType="INTEGER" />
 		<result column="FLOOR" property="floor" jdbcType="INTEGER" />
+		<result column="RELEASE_TIME" property="releaseTime" jdbcType="TIMESTAMP" />
   </resultMap>
   
   <resultMap type="com.house.agency.data.HouseDetailData" id="houseDetailDataResult">
@@ -133,7 +134,8 @@
        b.ROOM,
        b.SALOON,
        b.TOILET,
-       b.FLOOR
+       b.FLOOR,
+       a.RELEASE_TIME
       <include refid="sqlQueryData"/>
       order by 
       <if test="param.tag != null and param.tag == 'price'">
