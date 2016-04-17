@@ -48,8 +48,7 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	public User getDataByUsername(User param) {
-		// TODO Auto-generated method stub
+	public User getDataByUsername(String username) {
 		return null;
 	}
 
