@@ -34,6 +34,14 @@
 		<property name="service" ref="userService" />
 		<property name="serviceInterface" value="com.house.agency.service.IUserService" />
 	</bean>
+	<bean name="/roleService" class="org.springframework.remoting.caucho.HessianServiceExporter">
+    <property name="service" ref="roleService" />
+    <property name="serviceInterface" value="com.house.agency.service.IRoleService" />
+  </bean>
+  <bean name="/permissionService" class="org.springframework.remoting.caucho.HessianServiceExporter">
+    <property name="service" ref="permissionService" />
+    <property name="serviceInterface" value="com.house.agency.service.IPermissionService" />
+  </bean>
 	<!-- hessian-servlet-conf -->
 	
 </beans>
