@@ -21,6 +21,9 @@
 	<select id="getDataById" resultMap="userResult">
 		SELECT * FROM USER WHERE ID = #{id, jdbcType=VARCHAR}
 	</select>
+	<select id="getDataByUsername" resultMap="userResult">
+    SELECT * FROM USER WHERE USERNAME = #{username, jdbcType=VARCHAR}
+  </select>
 	<select id="count" resultType="java.lang.Integer">
 		SELECT COUNT(1) <include refid="sqlQuery"/>
 	</select>

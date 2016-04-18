@@ -88,4 +88,9 @@ public class HouseServiceImpl implements IHouseService {
 	public HouseDetailData getData(String tradeId) {
 		return houseDao.getData(tradeId);
 	}
+
+	@Override
+	public List<House> queryByBuildingUnitId(String buildingUnitId) {
+		return houseDao.queryByBuildingUnitId(buildingUnitId);
+	}
 }

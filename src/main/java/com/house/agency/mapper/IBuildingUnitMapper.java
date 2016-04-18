@@ -17,4 +17,5 @@ public interface IBuildingUnitMapper {
 	int count(@Param("param") BuildingUnitQueryParam param);
 	List<BuildingUnit> query(@Param("param") BuildingUnitQueryParam param,
 			@Param("start") int start, @Param("end") int end);
+	List<BuildingUnit> queryByBuildingId(@Param("buildingId") String buildingId);
 }

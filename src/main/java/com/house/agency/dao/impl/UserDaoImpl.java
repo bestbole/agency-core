@@ -49,4 +49,10 @@ public class UserDaoImpl extends BaseDao<IUserMapper> implements IUserDao {
 		return null;
 	}
 
+	@Override
+	public User getDataByUsername(String username) {
+		IUserMapper mapper = getMapper(IUserMapper.class);
+		return mapper.getDataByUsername(username);
+	}
+
 }

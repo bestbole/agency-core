@@ -14,4 +14,5 @@ public interface IBuildingUnitDao {
 	
 	int count(BuildingUnitQueryParam param);
 	List<BuildingUnit> query(BuildingUnitQueryParam param, int start, int end);
+	List<BuildingUnit> queryByBuildingId(String buildingId);
 }

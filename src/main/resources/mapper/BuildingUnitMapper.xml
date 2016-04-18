@@ -30,6 +30,10 @@
 		SELECT a.* <include refid="sqlQuery"/>
 			order by a.CREATE_TIME desc limit #{start}, #{end}
 	</select>
+	<select id="queryByBuildingId" resultMap="buildingUnitResult">
+    SELECT a.* FROM BUILDING_UNIT a where a.BUILDING_ID = #{buildingId}
+      order by a.NAME asc
+  </select>
 	
 	<insert id="save" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO BUILDING_UNIT
@@ -46,8 +50,8 @@
 		  	#{param.name, jdbcType=VARCHAR},
 		  	#{param.floor, jdbcType=INTEGER},
 		  	#{param.status, jdbcType=VARCHAR},
-          	#{param.createTime, jdbcType=TIMESTAMP},
-          	#{param.remarks, jdbcType=VARCHAR})
+        #{param.createTime, jdbcType=TIMESTAMP},
+        #{param.remarks, jdbcType=VARCHAR})
 	</insert>
 	
 	<update id="update">

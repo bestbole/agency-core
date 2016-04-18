@@ -69,4 +69,9 @@ public class BuildingUnitServiceImpl implements IBuildingUnitService {
 		return new Page<BuildingUnit>(list, count, page, rows);
 	}
 
+	@Override
+	public List<BuildingUnit> queryByBuildingId(String buildingId) {
+		return buildingUnitDao.queryByBuildingId(buildingId);
+	}
+
 }

@@ -49,7 +49,7 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	public User getDataByUsername(String username) {
-		return null;
+		return userDao.getDataByUsername(username);
 	}
 
 	@Override

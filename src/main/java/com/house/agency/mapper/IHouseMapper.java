@@ -23,4 +23,6 @@ public interface IHouseMapper {
 	int countData(@Param("param") HouseQueryParam param);
 	List<HouseListData> queryData(@Param("param") HouseQueryParam param, @Param("start") int start,
 			@Param("end") int end);
+	
+	List<House> queryByBuildingUnitId(@Param("buildingUnitId") String buildingUnitId);
 }

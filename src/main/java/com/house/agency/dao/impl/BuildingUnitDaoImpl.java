@@ -50,4 +50,10 @@ public class BuildingUnitDaoImpl extends BaseDao<IBuildingUnitMapper> implements
 		return mapper.query(param, start, end);
 	}
 
+	@Override
+	public List<BuildingUnit> queryByBuildingId(String buildingId) {
+		IBuildingUnitMapper mapper = getMapper(IBuildingUnitMapper.class);
+		return mapper.queryByBuildingId(buildingId);
+	}
+
 }

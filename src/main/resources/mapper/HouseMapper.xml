@@ -3,6 +3,7 @@
 <mapper namespace="com.house.agency.mapper.IHouseMapper">
 	<resultMap type="com.house.agency.entity.House" id="houseResult">
 		<id column="ID" property="id" jdbcType="VARCHAR" />
+		<result column="CARD" property="card" jdbcType="VARCHAR" />
 <result column="STATUS" property="status" jdbcType="VARCHAR" />
 <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
 <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
@@ -82,18 +83,28 @@
       <if test="param.townId != null and param.townId != ''">
         AND e.ID = #{param.townId}
       </if>
-      <if test="param.priceBegin != 0 and param.priceEnd != 0">
+      <if test="param.priceBegin != 0">
         AND a.PRICE <![CDATA[>=]]> #{param.priceBegin}
+      </if>
+      <if test="param.priceEnd != 0">
         AND a.PRICE <![CDATA[<=]]> #{param.priceEnd}
       </if>
-      <if test="param.pattern != 0 and param.symbol != null and param.symbol != ''">
-        AND b.ROOM <![CDATA[>]]> #{param.pattern}
+      <if test="param.room != 0 and param.symbol != null and param.symbol != ''">
+        AND b.ROOM <![CDATA[>]]> #{param.room}
       </if>
-      <if test="param.pattern != 0 and param.symbol == null or param.symbol == ''">
-        AND b.ROOM = #{param.pattern}
+      <if test="param.room != 0 and param.symbol == null or param.symbol == ''">
+        AND b.ROOM = #{param.room}
       </if>
-      <if test="param.areaBegin != 0 and param.areaEnd != 0">
+      <if test="param.saloon != 0">
+        AND b.SALOON = #{param.saloon}
+      </if>
+      <if test="param.toilet != 0">
+        AND b.TOILET = #{param.toilet}
+      </if>
+      <if test="param.areaBegin != 0">
         AND b.AREA <![CDATA[>=]]> #{param.areaBegin}
+      </if>
+      <if test="param.areaEnd != 0">
         AND b.AREA <![CDATA[<=]]> #{param.areaEnd}
       </if>
       <if test="param.subway != 0">
@@ -101,6 +112,12 @@
       </if>
       <if test="param.buildingName != null and param.buildingName != ''">
         AND d.BUILDING_NAME like '%${param.buildingName}%'
+      </if>
+      <if test="param.releaseDateBegin != null and param.releaseDateBegin != ''">
+        AND to_char(a.RELEASE_TIME, 'YYYY-MM-DD') <![CDATA[>=]]> #{param.releaseDateBegin}
+      </if>
+      <if test="param.releaseDateEnd != null and param.releaseDateEnd != ''">
+        AND to_char(a.RELEASE_TIME, 'YYYY-MM-DD') <![CDATA[<=]]> #{param.releaseDateEnd}
       </if>
   </sql>
 	
@@ -152,7 +169,6 @@
       </if>
       limit #{start, jdbcType=INTEGER}, #{end, jdbcType=INTEGER}
   </select>
-  
   <select id="getData" resultMap="houseDetailDataResult">
     SELECT 
        a.ID TRADE_ID,
@@ -195,6 +211,10 @@
     LEFT JOIN USER g
       ON g.ID = a.USER_ID
     WHERE a.ID = #{tradeId, jdbcType=VARCHAR}
+   </select>
+   <select id="queryByBuildingUnitId" resultMap="houseResult">
+   	SELECT a.* FROM HOUSE a WHERE a.BUILDING_UNIT_ID = #{buildingUnitId, jdbcType=VARCHAR}
+   	  order by a.CARD asc
    </select>
 	
 	<insert id="save" useGeneratedKeys="true" keyProperty="id">

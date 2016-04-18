@@ -68,4 +68,10 @@ public class HouseDaoImpl extends BaseDao<IHouseMapper> implements IHouseDao {
 		IHouseMapper mapper = getMapper(IHouseMapper.class);
 		return mapper.getData(tradeId);
 	}
+
+	@Override
+	public List<House> queryByBuildingUnitId(String buildingUnitId) {
+		IHouseMapper mapper = getMapper(IHouseMapper.class);
+		return mapper.queryByBuildingUnitId(buildingUnitId);
+	}
 }

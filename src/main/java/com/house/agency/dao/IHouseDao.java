@@ -20,4 +20,6 @@ public interface IHouseDao {
 	HouseDetailData getData(String tradeId);
 	int countData(HouseQueryParam param);
 	List<HouseListData> queryData(HouseQueryParam param, int start, int end);
+	
+	List<House> queryByBuildingUnitId(String buildingUnitId);
 }

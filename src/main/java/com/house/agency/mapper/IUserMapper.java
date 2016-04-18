@@ -17,4 +17,5 @@ public interface IUserMapper {
 	int count(@Param("param") UserQueryParam param);
 	List<User> query(@Param("param") UserQueryParam param,
 			@Param("start") int start, @Param("end") int end);
+	User getDataByUsername(@Param("username") String username);
 }
