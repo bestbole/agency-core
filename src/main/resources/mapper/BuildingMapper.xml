@@ -69,7 +69,7 @@
 		   BUILDING_YEAR,
 		   BUILDING_ADDRESS,
 		   TYPE,
-		   SUBMAY,
+		   SUBWAY,
 		   STATUS,
 		   CREATE_TIME,
 		   REMARKS)
