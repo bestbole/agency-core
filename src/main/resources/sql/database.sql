@@ -2,6 +2,7 @@ http://datatables.club/
 java -cp ../lib/hsqldb.jar org.hsqldb.Server -database.0 agencydb -dbname.0 agency_db
 java -cp ../lib/hsqldb.jar org.hsqldb.util.DatabaseManager -url jdbc:hsqldb:hsql://localhost/agency_db
 http://www.gbtags.com/gb/debug/new.htm
+http://www.codeceo.com/article/javascript-guide.html
 
 从MySQL5.7.6开始,要这样子安装
 先 mysqld --initialize-insecure
