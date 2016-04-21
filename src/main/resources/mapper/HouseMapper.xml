@@ -60,7 +60,28 @@
   </resultMap>
 
 	<sql id="sqlQuery">
-		FROM HOUSE a where 1=1
+		  FROM HOUSE a 
+		JOIN BUILDING_UNIT c
+      ON a.BUILDING_UNIT_ID = c.ID
+    JOIN BUILDING d
+      ON c.BUILDING_ID = d.ID
+    JOIN REGION e
+      ON e.ID = d.TOWN_ID
+    JOIN REGION f
+      ON f.ID = e.PARENT_ID
+     WHERE 1=1
+      <if test="param.districtId != null and param.districtId != ''">
+        AND f.ID = #{param.districtId}
+      </if>
+      <if test="param.townId != null and param.townId != ''">
+        AND e.ID = #{param.townId}
+      </if>
+      <if test="param.buildingName != null and param.buildingName != ''">
+        AND d.BUILDING_NAME like '%${param.buildingName}%'
+      </if>
+      <if test="param.buildingUnitId != null and param.buildingUnitId != ''">
+        AND a.BUILDING_UNIT_ID = #{param.buildingUnitId}
+      </if>
 	</sql>
 	<sql id="sqlQueryData">
       FROM TRADE a
