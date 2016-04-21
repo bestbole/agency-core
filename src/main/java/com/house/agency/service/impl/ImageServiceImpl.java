@@ -1,17 +1,22 @@
 package com.house.agency.service.impl;
 
+import java.io.File;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.house.agency.dao.IImageDao;
 import com.house.agency.entity.Image;
 import com.house.agency.page.IPage;
+import com.house.agency.param.ImageParam;
 import com.house.agency.param.ImageQueryParam;
 import com.house.agency.service.IImageService;
 import com.myself.common.exception.ServiceException;
+import com.myself.common.utils.FileUtil;
 import com.myself.common.utils.UIDGeneratorUtil;
 
 @Service("imageService")
@@ -63,6 +68,29 @@ public class ImageServiceImpl implements IImageService {
 	@Override
 	public List<Image> queryData(ImageQueryParam param) {
 		return imageDao.queryData(param);
+	}
+
+	@Override
+	@Transactional
+	public void upload(ImageParam param, Map<String, File> map, String path) {
+		String title = null;
+		File file = null;
+		for(Map.Entry<String, File> entry: map.entrySet()) {
+			title = entry.getKey();
+			file = entry.getValue();
+			break;
+		}
+		
+		Image image = new Image();
+		image.setForeignId(param.getForeignId());
+		image.setType(param.getType());
+		image.setTitle(title);
+		image.setUrl(param.getFolder() + "/" + file.getName());
+		save(image);
+		boolean flag = FileUtil.move(file, path);
+		if (!flag) {
+			throw new ServiceException("文件上传失败");
+		}
 	}
 
 }
