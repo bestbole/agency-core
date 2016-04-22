@@ -58,26 +58,44 @@
 		<result column="USERNAME" property="username" jdbcType="VARCHAR" />
 		<result column="PHONE" property="phone" jdbcType="VARCHAR" />
   </resultMap>
+  
+  <resultMap type="com.house.agency.data.manage.HouseManageData" id="houseManageData">
+    <result column="DISTRICT_NAME" property="districtName" jdbcType="VARCHAR" />
+    <result column="TOWN_NAME" property="townName" jdbcType="VARCHAR" />
+    <result column="BUILDING_NAME" property="buildingName" jdbcType="VARCHAR" />
+    <result column="BUILDING_ADDRESS" property="buildingAddress" jdbcType="VARCHAR" />
+    <result column="BUILDING_FLOOR" property="buildingFloor" jdbcType="INTEGER" />
+    <result column="HOUSE_ID" property="houseId" jdbcType="VARCHAR" />
+    <result column="AREA" property="area" jdbcType="INTEGER" />
+    <result column="ROOM" property="room" jdbcType="INTEGER" />
+    <result column="SALOON" property="saloon" jdbcType="INTEGER" />
+    <result column="TOILET" property="toilet" jdbcType="INTEGER" />
+    <result column="FLOOR" property="floor" jdbcType="INTEGER" />
+    <result column="FACE" property="face" jdbcType="INTEGER" />
+    <result column="FITMENT" property="fitment" jdbcType="INTEGER" />
+    <result column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="ENCODE" property="encode" jdbcType="VARCHAR" />
+  </resultMap>
 
 	<sql id="sqlQuery">
 		  FROM HOUSE a 
-		JOIN BUILDING_UNIT c
-      ON a.BUILDING_UNIT_ID = c.ID
-    JOIN BUILDING d
-      ON c.BUILDING_ID = d.ID
+		JOIN BUILDING_UNIT b
+      ON a.BUILDING_UNIT_ID = b.ID
+    JOIN BUILDING c
+      ON b.BUILDING_ID = c.ID
+    JOIN REGION d
+      ON d.ID = c.TOWN_ID
     JOIN REGION e
-      ON e.ID = d.TOWN_ID
-    JOIN REGION f
-      ON f.ID = e.PARENT_ID
+      ON e.ID = d.PARENT_ID
      WHERE 1=1
       <if test="param.districtId != null and param.districtId != ''">
-        AND f.ID = #{param.districtId}
+        AND e.ID = #{param.districtId}
       </if>
       <if test="param.townId != null and param.townId != ''">
-        AND e.ID = #{param.townId}
+        AND d.ID = #{param.townId}
       </if>
       <if test="param.buildingName != null and param.buildingName != ''">
-        AND d.BUILDING_NAME like '%${param.buildingName}%'
+        AND c.BUILDING_NAME like '%${param.buildingName}%'
       </if>
       <if test="param.buildingUnitId != null and param.buildingUnitId != ''">
         AND a.BUILDING_UNIT_ID = #{param.buildingUnitId}
@@ -237,11 +255,64 @@
    	SELECT a.* FROM HOUSE a WHERE a.BUILDING_UNIT_ID = #{buildingUnitId, jdbcType=VARCHAR}
    	  order by a.CARD asc
    </select>
+   
+   <sql id="sqlQueryManage">
+      FROM HOUSE a 
+    JOIN BUILDING_UNIT b
+      ON a.BUILDING_UNIT_ID = b.ID
+    JOIN BUILDING c
+      ON b.BUILDING_ID = c.ID
+    JOIN REGION d
+      ON d.ID = c.TOWN_ID
+    JOIN REGION e
+      ON e.ID = d.PARENT_ID
+     WHERE 1=1
+      <if test="param.districtId != null and param.districtId != ''">
+        AND e.ID = #{param.districtId}
+      </if>
+      <if test="param.townId != null and param.townId != ''">
+        AND d.ID = #{param.townId}
+      </if>
+      <if test="param.buildingName != null and param.buildingName != ''">
+        AND c.BUILDING_NAME like '%${param.buildingName}%'
+      </if>
+      <if test="param.buildingUnitId != null and param.buildingUnitId != ''">
+        AND a.BUILDING_UNIT_ID = #{param.buildingUnitId}
+      </if>
+  </sql>
+   <select id="countManageData" resultType="java.lang.Integer">
+     SELECT COUNT(1) <include refid="sqlQueryManage"/>
+   </select>
+   <select id="queryManageData" resultMap="houseManageData">
+   	 SELECT 
+   	   e.NAME DISTRICT_NAME, 
+       d.NAME TOWN_NAME, 
+       c.BUILDING_NAME,
+       c.BUILDING_ADDRESS, 
+       b.FLOOR BUILDING_FLOOR,
+       b.NAME FLOOR_NAME,
+       a.ID HOUSE_ID,
+       a.AREA,
+       a.ROOM,
+       a.SALOON,
+       a.TOILET,
+       a.FLOOR,
+       a.FACE,
+       a.FITMENT,
+       a.CARD,
+       a.CODE,
+       a.ENCODE,
+       a.CREATE_TIME
+      <include refid="sqlQueryManage"/>
+      order by a.CREATE_TIME desc
+      limit #{start, jdbcType=INTEGER}, #{end, jdbcType=INTEGER}
+   </select>
 	
-	<insert id="save" useGeneratedKeys="true" keyProperty="id">
+	 <insert id="save" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO HOUSE
 		  (ID,
 		   BUILDING_UNIT_ID,
+		   CARD,
 		   AREA,
 		   FLOOR,
 		   ROOM,
@@ -257,6 +328,7 @@
 		VALUES (
 		  	#{param.id, jdbcType=VARCHAR},
 		  	#{param.buildingUnitId, jdbcType=VARCHAR},
+		  	#{param.card, jdbcType=VARCHAR},
 		  	#{param.area, jdbcType=INTEGER},
 		  	#{param.floor, jdbcType=INTEGER},
 		  	#{param.room, jdbcType=INTEGER},

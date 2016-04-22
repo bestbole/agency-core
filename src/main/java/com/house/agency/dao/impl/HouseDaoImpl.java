@@ -8,13 +8,15 @@ import com.house.agency.dao.BaseDao;
 import com.house.agency.dao.IHouseDao;
 import com.house.agency.data.HouseDetailData;
 import com.house.agency.data.HouseListData;
+import com.house.agency.data.manage.HouseManageData;
 import com.house.agency.entity.House;
 import com.house.agency.mapper.IHouseMapper;
 import com.house.agency.param.HouseQueryParam;
+import com.house.agency.param.manage.HouseManageQueryParam;
 
 @Repository
 public class HouseDaoImpl extends BaseDao<IHouseMapper> implements IHouseDao {
-	
+
 	@Override
 	public int save(House param) {
 		IHouseMapper mapper = getMapper(IHouseMapper.class);
@@ -58,7 +60,8 @@ public class HouseDaoImpl extends BaseDao<IHouseMapper> implements IHouseDao {
 	}
 
 	@Override
-	public List<HouseListData> queryData(HouseQueryParam param, int start, int end) {
+	public List<HouseListData> queryData(HouseQueryParam param, int start,
+			int end) {
 		IHouseMapper mapper = getMapper(IHouseMapper.class);
 		return mapper.queryData(param, start, end);
 	}
@@ -73,5 +76,18 @@ public class HouseDaoImpl extends BaseDao<IHouseMapper> implements IHouseDao {
 	public List<House> queryByBuildingUnitId(String buildingUnitId) {
 		IHouseMapper mapper = getMapper(IHouseMapper.class);
 		return mapper.queryByBuildingUnitId(buildingUnitId);
+	}
+
+	@Override
+	public int countManageData(HouseManageQueryParam param) {
+		IHouseMapper mapper = getMapper(IHouseMapper.class);
+		return mapper.countManageData(param);
+	}
+
+	@Override
+	public List<HouseManageData> queryManageData(HouseManageQueryParam param,
+			int start, int end) {
+		IHouseMapper mapper = getMapper(IHouseMapper.class);
+		return mapper.queryManageData(param, start, end);
 	}
 }
