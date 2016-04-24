@@ -8,10 +8,12 @@ import org.springframework.stereotype.Service;
 
 import com.house.agency.dao.IBuildingDao;
 import com.house.agency.data.BuildingData;
+import com.house.agency.data.manage.BuildingManageData;
 import com.house.agency.entity.Building;
 import com.house.agency.page.IPage;
 import com.house.agency.page.Page;
 import com.house.agency.param.BuildingQueryParam;
+import com.house.agency.param.manage.BuildingManageQueryParam;
 import com.house.agency.service.IBuildingService;
 import com.myself.common.exception.ServiceException;
 import com.myself.common.utils.UIDGeneratorUtil;
@@ -72,5 +74,19 @@ public class BuildingServiceImpl implements IBuildingService {
 	@Override
 	public List<BuildingData> list(BuildingQueryParam param) {
 		return buildingDao.list(param);
+	}
+
+	@Override
+	public IPage<BuildingManageData> queryManageData(BuildingManageQueryParam param, int page, int rows) {
+		List<BuildingManageData> list = null;
+		page = page <= 0 ? 1 : page;
+		rows = rows <= 0 ? 10 : rows;
+		int count = buildingDao.countManageData(param);
+		if (count > 0) {
+			int start = (page - 1) * rows;
+			int end = start + rows;
+			list = buildingDao.queryManageData(param, start, end);
+		}
+		return new Page<BuildingManageData>(list, count, page, rows);
 	}
 }

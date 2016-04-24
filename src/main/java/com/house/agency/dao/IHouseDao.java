@@ -2,11 +2,14 @@ package com.house.agency.dao;
 
 import java.util.List;
 
-import com.house.agency.data.HouseDetailData;
-import com.house.agency.data.HouseListData;
+import com.house.agency.data.HouseInfoData;
+import com.house.agency.data.HouseData;
+import com.house.agency.data.home.HouseHomeData;
+import com.house.agency.data.home.HouseHomeDescData;
 import com.house.agency.data.manage.HouseManageData;
 import com.house.agency.entity.House;
 import com.house.agency.param.HouseQueryParam;
+import com.house.agency.param.home.HouseHomeQueryParam;
 import com.house.agency.param.manage.HouseManageQueryParam;
 
 public interface IHouseDao {
@@ -23,13 +26,18 @@ public interface IHouseDao {
 
 	List<House> query(HouseQueryParam param, int start, int end);
 
-	HouseDetailData getData(String tradeId);
+	HouseInfoData getData(String tradeId);
 
 	int countData(HouseQueryParam param);
 
-	List<HouseListData> queryData(HouseQueryParam param, int start, int end);
+	List<HouseData> queryData(HouseQueryParam param, int start, int end);
 
-	List<House> queryByBuildingUnitId(String buildingUnitId);
+	List<HouseHomeDescData> queryByBuildingUnitId(String buildingUnitId);
+	
+	int countHomeData(HouseHomeQueryParam param);
+	
+	List<HouseHomeData> queryHomeData(HouseHomeQueryParam param,
+			int start, int end);
 
 	int countManageData(HouseManageQueryParam param);
 	

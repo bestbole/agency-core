@@ -27,14 +27,14 @@ public class ImageDaoImpl extends BaseDao<IImageMapper> implements IImageDao {
 
 	@Override
 	public int deleteById(String id) {
-		// TODO Auto-generated method stub
-		return 0;
+		IImageMapper mapper = getMapper(IImageMapper.class);
+		return mapper.deleteById(id);
 	}
 
 	@Override
 	public Image getDataById(String id) {
-		// TODO Auto-generated method stub
-		return null;
+		IImageMapper mapper = getMapper(IImageMapper.class);
+		return mapper.getDataById(id);
 	}
 
 	@Override

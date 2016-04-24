@@ -1,26 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.house.agency.mapper.IHouseMapper">
-	<resultMap type="com.house.agency.entity.House" id="houseResult">
-		<id column="ID" property="id" jdbcType="VARCHAR" />
-		<result column="CARD" property="card" jdbcType="VARCHAR" />
-<result column="STATUS" property="status" jdbcType="VARCHAR" />
-<result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
-<result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
-<result column="REMARKS" property="remarks" jdbcType="VARCHAR" />
+	<resultMap type="com.house.agency.entity.House" id="house" />
+	<resultMap type="com.house.agency.data.home.HouseHomeDescData" id="houseHomeDescData">
+	  <result column="HOUSE_ID" property="houseId" jdbcType="VARCHAR" />
 	</resultMap>
 	
-	<resultMap type="com.house.agency.data.HouseListData" id="houseListDataResult">
+	<resultMap type="com.house.agency.data.HouseData" id="houseData">
     <result column="TRADE_ID" property="tradeId" jdbcType="VARCHAR" />
-		<result column="IMG_TITLE" property="imgTitle" jdbcType="VARCHAR" />
-		<result column="URL" property="url" jdbcType="VARCHAR" />
-		<result column="TITLE" property="title" jdbcType="VARCHAR" />
-		<result column="TYPE" property="type" jdbcType="VARCHAR" />
+		<result column="DISTRICT_NAME" property="districtName" jdbcType="VARCHAR" />
 		<result column="TOWN_NAME" property="townName" jdbcType="VARCHAR" />
 		<result column="BUILDING_NAME" property="buildingName" jdbcType="VARCHAR" />
 		<result column="BUILDING_ADDRESS" property="buildingAddress" jdbcType="VARCHAR" />
 		<result column="BUILDING_YEAR" property="buildingYear" jdbcType="VARCHAR" />
 		<result column="BUILDING_FLOOR" property="buildingFloor" jdbcType="INTEGER" />
+		<result column="IMAGE_TITLE" property="imageTitle" jdbcType="VARCHAR" />
+    <result column="URL" property="url" jdbcType="VARCHAR" />
+    <result column="TITLE" property="title" jdbcType="VARCHAR" />
+    <result column="TYPE" property="type" jdbcType="VARCHAR" />
 		<result column="PRICE" property="price" jdbcType="INTEGER" />
 		<result column="AREA" property="area" jdbcType="INTEGER" />
 		<result column="ROOM" property="room" jdbcType="INTEGER" />
@@ -30,7 +27,7 @@
 		<result column="RELEASE_TIME" property="releaseTime" jdbcType="TIMESTAMP" />
   </resultMap>
   
-  <resultMap type="com.house.agency.data.HouseDetailData" id="houseDetailDataResult">
+  <resultMap type="com.house.agency.data.HouseInfoData" id="houseInfoData">
     <result column="TRADE_ID" property="tradeId" jdbcType="VARCHAR" />
     <result column="HOUSE_ID" property="houseId" jdbcType="VARCHAR" />
     <result column="BUILDING_ID" property="buildingId" jdbcType="VARCHAR" />
@@ -58,14 +55,17 @@
 		<result column="USERNAME" property="username" jdbcType="VARCHAR" />
 		<result column="PHONE" property="phone" jdbcType="VARCHAR" />
   </resultMap>
-  
-  <resultMap type="com.house.agency.data.manage.HouseManageData" id="houseManageData">
+
+  <resultMap type="com.house.agency.data.home.HouseHomeData" id="houseHomeData">
+    <result column="TRADE_ID" property="tradeId" jdbcType="VARCHAR" />
     <result column="DISTRICT_NAME" property="districtName" jdbcType="VARCHAR" />
     <result column="TOWN_NAME" property="townName" jdbcType="VARCHAR" />
     <result column="BUILDING_NAME" property="buildingName" jdbcType="VARCHAR" />
     <result column="BUILDING_ADDRESS" property="buildingAddress" jdbcType="VARCHAR" />
     <result column="BUILDING_FLOOR" property="buildingFloor" jdbcType="INTEGER" />
-    <result column="HOUSE_ID" property="houseId" jdbcType="VARCHAR" />
+    <result column="FLOOR_NAME" property="floorName" jdbcType="VARCHAR" />
+    <result column="TITLE" property="title" jdbcType="VARCHAR" />
+    <result column="PRICE" property="price" jdbcType="INTEGER" />
     <result column="AREA" property="area" jdbcType="INTEGER" />
     <result column="ROOM" property="room" jdbcType="INTEGER" />
     <result column="SALOON" property="saloon" jdbcType="INTEGER" />
@@ -75,32 +75,45 @@
     <result column="FITMENT" property="fitment" jdbcType="INTEGER" />
     <result column="CODE" property="code" jdbcType="VARCHAR" />
     <result column="ENCODE" property="encode" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="RELEASE_TIME" property="releaseTime" jdbcType="TIMESTAMP" />
   </resultMap>
-
+  
+  <resultMap type="com.house.agency.data.manage.HouseManageData" id="houseManageData">
+    <result column="HOUSE_ID" property="houseId" jdbcType="VARCHAR" />
+    <result column="DISTRICT_NAME" property="districtName" jdbcType="VARCHAR" />
+    <result column="TOWN_NAME" property="townName" jdbcType="VARCHAR" />
+    <result column="BUILDING_NAME" property="buildingName" jdbcType="VARCHAR" />
+    <result column="BUILDING_ADDRESS" property="buildingAddress" jdbcType="VARCHAR" />
+    <result column="BUILDING_FLOOR" property="buildingFloor" jdbcType="INTEGER" />
+    <result column="AREA" property="area" jdbcType="INTEGER" />
+    <result column="ROOM" property="room" jdbcType="INTEGER" />
+    <result column="SALOON" property="saloon" jdbcType="INTEGER" />
+    <result column="TOILET" property="toilet" jdbcType="INTEGER" />
+    <result column="FLOOR" property="floor" jdbcType="INTEGER" />
+    <result column="FACE" property="face" jdbcType="INTEGER" />
+    <result column="FITMENT" property="fitment" jdbcType="INTEGER" />
+    <result column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="ENCODE" property="encode" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+	<select id="getDataById" resultMap="house">
+		SELECT * FROM HOUSE WHERE ID = #{id, jdbcType=VARCHAR}
+	</select>
+	
 	<sql id="sqlQuery">
-		  FROM HOUSE a 
-		JOIN BUILDING_UNIT b
-      ON a.BUILDING_UNIT_ID = b.ID
-    JOIN BUILDING c
-      ON b.BUILDING_ID = c.ID
-    JOIN REGION d
-      ON d.ID = c.TOWN_ID
-    JOIN REGION e
-      ON e.ID = d.PARENT_ID
-     WHERE 1=1
-      <if test="param.districtId != null and param.districtId != ''">
-        AND e.ID = #{param.districtId}
-      </if>
-      <if test="param.townId != null and param.townId != ''">
-        AND d.ID = #{param.townId}
-      </if>
-      <if test="param.buildingName != null and param.buildingName != ''">
-        AND c.BUILDING_NAME like '%${param.buildingName}%'
-      </if>
-      <if test="param.buildingUnitId != null and param.buildingUnitId != ''">
-        AND a.BUILDING_UNIT_ID = #{param.buildingUnitId}
-      </if>
-	</sql>
+      FROM HOUSE a WHERE 1=1
+  </sql>
+	<select id="count" resultType="java.lang.Integer">
+		SELECT COUNT(1) <include refid="sqlQuery"/>
+	</select>
+	<select id="query" resultMap="house">
+		SELECT a.* <include refid="sqlQuery"/>
+			order by a.CREATE_TIME desc limit #{start, jdbcType=INTEGER}, #{end, jdbcType=INTEGER}
+	</select>
+	
 	<sql id="sqlQueryData">
       FROM TRADE a
     JOIN HOUSE b
@@ -159,32 +172,22 @@
         AND to_char(a.RELEASE_TIME, 'YYYY-MM-DD') <![CDATA[<=]]> #{param.releaseDateEnd}
       </if>
   </sql>
-	
-	<select id="getDataById" resultMap="houseResult">
-		SELECT * FROM HOUSE WHERE ID = #{id, jdbcType=VARCHAR}
-	</select>
-	<select id="count" resultType="java.lang.Integer">
-		SELECT COUNT(1) <include refid="sqlQuery"/>
-	</select>
-	<select id="query" resultMap="houseResult">
-		SELECT a.* <include refid="sqlQuery"/>
-			order by a.CREATE_TIME desc limit #{start, jdbcType=INTEGER}, #{end, jdbcType=INTEGER}
-	</select>
 	<select id="countData" resultType="java.lang.Integer">
     SELECT COUNT(1) <include refid="sqlQueryData"/>
   </select>
-	<select id="queryData" resultMap="houseListDataResult">
+	<select id="queryData" resultMap="houseData">
     SELECT 
        a.ID TRADE_ID,
-       g.TITLE IMG_TITLE,
-       g.URL,
-       a.TITLE,
-       a.TYPE,
+       f.NAME DISTRICT_NAME,
        e.NAME TOWN_NAME, 
        d.BUILDING_NAME,
        d.BUILDING_ADDRESS, 
        d.BUILDING_YEAR,
        c.FLOOR BUILDING_FLOOR,
+       g.TITLE IMAGE_TITLE,
+       g.URL,
+       a.TITLE,
+       a.TYPE,
        a.PRICE,
        b.AREA,
        b.ROOM,
@@ -208,13 +211,12 @@
       </if>
       limit #{start, jdbcType=INTEGER}, #{end, jdbcType=INTEGER}
   </select>
-  <select id="getData" resultMap="houseDetailDataResult">
+  
+  <select id="getData" resultMap="houseInfoData">
     SELECT 
        a.ID TRADE_ID,
        b.ID HOUSE_ID,
        d.ID BUILDING_ID,
-       a.TITLE,
-       a.TYPE,
        f.NAME DISTRICT_NAME, 
        e.NAME TOWN_NAME, 
        d.BUILDING_NAME,
@@ -222,6 +224,8 @@
        d.BUILDING_YEAR,
        d.TYPE BUILDING_TYPE,
        c.FLOOR BUILDING_FLOOR,
+       a.TITLE,
+       a.TYPE,
        a.PRICE,
        b.CODE,
        b.ENCODE,
@@ -251,12 +255,113 @@
       ON g.ID = a.USER_ID
     WHERE a.ID = #{tradeId, jdbcType=VARCHAR}
    </select>
-   <select id="queryByBuildingUnitId" resultMap="houseResult">
-   	SELECT a.* FROM HOUSE a WHERE a.BUILDING_UNIT_ID = #{buildingUnitId, jdbcType=VARCHAR}
+   
+   <select id="queryByBuildingUnitId" resultMap="houseHomeDescData">
+   	SELECT 
+   	  a.ID HOUSE_ID,
+   	  a.AREA,
+      a.ROOM,
+      a.SALOON,
+      a.TOILET,
+      a.FLOOR,
+      a.FACE,
+      a.FITMENT,
+      a.CARD
+     FROM HOUSE a WHERE a.BUILDING_UNIT_ID = #{buildingUnitId, jdbcType=VARCHAR}
    	  order by a.CARD asc
    </select>
    
-   <sql id="sqlQueryManage">
+   <sql id="sqlQueryHomeData">
+      FROM TRADE a
+    JOIN HOUSE b
+      ON a.HOUSE_ID = b.ID
+    JOIN BUILDING_UNIT c
+      ON b.BUILDING_UNIT_ID = c.ID
+    JOIN BUILDING d
+      ON c.BUILDING_ID = d.ID
+    JOIN REGION e
+      ON e.ID = d.TOWN_ID
+    JOIN REGION f
+      ON f.ID = e.PARENT_ID
+     WHERE 1=1
+      <if test="param.districtId != null and param.districtId != ''">
+        AND f.ID = #{param.districtId}
+      </if>
+      <if test="param.townId != null and param.townId != ''">
+        AND e.ID = #{param.townId}
+      </if>
+      <if test="param.buildingName != null and param.buildingName != ''">
+        AND d.BUILDING_NAME like '%${param.buildingName}%'
+      </if>
+      <if test="param.buildingUnitId != null and param.buildingUnitId != ''">
+        AND b.BUILDING_UNIT_ID = #{param.buildingUnitId}
+      </if>
+      <if test="param.card != null and param.card != ''">
+        AND b.CARD = #{param.card}
+      </if>
+      <if test="param.priceBegin != 0">
+        AND b.PRICE <![CDATA[>=]]> #{param.priceBegin}
+      </if>
+      <if test="param.priceEnd != 0">
+        AND b.PRICE <![CDATA[<=]]> #{param.priceEnd}
+      </if>
+      <if test="param.areaBegin != 0">
+        AND b.AREA <![CDATA[>=]]> #{param.areaBegin}
+      </if>
+      <if test="param.areaEnd != 0">
+        AND b.AREA <![CDATA[<=]]> #{param.areaEnd}
+      </if>
+      <if test="param.room != 0 and param.symbol != null and param.symbol != ''">
+        AND b.ROOM <![CDATA[>]]> #{param.room}
+      </if>
+      <if test="param.room != 0 and param.symbol == null or param.symbol == ''">
+        AND b.ROOM = #{param.room}
+      </if>
+      <if test="param.saloon != 0">
+        AND b.SALOON = #{param.saloon}
+      </if>
+      <if test="param.toilet != 0">
+        AND b.TOILET = #{param.toilet}
+      </if>
+      <if test="param.releaseDateBegin != null and param.releaseDateBegin != ''">
+        AND to_char(a.RELEASE_TIME, 'YYYY-MM-DD') <![CDATA[>=]]> #{param.releaseDateBegin}
+      </if>
+      <if test="param.releaseDateEnd != null and param.releaseDateEnd != ''">
+        AND to_char(a.RELEASE_TIME, 'YYYY-MM-DD') <![CDATA[<=]]> #{param.releaseDateEnd}
+      </if>
+  </sql>
+   <select id="countHomeData" resultType="java.lang.Integer">
+     SELECT COUNT(1) <include refid="sqlQueryHomeData"/>
+   </select>
+   <select id="queryHomeData" resultMap="houseHomeData">
+     SELECT 
+       a.ID TRADE_ID,
+       f.NAME DISTRICT_NAME, 
+       e.NAME TOWN_NAME, 
+       d.BUILDING_NAME,
+       d.BUILDING_ADDRESS, 
+       c.FLOOR BUILDING_FLOOR,
+       c.NAME FLOOR_NAME,
+       a.TITLE,
+       a.PRICE,
+       b.AREA,
+       b.ROOM,
+       b.SALOON,
+       b.TOILET,
+       b.FLOOR,
+       b.FACE,
+       b.FITMENT,
+       b.CARD,
+       b.CODE,
+       b.ENCODE,
+       a.STATUS,
+       a.RELEASE_TIME
+      <include refid="sqlQueryHomeData"/>
+      order by a.RELEASE_TIME desc
+      limit #{start, jdbcType=INTEGER}, #{end, jdbcType=INTEGER}
+   </select>
+   
+   <sql id="sqlQueryManageData">
       FROM HOUSE a 
     JOIN BUILDING_UNIT b
       ON a.BUILDING_UNIT_ID = b.ID
@@ -279,19 +384,25 @@
       <if test="param.buildingUnitId != null and param.buildingUnitId != ''">
         AND a.BUILDING_UNIT_ID = #{param.buildingUnitId}
       </if>
+      <if test="param.createDateBegin != null and param.createDateBegin != ''">
+	      AND to_char(a.CREATE_TIME, 'YYYY-MM-DD') <![CDATA[>=]]> #{param.createDateBegin}
+	    </if>
+	    <if test="param.createDateEnd != null and param.createDateEnd != ''">
+	      AND to_char(a.CREATE_TIME, 'YYYY-MM-DD') <![CDATA[<=]]> #{param.createDateEnd}
+	    </if>
   </sql>
    <select id="countManageData" resultType="java.lang.Integer">
-     SELECT COUNT(1) <include refid="sqlQueryManage"/>
+     SELECT COUNT(1) <include refid="sqlQueryManageData"/>
    </select>
    <select id="queryManageData" resultMap="houseManageData">
    	 SELECT 
+   	   a.ID HOUSE_ID,
    	   e.NAME DISTRICT_NAME, 
        d.NAME TOWN_NAME, 
        c.BUILDING_NAME,
        c.BUILDING_ADDRESS, 
        b.FLOOR BUILDING_FLOOR,
        b.NAME FLOOR_NAME,
-       a.ID HOUSE_ID,
        a.AREA,
        a.ROOM,
        a.SALOON,
@@ -302,8 +413,9 @@
        a.CARD,
        a.CODE,
        a.ENCODE,
+       a.STATUS,
        a.CREATE_TIME
-      <include refid="sqlQueryManage"/>
+      <include refid="sqlQueryManageData"/>
       order by a.CREATE_TIME desc
       limit #{start, jdbcType=INTEGER}, #{end, jdbcType=INTEGER}
    </select>

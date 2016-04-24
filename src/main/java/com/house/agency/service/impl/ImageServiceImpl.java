@@ -44,14 +44,15 @@ public class ImageServiceImpl implements IImageService {
 
 	@Override
 	public void deleteById(String id) {
-		// TODO Auto-generated method stub
-
+		int count = imageDao.deleteById(id);
+		if (count < 1) {
+			throw new ServiceException("删除失败");
+		}
 	}
 
 	@Override
 	public Image getDataById(String id) {
-		// TODO Auto-generated method stub
-		return null;
+		return imageDao.getDataById(id);
 	}
 
 	@Override
@@ -72,7 +73,7 @@ public class ImageServiceImpl implements IImageService {
 
 	@Override
 	@Transactional
-	public void upload(ImageParam param, Map<String, File> map, String path) {
+	public Image upload(ImageParam param, Map<String, File> map, String path) {
 		String title = null;
 		File file = null;
 		for(Map.Entry<String, File> entry: map.entrySet()) {
@@ -90,6 +91,22 @@ public class ImageServiceImpl implements IImageService {
 		boolean flag = FileUtil.move(file, path);
 		if (!flag) {
 			throw new ServiceException("文件上传失败");
+		}
+		return image;
+	}
+
+	@Override
+	@Transactional
+	public void trash(String id, String path) {
+		Image image = imageDao.getDataById(id);
+		if (image != null) {
+			deleteById(id);
+			boolean flag = FileUtil.deleteFile(path + "/" + image.getUrl());
+			if (!flag) {
+				throw new ServiceException("文件删除失败");
+			}
+		} else {
+			throw new ServiceException("文件删除失败");
 		}
 	}
 

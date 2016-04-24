@@ -95,6 +95,6 @@ UPDATE_TIME = #{param.updateTime, jdbcType=TIMESTAMP},
 	</update>
 	
 	<delete id="deleteById">
-		delete from TRADE a where a.ID = #{id, jdbcType=VARCHAR}
+		delete from IMAGE a where a.ID = #{id, jdbcType=VARCHAR}
 	</delete>
 </mapper>

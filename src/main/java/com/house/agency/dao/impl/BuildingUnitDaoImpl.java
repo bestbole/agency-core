@@ -6,9 +6,11 @@ import org.springframework.stereotype.Repository;
 
 import com.house.agency.dao.BaseDao;
 import com.house.agency.dao.IBuildingUnitDao;
+import com.house.agency.data.manage.BuildingUnitManageData;
 import com.house.agency.entity.BuildingUnit;
 import com.house.agency.mapper.IBuildingUnitMapper;
 import com.house.agency.param.BuildingUnitQueryParam;
+import com.house.agency.param.manage.BuildingUnitManageQueryParam;
 
 @Repository
 public class BuildingUnitDaoImpl extends BaseDao<IBuildingUnitMapper> implements IBuildingUnitDao {
@@ -54,6 +56,18 @@ public class BuildingUnitDaoImpl extends BaseDao<IBuildingUnitMapper> implements
 	public List<BuildingUnit> queryByBuildingId(String buildingId) {
 		IBuildingUnitMapper mapper = getMapper(IBuildingUnitMapper.class);
 		return mapper.queryByBuildingId(buildingId);
+	}
+
+	@Override
+	public int countManageData(BuildingUnitManageQueryParam param) {
+		IBuildingUnitMapper mapper = getMapper(IBuildingUnitMapper.class);
+		return mapper.countManageData(param);
+	}
+
+	@Override
+	public List<BuildingUnitManageData> queryManageData(BuildingUnitManageQueryParam param, int start, int end) {
+		IBuildingUnitMapper mapper = getMapper(IBuildingUnitMapper.class);
+		return mapper.queryManageData(param, start, end);
 	}
 
 }

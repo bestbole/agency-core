@@ -25,7 +25,9 @@ public class TradeServiceImpl implements ITradeService {
 	public void save(Trade param) {
 		param.setId(UIDGeneratorUtil.getUID());
 		param.setStatus("1");
-		param.setCreateTime(new Date());
+		Date date = new Date();
+		param.setReleaseTime(date);
+		param.setCreateTime(date);
 		int count = tradeDao.save(param);
 		if (count < 1) {
 			throw new ServiceException("新增失败");
@@ -40,8 +42,10 @@ public class TradeServiceImpl implements ITradeService {
 
 	@Override
 	public void deleteById(String id) {
-		// TODO Auto-generated method stub
-
+		int count = tradeDao.deleteById(id);
+		if (count < 1) {
+			throw new ServiceException("删除失败");
+		}
 	}
 
 	@Override

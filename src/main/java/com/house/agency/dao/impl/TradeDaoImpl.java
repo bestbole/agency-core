@@ -27,8 +27,8 @@ public class TradeDaoImpl extends BaseDao<ITradeMapper> implements ITradeDao {
 
 	@Override
 	public int deleteById(String id) {
-		// TODO Auto-generated method stub
-		return 0;
+		ITradeMapper mapper = getMapper(ITradeMapper.class);
+		return mapper.deleteById(id);
 	}
 
 	@Override

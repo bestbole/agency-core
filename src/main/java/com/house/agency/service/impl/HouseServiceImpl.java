@@ -7,13 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.house.agency.dao.IHouseDao;
-import com.house.agency.data.HouseDetailData;
-import com.house.agency.data.HouseListData;
+import com.house.agency.data.HouseInfoData;
+import com.house.agency.data.HouseData;
+import com.house.agency.data.home.HouseHomeData;
+import com.house.agency.data.home.HouseHomeDescData;
 import com.house.agency.data.manage.HouseManageData;
 import com.house.agency.entity.House;
 import com.house.agency.page.IPage;
 import com.house.agency.page.Page;
 import com.house.agency.param.HouseQueryParam;
+import com.house.agency.param.home.HouseHomeQueryParam;
 import com.house.agency.param.manage.HouseManageQueryParam;
 import com.house.agency.service.IHouseService;
 import com.myself.common.exception.ServiceException;
@@ -73,9 +76,9 @@ public class HouseServiceImpl implements IHouseService {
 	}
 
 	@Override
-	public IPage<HouseListData> queryData(HouseQueryParam param, int page,
+	public IPage<HouseData> queryData(HouseQueryParam param, int page,
 			int rows) {
-		List<HouseListData> list = null;
+		List<HouseData> list = null;
 		page = page <= 0 ? 1 : page;
 		rows = rows <= 0 ? 10 : rows;
 		int count = houseDao.countData(param);
@@ -84,16 +87,16 @@ public class HouseServiceImpl implements IHouseService {
 			int end = start + rows;
 			list = houseDao.queryData(param, start, end);
 		}
-		return new Page<HouseListData>(list, count, page, rows);
+		return new Page<HouseData>(list, count, page, rows);
 	}
 
 	@Override
-	public HouseDetailData getData(String tradeId) {
+	public HouseInfoData getData(String tradeId) {
 		return houseDao.getData(tradeId);
 	}
 
 	@Override
-	public List<House> queryByBuildingUnitId(String buildingUnitId) {
+	public List<HouseHomeDescData> queryByBuildingUnitId(String buildingUnitId) {
 		return houseDao.queryByBuildingUnitId(buildingUnitId);
 	}
 
@@ -110,5 +113,19 @@ public class HouseServiceImpl implements IHouseService {
 			list = houseDao.queryManageData(param, start, end);
 		}
 		return new Page<HouseManageData>(list, count, page, rows);
+	}
+
+	@Override
+	public IPage<HouseHomeData> queryHomeData(HouseHomeQueryParam param, int page, int rows) {
+		List<HouseHomeData> list = null;
+		page = page <= 0 ? 1 : page;
+		rows = rows <= 0 ? 10 : rows;
+		int count = houseDao.countHomeData(param);
+		if (count > 0) {
+			int start = (page - 1) * rows;
+			int end = start + rows;
+			list = houseDao.queryHomeData(param, start, end);
+		}
+		return new Page<HouseHomeData>(list, count, page, rows);
 	}
 }

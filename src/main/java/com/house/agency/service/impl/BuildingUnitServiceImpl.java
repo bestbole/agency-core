@@ -7,10 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.house.agency.dao.IBuildingUnitDao;
+import com.house.agency.data.manage.BuildingUnitManageData;
 import com.house.agency.entity.BuildingUnit;
 import com.house.agency.page.IPage;
 import com.house.agency.page.Page;
 import com.house.agency.param.BuildingUnitQueryParam;
+import com.house.agency.param.manage.BuildingUnitManageQueryParam;
 import com.house.agency.service.IBuildingUnitService;
 import com.myself.common.exception.ServiceException;
 import com.myself.common.utils.UIDGeneratorUtil;
@@ -72,6 +74,20 @@ public class BuildingUnitServiceImpl implements IBuildingUnitService {
 	@Override
 	public List<BuildingUnit> queryByBuildingId(String buildingId) {
 		return buildingUnitDao.queryByBuildingId(buildingId);
+	}
+
+	@Override
+	public IPage<BuildingUnitManageData> queryManageData(BuildingUnitManageQueryParam param, int page, int rows) {
+		List<BuildingUnitManageData> list = null;
+		page = page <= 0 ? 1 : page;
+		rows = rows <= 0 ? 10 : rows;
+		int count = buildingUnitDao.countManageData(param);
+		if (count > 0) {
+			int start = (page - 1) * rows;
+			int end = start + rows;
+			list = buildingUnitDao.queryManageData(param, start, end);
+		}
+		return new Page<BuildingUnitManageData>(list, count, page, rows);
 	}
 
 }

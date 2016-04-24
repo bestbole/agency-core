@@ -6,12 +6,15 @@ import org.springframework.stereotype.Repository;
 
 import com.house.agency.dao.BaseDao;
 import com.house.agency.dao.IHouseDao;
-import com.house.agency.data.HouseDetailData;
-import com.house.agency.data.HouseListData;
+import com.house.agency.data.HouseInfoData;
+import com.house.agency.data.HouseData;
+import com.house.agency.data.home.HouseHomeData;
+import com.house.agency.data.home.HouseHomeDescData;
 import com.house.agency.data.manage.HouseManageData;
 import com.house.agency.entity.House;
 import com.house.agency.mapper.IHouseMapper;
 import com.house.agency.param.HouseQueryParam;
+import com.house.agency.param.home.HouseHomeQueryParam;
 import com.house.agency.param.manage.HouseManageQueryParam;
 
 @Repository
@@ -60,20 +63,20 @@ public class HouseDaoImpl extends BaseDao<IHouseMapper> implements IHouseDao {
 	}
 
 	@Override
-	public List<HouseListData> queryData(HouseQueryParam param, int start,
+	public List<HouseData> queryData(HouseQueryParam param, int start,
 			int end) {
 		IHouseMapper mapper = getMapper(IHouseMapper.class);
 		return mapper.queryData(param, start, end);
 	}
 
 	@Override
-	public HouseDetailData getData(String tradeId) {
+	public HouseInfoData getData(String tradeId) {
 		IHouseMapper mapper = getMapper(IHouseMapper.class);
 		return mapper.getData(tradeId);
 	}
 
 	@Override
-	public List<House> queryByBuildingUnitId(String buildingUnitId) {
+	public List<HouseHomeDescData> queryByBuildingUnitId(String buildingUnitId) {
 		IHouseMapper mapper = getMapper(IHouseMapper.class);
 		return mapper.queryByBuildingUnitId(buildingUnitId);
 	}
@@ -89,5 +92,17 @@ public class HouseDaoImpl extends BaseDao<IHouseMapper> implements IHouseDao {
 			int start, int end) {
 		IHouseMapper mapper = getMapper(IHouseMapper.class);
 		return mapper.queryManageData(param, start, end);
+	}
+
+	@Override
+	public int countHomeData(HouseHomeQueryParam param) {
+		IHouseMapper mapper = getMapper(IHouseMapper.class);
+		return mapper.countHomeData(param);
+	}
+
+	@Override
+	public List<HouseHomeData> queryHomeData(HouseHomeQueryParam param, int start, int end) {
+		IHouseMapper mapper = getMapper(IHouseMapper.class);
+		return mapper.queryHomeData(param, start, end);
 	}
 }
