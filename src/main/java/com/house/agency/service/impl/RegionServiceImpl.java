@@ -7,9 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.house.agency.dao.IRegionDao;
+import com.house.agency.data.manage.RegionManageData;
 import com.house.agency.entity.Region;
 import com.house.agency.page.IPage;
+import com.house.agency.page.Page;
 import com.house.agency.param.RegionQueryParam;
+import com.house.agency.param.manage.RegionManageQueryParam;
 import com.house.agency.service.IRegionService;
 import com.myself.common.exception.ServiceException;
 import com.myself.common.utils.UIDGeneratorUtil;
@@ -19,7 +22,7 @@ public class RegionServiceImpl implements IRegionService {
 
 	@Autowired
 	private IRegionDao regionDao;
-	
+
 	@Override
 	public void save(Region param) {
 		param.setId(UIDGeneratorUtil.getUID());
@@ -58,6 +61,20 @@ public class RegionServiceImpl implements IRegionService {
 	@Override
 	public List<Region> list(RegionQueryParam param) {
 		return regionDao.list(param);
+	}
+
+	@Override
+	public IPage<RegionManageData> queryManageData(RegionManageQueryParam param, int page, int rows) {
+		List<RegionManageData> list = null;
+		page = page <= 0 ? 1 : page;
+		rows = rows <= 0 ? 10 : rows;
+		int count = regionDao.countManageData(param);
+		if (count > 0) {
+			int start = (page - 1) * rows;
+			int end = start + rows;
+			list = regionDao.queryManageData(param, start, end);
+		}
+		return new Page<RegionManageData>(list, count, page, rows);
 	}
 
 }

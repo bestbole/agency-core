@@ -11,6 +11,10 @@
 <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
 <result column="REMARKS" property="remarks" jdbcType="VARCHAR" />
 	</resultMap>
+	
+	<resultMap type="com.house.agency.data.manage.RegionManageData" id="regionManageData">
+	  <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+	</resultMap>
 
 	<sql id="sqlQuery">
 		FROM REGION a where 1=1
@@ -19,6 +23,7 @@
 	<select id="getDataById" resultMap="regionResult">
 		SELECT * FROM REGION WHERE ID = #{id, jdbcType=VARCHAR}
 	</select>
+	
 	<select id="count" resultType="java.lang.Integer">
 		SELECT COUNT(1) <include refid="sqlQuery"/>
 	</select>
@@ -26,6 +31,7 @@
 		SELECT a.* <include refid="sqlQuery"/>
 			order by a.CREATE_TIME desc limit #{start, jdbcType=INTEGER}, #{end, jdbcType=INTEGER}
 	</select>
+	
 	<select id="list" resultMap="regionResult">
     select a.* FROM REGION a join REGION b on a.PARENT_ID = b.ID WHERE 1=1
       <if test="param.parentId != null and param.parentId != ''">
@@ -35,6 +41,23 @@
         AND b.CODE = #{param.code, jdbcType=VARCHAR}
       </if>
       order by a.SEQ asc
+  </select>
+  
+  <sql id="sqlQueryManageData">
+    FROM REGION a where 1=1
+    <if test="param.parentId != null and param.parentId != ''">
+      AND a.PARENT_ID = #{param.parentId, jdbcType=VARCHAR}
+    </if>
+    <if test="param.parentId == null or param.parentId == ''">
+      AND (a.PARENT_ID is null or a.PARENT_ID = '')
+    </if>
+  </sql>
+  <select id="countManageData" resultType="java.lang.Integer">
+    SELECT COUNT(1) <include refid="sqlQueryManageData"/>
+  </select>
+  <select id="queryManageData" resultMap="regionManageData">
+    SELECT a.* <include refid="sqlQueryManageData"/>
+      order by a.SEQ desc limit #{start, jdbcType=INTEGER}, #{end, jdbcType=INTEGER}
   </select>
 	
 	<insert id="save" useGeneratedKeys="true" keyProperty="id">

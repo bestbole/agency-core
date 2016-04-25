@@ -6,9 +6,11 @@ import org.springframework.stereotype.Repository;
 
 import com.house.agency.dao.BaseDao;
 import com.house.agency.dao.IRegionDao;
+import com.house.agency.data.manage.RegionManageData;
 import com.house.agency.entity.Region;
 import com.house.agency.mapper.IRegionMapper;
 import com.house.agency.param.RegionQueryParam;
+import com.house.agency.param.manage.RegionManageQueryParam;
 
 @Repository
 public class RegionDaoImpl extends BaseDao<IRegionMapper> implements IRegionDao {
@@ -53,6 +55,18 @@ public class RegionDaoImpl extends BaseDao<IRegionMapper> implements IRegionDao 
 	public List<Region> list(RegionQueryParam param) {
 		IRegionMapper mapper = getMapper(IRegionMapper.class);
 		return mapper.list(param);
+	}
+
+	@Override
+	public int countManageData(RegionManageQueryParam param) {
+		IRegionMapper mapper = getMapper(IRegionMapper.class);
+		return mapper.countManageData(param);
+	}
+
+	@Override
+	public List<RegionManageData> queryManageData(RegionManageQueryParam param, int start, int end) {
+		IRegionMapper mapper = getMapper(IRegionMapper.class);
+		return mapper.queryManageData(param, start, end);
 	}
 
 }
