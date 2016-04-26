@@ -139,3 +139,16 @@ CHARACTER SET 'utf8';
 grant select,insert,update,delete,create,drop on agency_db.* to 'john'@'%' identified by '123!@#456';
 update user set host='%' where user='john' and host='localhost';
 //MySQL安装
+
+//nginx
+server {
+    listen       8000;
+    server_name  localhost;
+
+    location ~ .*\.(gif|jpg|jpeg|png)$ {
+        root   E:/images/;
+    }
+
+    access_log  E:/images/logs/log_access.log;
+}
+//nginx
