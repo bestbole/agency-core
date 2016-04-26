@@ -42,6 +42,8 @@ show create database agency_db;
 
 open root@98.126.243.27
 
+select date_format(now(), '%Y-%m-%d') from dual
+
 CREATE TABLE USER
 (
     ID VARCHAR(50) NOT NULL,
