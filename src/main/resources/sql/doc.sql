@@ -146,11 +146,12 @@ server {
     server_name  localhost;
 
     location ~ .*\.(gif|jpg|jpeg|png)$ {
-        root   E:/images/;
+        root   E:/files/images/;
     }
 
-    access_log  E:/images/logs/log_access.log;
+    access_log  E:/files/logs/log_access.log;
 }
+nginx.exe -s reload
 //nginx
 
 
