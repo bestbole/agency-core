@@ -42,6 +42,10 @@
     <property name="service" ref="permissionService" />
     <property name="serviceInterface" value="com.house.agency.service.IPermissionService" />
   </bean>
+  <bean name="/configureService" class="org.springframework.remoting.caucho.HessianServiceExporter">
+    <property name="service" ref="configureService" />
+    <property name="serviceInterface" value="com.house.agency.service.IConfigureService" />
+  </bean>
 	<!-- hessian-servlet-conf -->
 	
 </beans>

@@ -152,3 +152,62 @@ server {
     access_log  E:/images/logs/log_access.log;
 }
 //nginx
+
+
+文件及目录的复制是经常要用到的。linux下进行复制的命令为cp。
+假设复制源目录 为 dir1 ,目标目录为dir2。怎样才能将dir1下所有文件复制到dir2下了
+如果dir2目录不存在，则可以直接使用
+cp -r dir1 dir2
+即可。
+如果dir2目录已存在，则需要使用
+cp -r dir1/. dir2
+如果这时使用cp -r dir1 dir2,则也会将dir1目录复制到dir2中，明显不符合要求。
+
+当我修改了/etc/profile文件，我想让它立刻生效，而不用重新登录；这时就想到用source命令，如:source /etc/profile
+
+rm-rf目录名字
+
+./shutdown.sh
+./startup.sh
+
+JAVA_HOME=/usr/java/jdk1.6.0_45
+JRE_HOME=/usr/java/jdk1.6.0_45/jre
+PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin
+CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$JRE_HOME/lib
+export JAVA_HOME JRE_HOME PATH CLASSPATH
+
+CATALINA_BASE=/usr/java/apache-tomcat-6.0.44
+CATALINA_HOME=/usr/java/apache-tomcat-6.0.44
+export CATALINA_BASE CATALINA_HOME
+
+CATALINA_2_BASE=/usr/java/apache-tomcat-6.0.44-core
+CATALINA_2_HOME=/usr/java/apache-tomcat-6.0.44-core
+export CATALINA_2_BASE CATALINA_2_HOME
+
+CATALINA_3_BASE=/usr/java/apache-tomcat-6.0.44-web
+CATALINA_3_HOME=/usr/java/apache-tomcat-6.0.44-web
+export CATALINA_3_BASE CATALINA_3_HOME
+
+TOMCAT_HOME=/usr/java/apache-tomcat-6.0.44
+export TOMCAT_HOME
+TOMCAT_2_HOME=/usr/java/apache-tomcat-6.0.44-core
+export TOMCAT_2_HOME
+TOMCAT_3_HOME=/usr/java/apache-tomcat-6.0.44-web
+export TOMCAT_3_HOME
+
+
+export JAVA_HOME=/usr/java/jdk1.6.0_45
+export JRE_HOME=/usr/java/jdk1.6.0_45/jre
+export PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin
+export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$JRE_HOME/lib
+export CATALINA_HOME=$CATALINA_2_HOME
+export CATALINA_BASE=$CATALINA_2_BASE
+
+export JAVA_HOME=/usr/java/jdk1.6.0_45
+export JRE_HOME=/usr/java/jdk1.6.0_45/jre
+export PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin
+export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$JRE_HOME/lib
+export CATALINA_HOME=$CATALINA_3_HOME
+export CATALINA_BASE=$CATALINA_3_BASE
+
+Choose unique values for the 'webAppRootKey' context-param in your web.xml files!
