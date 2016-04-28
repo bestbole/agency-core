@@ -3,12 +3,16 @@ package com.house.agency.service.impl;
 import java.util.Date;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
+import com.house.agency.dao.IConfigureDao;
 import com.house.agency.dao.IHouseDao;
-import com.house.agency.data.HouseInfoData;
 import com.house.agency.data.HouseData;
+import com.house.agency.data.HouseInfoData;
 import com.house.agency.data.home.HouseHomeData;
 import com.house.agency.data.home.HouseHomeDescData;
 import com.house.agency.data.manage.HouseManageData;
@@ -20,13 +24,21 @@ import com.house.agency.param.home.HouseHomeQueryParam;
 import com.house.agency.param.manage.HouseManageQueryParam;
 import com.house.agency.service.IHouseService;
 import com.myself.common.exception.ServiceException;
+import com.myself.common.utils.ImageUtil;
+import com.myself.common.utils.StringUtil;
 import com.myself.common.utils.UIDGeneratorUtil;
 
 @Service("houseService")
 public class HouseServiceImpl implements IHouseService {
 
+	private final static Logger logger = LoggerFactory
+			.getLogger(HouseServiceImpl.class);
+	
 	@Autowired
 	private IHouseDao houseDao;
+	
+	@Autowired
+	private IConfigureDao configureDao;
 
 	@Override
 	public void save(House param) {
@@ -86,8 +98,31 @@ public class HouseServiceImpl implements IHouseService {
 			int start = (page - 1) * rows;
 			int end = start + rows;
 			list = houseDao.queryData(param, start, end);
+			setList(list);
 		}
 		return new Page<HouseData>(list, count, page, rows);
+	}
+
+	private void setList(List<HouseData> list) {
+		String path = configureDao.getValueByKey("upload_folder");
+		String width = configureDao.getValueByKey("image_width");
+		String height = configureDao.getValueByKey("image_height");
+		String blank = configureDao.getValueByKey("image_blank");
+		for (int i = 0; i < list.size(); i++) {
+			HouseData houseData = list.get(i);
+			String url = houseData.getUrl();
+			if (StringUtils.isEmpty(url)) {
+				url = blank;
+			} else {
+				try {
+					url = ImageUtil.creMinImage(url, Integer.parseInt(width), Integer.parseInt(height), path);
+				} catch (Exception e) {
+					logger.info("生成图片出错");
+				}
+			}
+			houseData.setUrl(url);
+			list.set(i, houseData);
+		}
 	}
 
 	@Override

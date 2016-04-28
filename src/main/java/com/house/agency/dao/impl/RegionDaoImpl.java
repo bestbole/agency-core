@@ -30,7 +30,7 @@ public class RegionDaoImpl extends BaseDao<IRegionMapper> implements IRegionDao 
 	@Override
 	public int deleteById(String id) {
 		IRegionMapper mapper = getMapper(IRegionMapper.class);
-		return 0;
+		return mapper.deleteById(id);
 	}
 
 	@Override

@@ -152,8 +152,12 @@ server {
     access_log  E:/files/logs/log_access.log;
 }
 nginx.exe -s reload
+start nginx
 //nginx
 
+<ImageTag:image src="image-5.jpg" width="202" height="150" path="F:/images/" />
+content += '  <ImageTag:image src="' + data.url + '" width="202" height="150" path="${uploadFolder}" base="${imageUrl}"/>';
+nginx.exe -s reload
 
 文件及目录的复制是经常要用到的。linux下进行复制的命令为cp。
 假设复制源目录 为 dir1 ,目标目录为dir2。怎样才能将dir1下所有文件复制到dir2下了

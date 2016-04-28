@@ -44,6 +44,39 @@ public class TestConfigure extends BaseJunitTest {
 	}
 	
 	@Test
+	public void testSaveWidth() {
+		Configure param = new Configure();
+		param.setId(UIDGeneratorUtil.getUID());
+		param.setStatus("1");
+		param.setCreateTime(new Date());
+		param.setConfKey("image_width");
+		param.setConfValue("205");
+		configureDao.save(param);
+	}
+	
+	@Test
+	public void testSaveHeight() {
+		Configure param = new Configure();
+		param.setId(UIDGeneratorUtil.getUID());
+		param.setStatus("1");
+		param.setCreateTime(new Date());
+		param.setConfKey("image_height");
+		param.setConfValue("150");
+		configureDao.save(param);
+	}
+	
+	@Test
+	public void testSaveImageBlank() {
+		Configure param = new Configure();
+		param.setId(UIDGeneratorUtil.getUID());
+		param.setStatus("1");
+		param.setCreateTime(new Date());
+		param.setConfKey("image_blank");
+		param.setConfValue("image_blank.png");
+		configureDao.save(param);
+	}
+	
+	@Test
 	public void testSaveImageUrl() {
 		Configure param = new Configure();
 		param.setId(UIDGeneratorUtil.getUID());

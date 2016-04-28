@@ -93,7 +93,7 @@
 	</insert>
 	
 	<update id="update">
-		update TRADE
+		update REGION
 		<set>
 UPDATE_TIME = #{param.updateTime, jdbcType=TIMESTAMP},
 		</set>
@@ -101,6 +101,6 @@ UPDATE_TIME = #{param.updateTime, jdbcType=TIMESTAMP},
 	</update>
 	
 	<delete id="deleteById">
-		delete from TRADE a where a.ID = #{id, jdbcType=VARCHAR}
+		delete from REGION a where a.ID = #{id, jdbcType=VARCHAR}
 	</delete>
 </mapper>

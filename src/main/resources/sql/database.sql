@@ -61,7 +61,7 @@ CREATE TABLE USER
     REMARKS VARCHAR(1000),
     PRIMARY KEY (ID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-ImageTag:image src="image-5.jpg" width="202" height="150" path="F:/images/" />
+
 CREATE TABLE CONFIGURE
 (
     ID VARCHAR(50) NOT NULL,

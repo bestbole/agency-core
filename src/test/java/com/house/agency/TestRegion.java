@@ -220,4 +220,18 @@ public class TestRegion extends BaseJunitTest {
 			regionDao.save(param);
 		}
 	}
+	
+	@Test
+	public void testGetRegion() {
+		getRegionById("9820cd1545561c5577fe9").getName();
+	}
+	
+	private Region getRegionById(String id) {
+		Region region = regionDao.getDataById(id);
+		System.out.println("name===========" + region.getName());
+		if (region.getParentId() == null) {
+			return region;
+		}
+		return getRegionById(region.getParentId());
+	}
 }
