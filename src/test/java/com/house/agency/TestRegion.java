@@ -1,12 +1,18 @@
 package com.house.agency;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 
 import com.house.agency.dao.IRegionDao;
 import com.house.agency.entity.Region;
+import com.house.agency.param.RegionQueryParam;
 
 public class TestRegion extends BaseJunitTest {
 
@@ -220,18 +226,42 @@ public class TestRegion extends BaseJunitTest {
 			regionDao.save(param);
 		}
 	}
-	
+
 	@Test
 	public void testGetRegion() {
-		getRegionById("9820cd1545561c5577fe9").getName();
-	}
-	
-	private Region getRegionById(String id) {
-		Region region = regionDao.getDataById(id);
-		System.out.println("name===========" + region.getName());
-		if (region.getParentId() == null) {
-			return region;
+		// c875c815452e887867ffb da03e615452e887867ffa
+		int index = 0;
+		Map<String, List<Region>> regions = new LinkedHashMap<String, List<Region>>();
+		getRegionById("da03e615452e887867ffa", regions, index);
+		for (Map.Entry<String, List<Region>> entry : regions.entrySet()) {
+			String key = entry.getKey();
+			System.out.println("key=" + key);
+			List<Region> values = entry.getValue();
+			for (Region region : values) {
+				System.out.println("name=" + region.getName());
+			}
 		}
-		return getRegionById(region.getParentId());
+	}
+
+	private Region getRegionById(String id, Map<String, List<Region>> map, int index) {
+		Region region = regionDao.getDataById(id);
+		if (StringUtils.isEmpty(region.getParentId())) {
+			return region;
+		} else {
+			String key = region.getLevel() + "_" + region.getId() + "_" + region.getParentId() + "_" + region.getName()
+					+ "_" + region.getCode() + "_" + region.getSeq();
+			
+			List<Region> regions = null;
+			if (index != 0) {
+				RegionQueryParam param = new RegionQueryParam();
+				param.setParentId(region.getParentId());
+				regions = regionDao.list(param);
+			} else {
+				regions = new ArrayList<Region>();
+			}
+			map.put(key, regions);
+		}
+		index += 1;
+		return getRegionById(region.getParentId(), map, index);
 	}
 }
