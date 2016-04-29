@@ -1,10 +1,13 @@
 package com.house.agency.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.house.agency.dao.IRegionDao;
 import com.house.agency.data.manage.RegionManageData;
@@ -79,4 +82,31 @@ public class RegionServiceImpl implements IRegionService {
 		return new Page<RegionManageData>(list, count, page, rows);
 	}
 
+	@Override
+	public void getRegionById(String id, Map<String, List<Region>> regions) {
+		int index = 0;
+		getRegionById(id, regions, index);
+	}
+
+	private Region getRegionById(String id, Map<String, List<Region>> map, int index) {
+		Region region = regionDao.getDataById(id);
+		if (StringUtils.isEmpty(region.getParentId())) {
+			return region;
+		} else {
+			String key = region.getLevel() + "_" + region.getId() + "_" + region.getParentId() + "_" + region.getName()
+					+ "_" + region.getCode() + "_" + region.getSeq();
+			
+			List<Region> regions = null;
+			if (index != 0) {
+				RegionQueryParam param = new RegionQueryParam();
+				param.setParentId(region.getParentId());
+				regions = regionDao.list(param);
+			} else {
+				regions = new ArrayList<Region>();
+			}
+			map.put(key, regions);
+		}
+		index += 1;
+		return getRegionById(region.getParentId(), map, index);
+	}
 }

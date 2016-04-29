@@ -232,7 +232,7 @@ public class TestRegion extends BaseJunitTest {
 		// c875c815452e887867ffb da03e615452e887867ffa
 		int index = 0;
 		Map<String, List<Region>> regions = new LinkedHashMap<String, List<Region>>();
-		getRegionById("da03e615452e887867ffa", regions, index);
+		getRegionById("9820cd1545561c5577fe9", regions, index);
 		for (Map.Entry<String, List<Region>> entry : regions.entrySet()) {
 			String key = entry.getKey();
 			System.out.println("key=" + key);
