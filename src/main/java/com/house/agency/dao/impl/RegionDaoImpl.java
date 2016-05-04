@@ -23,8 +23,8 @@ public class RegionDaoImpl extends BaseDao<IRegionMapper> implements IRegionDao 
 
 	@Override
 	public int update(Region param) {
-		// TODO Auto-generated method stub
-		return 0;
+		IRegionMapper mapper = getMapper(IRegionMapper.class);
+		return mapper.update(param);
 	}
 
 	@Override

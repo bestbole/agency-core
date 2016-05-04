@@ -29,7 +29,7 @@ public class RegionServiceImpl implements IRegionService {
 	@Override
 	public void save(Region param) {
 		param.setId(UIDGeneratorUtil.getUID());
-		param.setStatus("1");
+		//param.setStatus("1");
 		param.setCreateTime(new Date());
 		int count = regionDao.save(param);
 		if (count < 1) {
@@ -39,8 +39,21 @@ public class RegionServiceImpl implements IRegionService {
 
 	@Override
 	public void update(Region param) {
-		// TODO Auto-generated method stub
-
+		param.setUpdateTime(new Date());
+		int count = regionDao.update(param);
+		if (count < 1) {
+			throw new ServiceException("修改失败");
+		}
+	}
+	
+	@Override
+	public void saveOrUpdate(Region param) {
+		String id = param.getId();
+		if (StringUtils.isEmpty(id)) {
+			save(param);
+		} else {
+			update(param);
+		}
 	}
 
 	@Override
@@ -53,8 +66,7 @@ public class RegionServiceImpl implements IRegionService {
 
 	@Override
 	public Region getDataById(String id) {
-		// TODO Auto-generated method stub
-		return null;
+		return regionDao.getDataById(id);
 	}
 
 	@Override
@@ -83,9 +95,10 @@ public class RegionServiceImpl implements IRegionService {
 	}
 
 	@Override
-	public void getRegionById(String id, Map<String, List<Region>> regions) {
+	public Map<String, List<Region>> getRegionById(String id, Map<String, List<Region>> regions) {
 		int index = 0;
 		getRegionById(id, regions, index);
+		return regions;
 	}
 
 	private Region getRegionById(String id, Map<String, List<Region>> map, int index) {
@@ -94,7 +107,7 @@ public class RegionServiceImpl implements IRegionService {
 			return region;
 		} else {
 			String key = region.getLevel() + "_" + region.getId() + "_" + region.getParentId() + "_" + region.getName()
-					+ "_" + region.getCode() + "_" + region.getSeq();
+					+ "_" + region.getCode() + "_" + region.getSeq() + "_" + region.getStatus();
 			
 			List<Region> regions = null;
 			if (index != 0) {

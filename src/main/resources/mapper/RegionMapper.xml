@@ -95,7 +95,19 @@
 	<update id="update">
 		update REGION
 		<set>
-UPDATE_TIME = #{param.updateTime, jdbcType=TIMESTAMP},
+			<if test="param.name != null and param.name != ''">
+        NAME = #{param.name},
+      </if>
+      <if test="param.code != null and param.code != ''">
+        CODE = #{param.code},
+      </if>
+      <if test="param.seq != null and param.seq != ''">
+        SEQ = #{param.seq},
+      </if>
+      <if test="param.status != null and param.status != ''">
+        STATUS = #{param.status},
+      </if>
+      UPDATE_TIME = #{param.updateTime, jdbcType=TIMESTAMP}
 		</set>
 		where id = #{param.id, jdbcType=VARCHAR}
 	</update>
