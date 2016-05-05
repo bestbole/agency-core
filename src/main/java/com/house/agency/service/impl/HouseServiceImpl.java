@@ -25,7 +25,6 @@ import com.house.agency.param.manage.HouseManageQueryParam;
 import com.house.agency.service.IHouseService;
 import com.myself.common.exception.ServiceException;
 import com.myself.common.utils.ImageUtil;
-import com.myself.common.utils.StringUtil;
 import com.myself.common.utils.UIDGeneratorUtil;
 
 @Service("houseService")

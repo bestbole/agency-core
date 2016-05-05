@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.house.agency.dao.IBuildingDao;
+import com.house.agency.dao.IImageDao;
 import com.house.agency.data.BuildingData;
 import com.house.agency.data.manage.BuildingManageData;
 import com.house.agency.entity.Building;
@@ -23,6 +24,9 @@ public class BuildingServiceImpl implements IBuildingService {
 
 	@Autowired
 	private IBuildingDao buildingDao;
+	
+	@Autowired
+	private IImageDao imageDao;
 	
 	@Override
 	public void save(Building param) {

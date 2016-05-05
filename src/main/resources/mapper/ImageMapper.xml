@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.house.agency.mapper.IImageMapper">
-	<resultMap type="com.house.agency.entity.Image" id="imageResult">
+	<resultMap type="com.house.agency.entity.Image" id="image">
 		<id column="ID" property="id" jdbcType="VARCHAR" />
 		<result column="TITLE" property="title" jdbcType="VARCHAR" />
 		<result column="URL" property="url" jdbcType="VARCHAR" />
@@ -15,17 +15,17 @@
 		FROM IMAGE a where 1=1
 	</sql>
 	
-	<select id="getDataById" resultMap="imageResult">
+	<select id="getDataById" resultMap="image">
 		SELECT * FROM IMAGE WHERE ID = #{id, jdbcType=VARCHAR}
 	</select>
 	<select id="count" resultType="java.lang.Integer">
 		SELECT COUNT(1) <include refid="sqlQuery"/>
 	</select>
-	<select id="query" resultMap="imageResult">
+	<select id="query" resultMap="image">
 		SELECT a.* <include refid="sqlQuery"/>
 			order by a.CREATE_TIME desc limit #{start, jdbcType=INTEGER}, #{end, jdbcType=INTEGER}
 	</select>
-	<select id="queryData" resultMap="imageResult">
+	<select id="queryData" resultMap="image">
     SELECT
         a.*
     FROM
@@ -38,7 +38,7 @@
         b.TRADE_ID = #{param.tradeId, jdbcType=VARCHAR}
       order by a.CREATE_TIME desc
   </select>
-  <select id="listData" resultMap="imageResult">
+  <select id="listData" resultMap="image">
     SELECT a.* FROM IMAGE a where 1=1
     <if test="param.foreignId != null and param.foreignId != ''">
       AND a.FOREIGN_ID = #{param.foreignId, jdbcType=VARCHAR}
@@ -61,8 +61,17 @@
       AND (a.USER_ID IS NULL or a.USER_ID = '')
       order by a.CREATE_TIME desc
   </select>
+  <select id="queryDataByFuid" resultMap="image">
+    SELECT a.* FROM IMAGE a where 1=1
+    <if test="param.foreignId != null and param.foreignId != ''">
+      AND a.FOREIGN_ID = #{param.foreignId, jdbcType=VARCHAR}
+    </if>
+    <if test="param.userId != null and param.userId != ''">
+      AND a.USER_ID = #{param.userId, jdbcType=VARCHAR}
+    </if>
+      order by a.CREATE_TIME desc
+  </select>
   
-	
 	<insert id="save" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO IMAGE
 		  (ID,
