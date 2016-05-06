@@ -100,7 +100,7 @@ public class ImageServiceImpl implements IImageService {
 		image.setTitle(title);
 		image.setUrl(param.getFolder() + "/" + file.getName());
 		save(image);
-		boolean flag = FileUtil.move(file, path);
+		boolean flag = FileUtil.move(file, path + param.getFolder());
 		if (!flag) {
 			throw new ServiceException("文件上传失败");
 		}
