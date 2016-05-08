@@ -2,6 +2,7 @@ package com.house.agency.dao;
 
 import java.util.List;
 
+import com.house.agency.data.ImageData;
 import com.house.agency.entity.Image;
 import com.house.agency.param.ImageQueryParam;
 
@@ -23,5 +24,7 @@ public interface IImageDao {
 
 	List<Image> listData(ImageQueryParam param);
 	
-	List<Image> queryDataByFuid(ImageQueryParam param);
+	List<ImageData> queryDataByFuid(ImageQueryParam param);
+	
+	List<ImageData> queryHomeDataByFuid(ImageQueryParam param);
 }

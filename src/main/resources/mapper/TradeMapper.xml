@@ -35,6 +35,7 @@
 		   TITLE,
 		   TYPE,
 		   RELEASE_TIME,
+		   CONTENT,
 		   STATUS,
 		   CREATE_TIME,
 		   REMARKS)
@@ -47,6 +48,7 @@
 		  	#{param.title, jdbcType=VARCHAR},
 		  	#{param.type, jdbcType=VARCHAR},
 		  	#{param.releaseTime, jdbcType=TIMESTAMP},
+		  	#{param.content, jdbcType=VARCHAR},
 		  	#{param.status, jdbcType=VARCHAR},
         #{param.createTime, jdbcType=TIMESTAMP},
         #{param.remarks, jdbcType=VARCHAR})
@@ -55,10 +57,19 @@
 	<update id="update">
 		update TRADE
 		<set>
-UPDATE_TIME = #{param.updateTime, jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{param.updateTime, jdbcType=TIMESTAMP},
 		</set>
 		where id = #{param.id, jdbcType=VARCHAR}
 	</update>
+	
+	<update id="cover">
+    update TRADE
+    <set>
+      IMAGE_ID = #{param.imageId, jdbcType=VARCHAR},
+      UPDATE_TIME = #{param.updateTime, jdbcType=TIMESTAMP}
+    </set>
+    where id = #{param.id, jdbcType=VARCHAR}
+  </update>
 	
 	<delete id="deleteById">
 		delete from TRADE a where a.ID = #{id, jdbcType=VARCHAR}

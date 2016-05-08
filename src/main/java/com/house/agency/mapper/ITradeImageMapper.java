@@ -10,4 +10,5 @@ public interface ITradeImageMapper {
 	int update(@Param("param") TradeImage param);
 	int deleteById(@Param("id") String id);
 	TradeImage getDataById(@Param("id") String id);
+	void clear(@Param("tradeId") String tradeId);
 }

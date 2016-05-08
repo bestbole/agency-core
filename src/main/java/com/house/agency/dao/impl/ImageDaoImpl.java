@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import com.house.agency.dao.BaseDao;
 import com.house.agency.dao.IImageDao;
+import com.house.agency.data.ImageData;
 import com.house.agency.entity.Image;
 import com.house.agency.mapper.IImageMapper;
 import com.house.agency.param.ImageQueryParam;
@@ -21,8 +22,8 @@ public class ImageDaoImpl extends BaseDao<IImageMapper> implements IImageDao {
 
 	@Override
 	public int update(Image param) {
-		// TODO Auto-generated method stub
-		return 0;
+		IImageMapper mapper = getMapper(IImageMapper.class);
+		return mapper.update(param);
 	}
 
 	@Override
@@ -62,9 +63,15 @@ public class ImageDaoImpl extends BaseDao<IImageMapper> implements IImageDao {
 	}
 
 	@Override
-	public List<Image> queryDataByFuid(ImageQueryParam param) {
+	public List<ImageData> queryDataByFuid(ImageQueryParam param) {
 		IImageMapper mapper = getMapper(IImageMapper.class);
 		return mapper.queryDataByFuid(param);
+	}
+
+	@Override
+	public List<ImageData> queryHomeDataByFuid(ImageQueryParam param) {
+		IImageMapper mapper = getMapper(IImageMapper.class);
+		return mapper.queryHomeDataByFuid(param);
 	}
 
 }

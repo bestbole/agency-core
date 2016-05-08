@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.house.agency.data.ImageData;
 import com.house.agency.entity.Image;
 import com.house.agency.param.ImageQueryParam;
 
@@ -20,5 +21,6 @@ public interface IImageMapper {
 	List<Image> queryData(@Param("param") ImageQueryParam param);
 	List<Image> listData(@Param("param") ImageQueryParam param);
 	
-	List<Image> queryDataByFuid(@Param("param") ImageQueryParam param);
+	List<ImageData> queryDataByFuid(@Param("param") ImageQueryParam param);
+	List<ImageData> queryHomeDataByFuid(@Param("param") ImageQueryParam param);
 }

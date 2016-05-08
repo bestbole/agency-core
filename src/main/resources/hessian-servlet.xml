@@ -22,6 +22,10 @@
     <property name="service" ref="tradeService" />  
     <property name="serviceInterface" value="com.house.agency.service.ITradeService" />  
   </bean>
+  <bean name="/tradeImageService" class="org.springframework.remoting.caucho.HessianServiceExporter"> 
+    <property name="service" ref="tradeImageService" />  
+    <property name="serviceInterface" value="com.house.agency.service.ITradeImageService" />  
+  </bean>
 	<bean name="/imageService" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="imageService" />
 		<property name="serviceInterface" value="com.house.agency.service.IImageService" />

@@ -8,5 +8,5 @@ public interface ITradeImageDao {
 	int update(TradeImage param);
 	int deleteById(String id);
 	TradeImage getDataById(String id);
-	
+	void clear(String tradeId);
 }

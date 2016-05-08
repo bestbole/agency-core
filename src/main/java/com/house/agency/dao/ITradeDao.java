@@ -14,4 +14,5 @@ public interface ITradeDao {
 	
 	int count(TradeQueryParam param);
 	List<Trade> query(TradeQueryParam param, int start, int end);
+	int cover(Trade param);
 }

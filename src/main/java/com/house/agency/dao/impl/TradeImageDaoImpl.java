@@ -18,20 +18,26 @@ public class TradeImageDaoImpl extends BaseDao<ITradeImageMapper> implements ITr
 
 	@Override
 	public int update(TradeImage param) {
-		// TODO Auto-generated method stub
-		return 0;
+		ITradeImageMapper mapper = getMapper(ITradeImageMapper.class);
+		return mapper.update(param);
 	}
 
 	@Override
 	public int deleteById(String id) {
-		// TODO Auto-generated method stub
-		return 0;
+		ITradeImageMapper mapper = getMapper(ITradeImageMapper.class);
+		return mapper.deleteById(id);
 	}
 
 	@Override
 	public TradeImage getDataById(String id) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void clear(String tradeId) {
+		ITradeImageMapper mapper = getMapper(ITradeImageMapper.class);
+		mapper.clear(tradeId);
 	}
 
 }

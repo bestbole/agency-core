@@ -1,7 +1,6 @@
 package com.house.agency.service.impl;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.house.agency.dao.IConfigureDao;
 import com.house.agency.dao.IImageDao;
-import com.house.agency.data.manage.ImageManageData;
+import com.house.agency.data.ImageData;
 import com.house.agency.entity.Image;
 import com.house.agency.page.IPage;
 import com.house.agency.param.ImageParam;
@@ -40,6 +39,7 @@ public class ImageServiceImpl implements IImageService {
 	@Override
 	public void save(Image param) {
 		param.setId(UIDGeneratorUtil.getUID());
+		param.setSort(0);
 		param.setStatus("1");
 		param.setCreateTime(new Date());
 		int count = imageDao.save(param);
@@ -50,8 +50,11 @@ public class ImageServiceImpl implements IImageService {
 
 	@Override
 	public void update(Image param) {
-		// TODO Auto-generated method stub
-
+		param.setUpdateTime(new Date());
+		int count = imageDao.update(param);
+		if (count < 1) {
+			throw new ServiceException("修改失败");
+		}
 	}
 
 	@Override
@@ -96,11 +99,12 @@ public class ImageServiceImpl implements IImageService {
 		
 		Image image = new Image();
 		image.setForeignId(param.getForeignId());
+		image.setUserId(param.getUserId());
 		image.setType(param.getType());
 		image.setTitle(title);
 		image.setUrl(param.getFolder() + "/" + file.getName());
 		save(image);
-		boolean flag = FileUtil.move(file, path + param.getFolder());
+		boolean flag = FileUtil.move(file, path + "/" +  param.getFolder());
 		if (!flag) {
 			throw new ServiceException("文件上传失败");
 		}
@@ -123,16 +127,14 @@ public class ImageServiceImpl implements IImageService {
 	}
 
 	@Override
-	public List<ImageManageData> queryDataByFuid(ImageQueryParam param) {
-		List<ImageManageData> datas = new ArrayList<ImageManageData>();
+	public List<ImageData> queryDataByFuid(ImageQueryParam param) {
 		String path = configureDao.getValueByKey("upload_folder");
 		String width = configureDao.getValueByKey("home_image_w");
 		String height = configureDao.getValueByKey("home_image_h");
 		
-		ImageManageData data = null;
-		List<Image> images = imageDao.queryDataByFuid(param);
-		for (Image image : images) {
-			data = new ImageManageData();
+		List<ImageData> images = imageDao.queryDataByFuid(param);
+		for (int i = 0; i < images.size(); i++) {
+			ImageData image = images.get(i);
 			String url = image.getUrl();
 			String thumb = null;
 			try {
@@ -140,14 +142,32 @@ public class ImageServiceImpl implements IImageService {
 			} catch (Exception e) {
 				logger.info("生成图片出错");
 			}
-			data.setId(image.getId());
-			data.setThumb(thumb);
-			data.setUrl(url);
-			data.setTitle(image.getTitle());
-			data.setStatus(image.getStatus());
-			datas.add(data);
+			System.out.println(thumb);
+			image.setThumb(thumb);
+			images.set(i, image);
 		}
-		return datas;
+		return images;
 	}
 
+	@Override
+	public List<ImageData> queryHomeDataByFuid(ImageQueryParam param) {
+		String path = configureDao.getValueByKey("upload_folder");
+		String width = configureDao.getValueByKey("home_image_w");
+		String height = configureDao.getValueByKey("home_image_h");
+		
+		List<ImageData> images = imageDao.queryHomeDataByFuid(param);
+		for (int i = 0; i < images.size(); i++) {
+			ImageData image = images.get(i);
+			String url = image.getUrl();
+			String thumb = null;
+			try {
+				thumb = ImageUtil.creMinImage(url, Integer.parseInt(width), Integer.parseInt(height), path);
+			} catch (Exception e) {
+				logger.info("生成图片出错");
+			}
+			image.setThumb(thumb);
+			images.set(i, image);
+		}
+		return images;
+	}
 }

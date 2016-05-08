@@ -17,4 +17,5 @@ public interface ITradeMapper {
 	int count(@Param("param") TradeQueryParam param);
 	List<Trade> query(@Param("param") TradeQueryParam param,
 			@Param("start") int start, @Param("end") int end);
+	int cover(@Param("param") Trade param);
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.house.agency.mapper.ITradeImageMapper">
-	<resultMap type="com.house.agency.entity.TradeImage" id="tradeImageResult">
+	<resultMap type="com.house.agency.entity.TradeImage" id="tradeImage">
 		<id column="ID" property="id" jdbcType="VARCHAR" />
 <result column="STATUS" property="status" jdbcType="VARCHAR" />
 <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
@@ -13,13 +13,13 @@
 		FROM TRADE a where 1=1
 	</sql>
 	
-	<select id="getDataById" resultMap="tradeImageResult">
+	<select id="getDataById" resultMap="tradeImage">
 		SELECT * FROM TRADE WHERE ID = #{id, jdbcType=VARCHAR}
 	</select>
 	<select id="count" resultType="java.lang.Integer">
 		SELECT COUNT(1) <include refid="sqlQuery"/>
 	</select>
-	<select id="query" resultMap="tradeImageResult">
+	<select id="query" resultMap="tradeImage">
 		SELECT a.* <include refid="sqlQuery"/>
 			order by a.RELEASE_TIME desc limit #{start, jdbcType=INTEGER}, #{end, jdbcType=INTEGER}
 	</select>
@@ -30,6 +30,7 @@
 		   TRADE_ID,
 		   IMAGE_ID,
 		   TYPE,
+		   COVER,
 		   STATUS,
 		   CREATE_TIME,
 		   REMARKS)
@@ -38,20 +39,35 @@
 		  	#{param.tradeId, jdbcType=VARCHAR},
 		  	#{param.imageId, jdbcType=VARCHAR},
 		  	#{param.type, jdbcType=VARCHAR},
+		  	#{param.cover, jdbcType=VARCHAR},
 		  	#{param.status, jdbcType=VARCHAR},
         #{param.createTime, jdbcType=TIMESTAMP},
         #{param.remarks, jdbcType=VARCHAR})
 	</insert>
 	
 	<update id="update">
-		update TRADE
-		<set>
-UPDATE_TIME = #{param.updateTime, jdbcType=TIMESTAMP},
-		</set>
-		where id = #{param.id, jdbcType=VARCHAR}
-	</update>
+    update TRADE_IMAGE
+    <set>
+      <if test="param.sort != 0">
+        SORT = #{param.sort},
+      </if>
+      <if test="param.cover != null and param.cover != ''">
+        COVER = #{param.cover},
+      </if>
+      UPDATE_TIME = #{param.updateTime, jdbcType=TIMESTAMP}
+    </set>
+    where id = #{param.id, jdbcType=VARCHAR}
+  </update>
+  
+  <update id="clear">
+    update TRADE_IMAGE
+    <set>
+      COVER = '0'
+    </set>
+    where TRADE_ID = #{tradeId, jdbcType=VARCHAR} AND COVER = '1'
+  </update>
 	
 	<delete id="deleteById">
-		delete from TRADE a where a.ID = #{id, jdbcType=VARCHAR}
+		delete from TRADE_IMAGE a where a.ID = #{id, jdbcType=VARCHAR}
 	</delete>
 </mapper>

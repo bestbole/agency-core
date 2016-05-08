@@ -55,12 +55,34 @@ public class TestConfigure extends BaseJunitTest {
 	}
 	
 	@Test
+	public void testSaveHomeWidth() {
+		Configure param = new Configure();
+		param.setId(UIDGeneratorUtil.getUID());
+		param.setStatus("1");
+		param.setCreateTime(new Date());
+		param.setConfKey("home_image_w");
+		param.setConfValue("150");
+		configureDao.save(param);
+	}
+	
+	@Test
 	public void testSaveHeight() {
 		Configure param = new Configure();
 		param.setId(UIDGeneratorUtil.getUID());
 		param.setStatus("1");
 		param.setCreateTime(new Date());
 		param.setConfKey("image_height");
+		param.setConfValue("150");
+		configureDao.save(param);
+	}
+	
+	@Test
+	public void testSaveHomeHeight() {
+		Configure param = new Configure();
+		param.setId(UIDGeneratorUtil.getUID());
+		param.setStatus("1");
+		param.setCreateTime(new Date());
+		param.setConfKey("home_image_h");
 		param.setConfValue("150");
 		configureDao.save(param);
 	}
@@ -73,6 +95,17 @@ public class TestConfigure extends BaseJunitTest {
 		param.setCreateTime(new Date());
 		param.setConfKey("image_blank");
 		param.setConfValue("image_blank.png");
+		configureDao.save(param);
+	}
+	
+	@Test
+	public void testSaveProfileBlank() {
+		Configure param = new Configure();
+		param.setId(UIDGeneratorUtil.getUID());
+		param.setStatus("1");
+		param.setCreateTime(new Date());
+		param.setConfKey("profile_blank");
+		param.setConfValue("profile_blank.jpg");
 		configureDao.save(param);
 	}
 	

@@ -48,4 +48,10 @@ public class TradeDaoImpl extends BaseDao<ITradeMapper> implements ITradeDao {
 		ITradeMapper mapper = getMapper(ITradeMapper.class);
 		return mapper.query(param, start, end);
 	}
+
+	@Override
+	public int cover(Trade param) {
+		ITradeMapper mapper = getMapper(ITradeMapper.class);
+		return mapper.cover(param);
+	}
 }
