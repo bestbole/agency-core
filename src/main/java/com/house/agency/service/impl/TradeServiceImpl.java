@@ -50,8 +50,7 @@ public class TradeServiceImpl implements ITradeService {
 
 	@Override
 	public Trade getDataById(String id) {
-		// TODO Auto-generated method stub
-		return null;
+		return tradeDao.getDataById(id);
 	}
 
 	@Override

@@ -4,6 +4,7 @@
 	<resultMap type="com.house.agency.entity.Trade" id="tradeResult">
 		<id column="ID" property="id" jdbcType="VARCHAR" />
 <result column="STATUS" property="status" jdbcType="VARCHAR" />
+<result column="RELEASE_TIME" property="releaseTime" jdbcType="TIMESTAMP" />
 <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
 <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
 <result column="REMARKS" property="remarks" jdbcType="VARCHAR" />

@@ -33,8 +33,8 @@ public class TradeDaoImpl extends BaseDao<ITradeMapper> implements ITradeDao {
 
 	@Override
 	public Trade getDataById(String id) {
-		// TODO Auto-generated method stub
-		return null;
+		ITradeMapper mapper = getMapper(ITradeMapper.class);
+		return mapper.getDataById(id);
 	}
 
 	@Override
