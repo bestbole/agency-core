@@ -21,8 +21,8 @@ public class TradeDaoImpl extends BaseDao<ITradeMapper> implements ITradeDao {
 
 	@Override
 	public int update(Trade param) {
-		// TODO Auto-generated method stub
-		return 0;
+		ITradeMapper mapper = getMapper(ITradeMapper.class);
+		return mapper.update(param);
 	}
 
 	@Override

@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.house.agency.dao.ITradeDao;
 import com.house.agency.entity.Trade;
@@ -36,8 +37,11 @@ public class TradeServiceImpl implements ITradeService {
 
 	@Override
 	public void update(Trade param) {
-		// TODO Auto-generated method stub
-
+		param.setUpdateTime(new Date());
+		int count = tradeDao.update(param);
+		if (count < 1) {
+			throw new ServiceException("修改失败");
+		}
 	}
 
 	@Override
@@ -65,6 +69,16 @@ public class TradeServiceImpl implements ITradeService {
 			list = tradeDao.query(param, start, end);
 		}
 		return new Page<Trade>(list, count, page, rows);
+	}
+
+	@Override
+	public void saveOrUpdate(Trade param) {
+		String id = param.getId();
+		if (StringUtils.isEmpty(id)) {
+			save(param);
+		} else {
+			update(param);
+		}
 	}
 
 }
