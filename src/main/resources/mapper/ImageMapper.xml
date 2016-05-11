@@ -40,13 +40,10 @@
       WHERE b.TRADE_ID = #{param.tradeId, jdbcType=VARCHAR}
       order by b.SORT asc
   </select>
-  <select id="listData" resultMap="image">
+  <select id="queryDataByFid" resultMap="image">
     SELECT a.* FROM IMAGE a where 1=1
     <if test="param.foreignId != null and param.foreignId != ''">
       AND a.FOREIGN_ID = #{param.foreignId, jdbcType=VARCHAR}
-    </if>
-    <if test="param.userId != null and param.userId != ''">
-      AND a.USER_ID = #{param.userId, jdbcType=VARCHAR}
     </if>
     <if test="param.type != null and param.type != ''">
       AND a.TYPE = #{param.type, jdbcType=VARCHAR}
@@ -56,6 +53,19 @@
           WHERE b.TRADE_ID = #{param.tradeId, jdbcType=VARCHAR})
       AND (a.USER_ID IS NULL or a.USER_ID = '')
       order by a.CREATE_TIME desc
+  </select>
+  <select id="countDataByFid" resultType="java.lang.Integer">
+    SELECT count(1) FROM IMAGE a where 1=1
+    <if test="param.foreignId != null and param.foreignId != ''">
+      AND a.FOREIGN_ID = #{param.foreignId, jdbcType=VARCHAR}
+    </if>
+    <if test="param.type != null and param.type != ''">
+      AND a.TYPE = #{param.type, jdbcType=VARCHAR}
+    </if>
+      AND a.ID not in (SELECT a.ID
+        FROM IMAGE a JOIN TRADE_IMAGE b ON a.ID = b.IMAGE_ID
+          WHERE b.TRADE_ID = #{param.tradeId, jdbcType=VARCHAR})
+      AND (a.USER_ID IS NULL or a.USER_ID = '')
   </select>
   <select id="queryDataByFuid" resultMap="imageData">
     SELECT 

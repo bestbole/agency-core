@@ -1,15 +1,21 @@
 package com.house.agency.service.impl;
 
 import java.util.Date;
+import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.house.agency.dao.IImageDao;
 import com.house.agency.dao.ITradeDao;
 import com.house.agency.dao.ITradeImageDao;
+import com.house.agency.entity.Image;
 import com.house.agency.entity.Trade;
 import com.house.agency.entity.TradeImage;
+import com.house.agency.param.ImageQueryParam;
+import com.house.agency.param.TradeImageParam;
 import com.house.agency.service.ITradeImageService;
 import com.myself.common.exception.ServiceException;
 import com.myself.common.utils.UIDGeneratorUtil;
@@ -23,8 +29,11 @@ public class TradeImageServiceImpl implements ITradeImageService {
 	@Autowired
 	private ITradeDao tradeDao;
 	
+	@Autowired
+	private IImageDao imageDao;
+	
 	@Override
-	public String save(TradeImage param) {
+	public void save(TradeImage param) {
 		param.setId(UIDGeneratorUtil.getUID());
 		param.setCover("0");
 		param.setStatus("1");
@@ -34,7 +43,42 @@ public class TradeImageServiceImpl implements ITradeImageService {
 			param.setId(null);
 			throw new ServiceException("新增失败");
 		}
-		return param.getId();
+	}
+	
+	@Override
+	public String saveData(TradeImageParam param) {
+		TradeImage data = new TradeImage();
+		data.setTradeId(param.getTradeId());
+		data.setImageId(param.getImageId());
+		save(data);
+		
+		int images = 0;
+		ImageQueryParam imageParam = new ImageQueryParam();
+		imageParam.setTradeId(param.getTradeId());
+		List<Image> datas = imageDao.queryData(imageParam);
+		if (CollectionUtils.isNotEmpty(datas)) {
+			images += datas.size();
+		}
+		imageParam = new ImageQueryParam();
+		imageParam.setForeignId(param.getHouseId());
+		datas = imageDao.queryDataByFid(imageParam);
+		if (CollectionUtils.isNotEmpty(datas)) {
+			images += datas.size();
+		}
+		imageParam.setForeignId(param.getBuildingId());
+		datas = imageDao.queryDataByFid(imageParam);
+		if (CollectionUtils.isNotEmpty(datas)) {
+			images += datas.size();
+		}
+		Trade trade = new Trade();
+		trade.setId(param.getTradeId());
+		trade.setImages(images);
+		trade.setUpdateTime(new Date());
+		int count = tradeDao.update(trade);
+		if (count < 1) {
+			throw new ServiceException("修改失败");
+		}
+		return data.getId();
 	}
 
 	@Override

@@ -35,6 +35,7 @@
 		   PRICE,
 		   TITLE,
 		   TYPE,
+		   IMAGES,
 		   RELEASE_TIME,
 		   CONTENT,
 		   STATUS,
@@ -48,6 +49,7 @@
 		  	#{param.price, jdbcType=INTEGER},
 		  	#{param.title, jdbcType=VARCHAR},
 		  	#{param.type, jdbcType=VARCHAR},
+		  	#{param.images, jdbcType=INTEGER},
 		  	#{param.releaseTime, jdbcType=TIMESTAMP},
 		  	#{param.content, jdbcType=VARCHAR},
 		  	#{param.status, jdbcType=VARCHAR},
@@ -67,7 +69,10 @@
       <if test="param.content != null and param.content != ''">
         CONTENT = #{param.content},
       </if>
-      UPDATE_TIME = #{param.updateTime, jdbcType=TIMESTAMP},
+      <if test="param.images != 0">
+        IMAGES = #{param.images},
+      </if>
+      UPDATE_TIME = #{param.updateTime, jdbcType=TIMESTAMP}
 		</set>
 		where id = #{param.id, jdbcType=VARCHAR}
 	</update>

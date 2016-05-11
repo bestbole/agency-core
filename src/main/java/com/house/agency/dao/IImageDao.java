@@ -22,7 +22,8 @@ public interface IImageDao {
 
 	List<Image> queryData(ImageQueryParam param);
 
-	List<Image> listData(ImageQueryParam param);
+	int countDataByFid(ImageQueryParam param);
+	List<Image> queryDataByFid(ImageQueryParam param);
 	
 	List<ImageData> queryDataByFuid(ImageQueryParam param);
 	

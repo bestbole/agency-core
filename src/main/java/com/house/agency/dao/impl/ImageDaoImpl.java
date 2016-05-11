@@ -51,9 +51,9 @@ public class ImageDaoImpl extends BaseDao<IImageMapper> implements IImageDao {
 	}
 
 	@Override
-	public List<Image> listData(ImageQueryParam param) {
+	public List<Image> queryDataByFid(ImageQueryParam param) {
 		IImageMapper mapper = getMapper(IImageMapper.class);
-		return mapper.listData(param);
+		return mapper.queryDataByFid(param);
 	}
 
 	@Override
@@ -72,6 +72,12 @@ public class ImageDaoImpl extends BaseDao<IImageMapper> implements IImageDao {
 	public List<ImageData> queryHomeDataByFuid(ImageQueryParam param) {
 		IImageMapper mapper = getMapper(IImageMapper.class);
 		return mapper.queryHomeDataByFuid(param);
+	}
+
+	@Override
+	public int countDataByFid(ImageQueryParam param) {
+		IImageMapper mapper = getMapper(IImageMapper.class);
+		return mapper.countDataByFid(param);
 	}
 
 }

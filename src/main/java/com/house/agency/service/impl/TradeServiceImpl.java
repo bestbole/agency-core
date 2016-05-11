@@ -3,14 +3,18 @@ package com.house.agency.service.impl;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import com.house.agency.dao.IImageDao;
 import com.house.agency.dao.ITradeDao;
+import com.house.agency.entity.Image;
 import com.house.agency.entity.Trade;
 import com.house.agency.page.IPage;
 import com.house.agency.page.Page;
+import com.house.agency.param.ImageQueryParam;
 import com.house.agency.param.TradeQueryParam;
 import com.house.agency.service.ITradeService;
 import com.myself.common.exception.ServiceException;
@@ -21,6 +25,9 @@ public class TradeServiceImpl implements ITradeService {
 
 	@Autowired
 	private ITradeDao tradeDao;
+	
+	@Autowired
+	private IImageDao imageDao;
 	
 	@Override
 	public void save(Trade param) {
@@ -72,9 +79,28 @@ public class TradeServiceImpl implements ITradeService {
 	}
 
 	@Override
-	public void saveOrUpdate(Trade param) {
+	public void saveOrUpdate(Trade param, String buildingId) {
 		String id = param.getId();
 		if (StringUtils.isEmpty(id)) {
+			ImageQueryParam imageParam = new ImageQueryParam();
+			imageParam.setForeignId(param.getHouseId());
+			List<Image> houseImages = imageDao.queryDataByFid(imageParam);
+			imageParam.setForeignId(buildingId);
+			List<Image> buildingImages = imageDao.queryDataByFid(imageParam);
+			
+			int images = 0;
+			Image image = null;
+			if (CollectionUtils.isNotEmpty(houseImages)) {
+				image = houseImages.get(0);
+				images = + houseImages.size();
+			} else if (CollectionUtils.isNotEmpty(buildingImages)) {
+				image = buildingImages.get(0);
+				images = + buildingImages.size();
+			}
+			param.setImages(images);
+			if (image != null) {
+				param.setImageId(image.getId());
+			}
 			save(param);
 		} else {
 			update(param);

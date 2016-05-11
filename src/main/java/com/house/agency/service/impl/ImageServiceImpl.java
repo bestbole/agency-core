@@ -77,8 +77,8 @@ public class ImageServiceImpl implements IImageService {
 	}
 
 	@Override
-	public List<Image> listData(ImageQueryParam param) {
-		return imageDao.listData(param);
+	public List<Image> queryDataByFid(ImageQueryParam param) {
+		return imageDao.queryDataByFid(param);
 	}
 
 	@Override
