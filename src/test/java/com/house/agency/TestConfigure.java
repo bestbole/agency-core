@@ -119,4 +119,15 @@ public class TestConfigure extends BaseJunitTest {
 		param.setConfValue("http://127.0.0.1:8008/");
 		configureDao.save(param);
 	}
+	
+	@Test
+	public void testSaveMatch() {
+		Configure param = new Configure();
+		param.setId(UIDGeneratorUtil.getUID());
+		param.setStatus("1");
+		param.setCreateTime(new Date());
+		param.setConfKey("match");
+		param.setConfValue("YT:阳台,LT:凉台");
+		configureDao.save(param);
+	}
 }

@@ -14,7 +14,7 @@
 	</sql>
 	
 	<select id="getDataById" resultMap="customerResult">
-		SELECT * CUSTOMER TRADE WHERE ID = #{id, jdbcType=VARCHAR}
+		SELECT * FROM CUSTOMER WHERE ID = #{id, jdbcType=VARCHAR}
 	</select>
 	<select id="count" resultType="java.lang.Integer">
 		SELECT COUNT(1) <include refid="sqlQuery"/>
@@ -41,19 +41,28 @@
 		  	#{param.phone, jdbcType=VARCHAR},
 		  	#{param.level, jdbcType=VARCHAR},
 		  	#{param.status, jdbcType=VARCHAR},
-          	#{param.createTime, jdbcType=TIMESTAMP},
-          	#{param.remarks, jdbcType=VARCHAR})
+        #{param.createTime, jdbcType=TIMESTAMP},
+        #{param.remarks, jdbcType=VARCHAR})
 	</insert>
 	
 	<update id="update">
-		update TRADE
+		update CUSTOMER
 		<set>
-UPDATE_TIME = #{param.updateTime, jdbcType=TIMESTAMP},
+			<if test="param.name != null and param.name != ''">
+        NAME = #{param.name},
+      </if>
+      <if test="param.phone != null and param.phone != ''">
+        PHONE = #{param.phone},
+      </if>
+      <if test="param.status != null and param.status != ''">
+        STATUS = #{param.status},
+      </if>
+      UPDATE_TIME = #{param.updateTime, jdbcType=TIMESTAMP}
 		</set>
 		where id = #{param.id, jdbcType=VARCHAR}
 	</update>
 	
 	<delete id="deleteById">
-		delete from TRADE a where a.ID = #{id, jdbcType=VARCHAR}
+		delete from CUSTOMER a where a.ID = #{id, jdbcType=VARCHAR}
 	</delete>
 </mapper>

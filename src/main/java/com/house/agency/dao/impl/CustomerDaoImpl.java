@@ -21,32 +21,32 @@ public class CustomerDaoImpl extends BaseDao<ICustomerMapper> implements ICustom
 
 	@Override
 	public int update(Customer param) {
-		// TODO Auto-generated method stub
-		return 0;
+		ICustomerMapper mapper = getMapper(ICustomerMapper.class);
+		return mapper.update(param);
 	}
 
 	@Override
 	public int deleteById(String id) {
-		// TODO Auto-generated method stub
-		return 0;
+		ICustomerMapper mapper = getMapper(ICustomerMapper.class);
+		return mapper.deleteById(id);
 	}
 
 	@Override
 	public Customer getDataById(String id) {
-		// TODO Auto-generated method stub
-		return null;
+		ICustomerMapper mapper = getMapper(ICustomerMapper.class);
+		return mapper.getDataById(id);
 	}
 
 	@Override
 	public int count(CustomerQueryParam param) {
-		// TODO Auto-generated method stub
-		return 0;
+		ICustomerMapper mapper = getMapper(ICustomerMapper.class);
+		return mapper.count(param);
 	}
 
 	@Override
 	public List<Customer> query(CustomerQueryParam param, int start, int end) {
-		// TODO Auto-generated method stub
-		return null;
+		ICustomerMapper mapper = getMapper(ICustomerMapper.class);
+		return mapper.query(param, start, end);
 	}
 
 }

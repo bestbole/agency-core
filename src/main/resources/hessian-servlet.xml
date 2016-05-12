@@ -50,6 +50,10 @@
     <property name="service" ref="configureService" />
     <property name="serviceInterface" value="com.house.agency.service.IConfigureService" />
   </bean>
+  <bean name="/customerService" class="org.springframework.remoting.caucho.HessianServiceExporter">
+    <property name="service" ref="customerService" />
+    <property name="serviceInterface" value="com.house.agency.service.ICustomerService" />
+  </bean>
 	<!-- hessian-servlet-conf -->
 	
 </beans>

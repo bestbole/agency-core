@@ -1,5 +1,8 @@
 package com.house.agency;
 
+import java.util.Map;
+
+import com.myself.common.utils.MapUtil;
 import com.myself.common.utils.UIDGeneratorUtil;
 
 public class Test {
@@ -20,5 +23,10 @@ public class Test {
 		6b2d4a153fb08a44b7ff9
 		91993f153fb08a44b7ff8
 		4af82c153fb08a44b7ff7*/
+		
+		Map<String, String> map = MapUtil.getMap("1:中国,2:美国", "[,]");
+		for(Map.Entry<String, String> entry: map.entrySet()) {
+			System.out.print(entry.getKey() + ":" + entry.getValue() + "\t");
+		}
 	}
 }

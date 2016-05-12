@@ -38,6 +38,7 @@
 		   IMAGES,
 		   RELEASE_TIME,
 		   CONTENT,
+		   MATCHS,
 		   STATUS,
 		   CREATE_TIME,
 		   REMARKS)
@@ -52,6 +53,7 @@
 		  	#{param.images, jdbcType=INTEGER},
 		  	#{param.releaseTime, jdbcType=TIMESTAMP},
 		  	#{param.content, jdbcType=VARCHAR},
+		  	#{param.matchs, jdbcType=VARCHAR},
 		  	#{param.status, jdbcType=VARCHAR},
         #{param.createTime, jdbcType=TIMESTAMP},
         #{param.remarks, jdbcType=VARCHAR})
@@ -68,6 +70,9 @@
       </if>
       <if test="param.content != null and param.content != ''">
         CONTENT = #{param.content},
+      </if>
+      <if test="param.matchs != null and param.matchs != ''">
+        MATCHS = #{param.matchs},
       </if>
       <if test="param.images != 0">
         IMAGES = #{param.images},
