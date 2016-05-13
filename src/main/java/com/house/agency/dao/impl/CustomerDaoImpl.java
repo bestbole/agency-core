@@ -49,4 +49,10 @@ public class CustomerDaoImpl extends BaseDao<ICustomerMapper> implements ICustom
 		return mapper.query(param, start, end);
 	}
 
+	@Override
+	public List<Customer> queryDataByUid(String userId) {
+		ICustomerMapper mapper = getMapper(ICustomerMapper.class);
+		return mapper.queryDataByUid(userId);
+	}
+
 }

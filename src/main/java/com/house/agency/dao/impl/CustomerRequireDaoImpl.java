@@ -21,33 +21,33 @@ public class CustomerRequireDaoImpl extends BaseDao<ICustomerRequireMapper> impl
 
 	@Override
 	public int update(CustomerRequire param) {
-		// TODO Auto-generated method stub
-		return 0;
+		ICustomerRequireMapper mapper = getMapper(ICustomerRequireMapper.class);
+		return mapper.update(param);
 	}
 
 	@Override
 	public int deleteById(String id) {
-		// TODO Auto-generated method stub
-		return 0;
+		ICustomerRequireMapper mapper = getMapper(ICustomerRequireMapper.class);
+		return mapper.deleteById(id);
 	}
 
 	@Override
 	public CustomerRequire getDataById(String id) {
-		// TODO Auto-generated method stub
-		return null;
+		ICustomerRequireMapper mapper = getMapper(ICustomerRequireMapper.class);
+		return mapper.getDataById(id);
 	}
 
 	@Override
 	public int count(CustomerRequireQueryParam param) {
-		// TODO Auto-generated method stub
-		return 0;
+		ICustomerRequireMapper mapper = getMapper(ICustomerRequireMapper.class);
+		return mapper.count(param);
 	}
 
 	@Override
 	public List<CustomerRequire> query(CustomerRequireQueryParam param,
 			int start, int end) {
-		// TODO Auto-generated method stub
-		return null;
+		ICustomerRequireMapper mapper = getMapper(ICustomerRequireMapper.class);
+		return mapper.query(param, start, end);
 	}
 
 }

@@ -84,4 +84,9 @@ public class CustomerServiceImpl implements ICustomerService {
 		}
 	}
 
+	@Override
+	public List<Customer> queryDataByUid(String userId) {
+		return customerDao.queryDataByUid(userId);
+	}
+
 }
