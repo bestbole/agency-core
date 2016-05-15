@@ -48,4 +48,8 @@ public interface IHouseMapper {
 	
 	List<HouseManageData> queryManageData(@Param("param") HouseManageQueryParam param,
 			@Param("start") int start, @Param("end") int end);
+	
+	int countByCustomerRequire(@Param("param") HouseHomeQueryParam param);
+	List<HouseHomeData> queryByCustomerRequire(@Param("param") HouseHomeQueryParam param,
+			@Param("start") int start, @Param("end") int end);
 }

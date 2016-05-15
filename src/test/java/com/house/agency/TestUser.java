@@ -21,7 +21,7 @@ public class TestUser extends BaseJunitTest {
 		param.setId(Data.userId + "001");
 		param.setStatus("1");
 		param.setCreateTime(new Date());
-		param.setNickname("name1");
+		param.setNickname("张芳");
 		param.setUsername("hesheng");
 		param.setAccount("jokn");
 		param.setPassword("123456");

@@ -4,6 +4,19 @@
 
 systemctl stop firewalld
 systemctl mask firewalld
+
+首先查看本机的 iptables 的版本：rpm -qa iptables，发现是iptables-2.16-xxx.xx
+
+于是下载了 iptables 的rpm包，即：iptables-2.16-xxx.xx.rpm
+
+然后强制卸载 iptables 包: rpm -e --nodeps iptables-2.16-xxx.xx  这里需要加上 --nodeps 不考虑依赖，强制卸载。
+
+卸载完毕，安装: rpm -ivh iptables-2.16-xxx.xx.rpm
+
+安装成功后，执行 iptables 命令：iptables -L 。发现不再提示段错误了，正常了。
+
+重启iptables，即执行命令： systemctl restart iptables.service，
+查看iptables状态，即：systemctl status iptables.service。
  
 并且安装iptables-services：
 1
@@ -21,13 +34,33 @@ service iptables save
 /usr/libexec/iptables/iptables.init save
 //防火墙
 
+//linux
+shutdown -h now
+//linux
+
 //Java安装
+1.查看Linux自带的JDK是否已安装
 查看CentOS自带JDK是否已安装。
-输入：yum list installed |grep java。
+输入：yum list installed |grep -i java。
+2.卸载OpenJDK
 若有自带安装的JDK，如何卸载CentOS系统自带Java环境？
 卸载JDK相关文件输入：yum -y remove java-1.7.0-openjdk*。
 卸载tzdata-java输入：yum -y remove tzdata-java.noarch。
 当结果显示为Complete！即卸载完毕。
+3.新建java安装目录
+mkdir /usr/java
+4.将之前下载的jdk解压缩并安装
+tar -zxvf  jdk-7u71-linux-i586.tar.gz
+5.在profile文件中加入java环境变量
+vi /etc/profile  
+  
+export JAVA_HOME=/usr/java/jdk1.8.0_91  
+export CLASSPATH=.:%JAVA_HOME%/lib/dt.jar:%JAVA_HOME%/lib/tools.jar  
+export PATH=$PATH:$JAVA_HOME/bin
+6.使文件立即生效
+source /etc/profile
+7.检测是否安装成功
+java -version 
 //Java安装
 
 //tomcat安装
@@ -41,7 +74,7 @@ service iptables save
 
 8080端口开启
 [root@admin ~]# vi + /etc/sysconfig/iptables
--A RH-Firewall-1-INPUT -m state --state NEW -m tcp -p tcp --dport 8080 -j ACCEPT
+-A RH-Firewall-1-INPUT -m state --state NEW -m tcp -p tcp --dport 8081 -j ACCEPT
 service iptables restart
 //tomcat安装
 
@@ -55,6 +88,7 @@ b. 下载Linux对应的RPM包，如：CentOS6.4_64对应的RPM包，如下
 MySQL-client-5.6.15-1.el6.x86_64.rpm
 MySQL-devel-5.6.15-1.el6.x86_64.rpm
 MySQL-server-5.6.15-1.el6.x86_64.rpm
+在下载页面Select Platform:选项选择linux-generic
 c. 安装MySQL
 [root@localhost rpm]# rpm -ivh MySQL-server-5.6.15-1.el6.x86_64.rpm
 [root@localhost rpm]# rpm -ivh MySQL-devel-5.6.15-1.el6.x86_64.rpm
@@ -80,17 +114,18 @@ rpm -qa | grep -i mariadb
 [root@bogon 桌面]# service mysql stop
 6. 初始化MySQL及设置密码
 cat /root/.mysql_secret  #查看root账号密码,密码动态生成
-[root@localhost ~]# mysql -u root –p qKTaFZnl
+[root@localhost ~]# mysql -u root –p Y7Q3I2EEXf_fmHtT
 mysql> SET PASSWORD = PASSWORD('123456');    #设置密码为123456
 mysql> exit
 [root@localhost ~]# mysql -u root -p 123456
 7. 允许远程登陆
 mysql> use mysql;
-mysql> select host,user,password from user;
-mysql> update user set password=password('123456') where user='root';
+mysql> select host,user,password,password_expired from user;
+mysql> update user set password=password('123!@#456') where user='root';
 mysql> update user set host='%' where user='root' and host='localhost';
 mysql> flush privileges;
 mysql> exit
+发现表中密码过期，密码过期状态（password_expired字段值）是否为Y，Y表示已过期，需要修改为N
 8. 设置开机自启动
 [root@localhost ~]# chkconfig mysql on
 [root@localhost ~]# chkconfig --list | grep mysql
@@ -104,6 +139,7 @@ mysql> exit
 default-character-set=utf8
 在[mysqld]下添加
 default-character-set=utf8（mysql 5.5 版本添加character-set-server=utf8）
+
 
 配置/etc/my.cnf文件,修改数据存放路径、mysql.sock路径以及默认编码utf-8.
 [client]
@@ -141,8 +177,31 @@ update user set host='%' where user='john' and host='localhost';
 //MySQL安装
 
 //nginx
+第三步:检测是否安装成功
+
+[root@localhost nginx-1.2.6]# cd  /usr/local/nginx/sbin
+
+[root@localhost sbin]# ./nginx -t
+
+启动nginx
+[root@localhost sbin]# ./nginx
+查看端口
+[root@localhost sbin]# netstat -ntlp
+# nginx -t
+nginx: the configuration file /usr/local/etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /usr/local/etc/nginx/nginx.conf test is successful
+
+
+首先执行命令找到nginx路径
+ps aux | grep nginx
+如nginx路径为
+/usr/local/nginx/sbin/nginx
+
+然后执行以下命令
+/usr/local/nginx/sbin/nginx -V
+默认放在 安装目录下 conf/nginx.conf
 server {
-    listen       8000;
+    listen       8090;
     server_name  localhost;
 
     location ~ .*\.(gif|jpg|jpeg|png)$ {
@@ -151,13 +210,19 @@ server {
 
     access_log  E:/files/logs/log_access.log;
 }
+server {
+    listen       8090;
+    server_name  localhost;
+
+    location ~ .*\.(gif|jpg|jpeg|png)$ {
+        root   /data/files/images/;
+    }
+
+    #access_log /usr/nginx/logs/log_access.log;
+}
 nginx.exe -s reload
 start nginx
 //nginx
-
-<ImageTag:image src="image-5.jpg" width="202" height="150" path="F:/images/" />
-content += '  <ImageTag:image src="' + data.url + '" width="202" height="150" path="${uploadFolder}" base="${imageUrl}"/>';
-nginx.exe -s reload
 
 文件及目录的复制是经常要用到的。linux下进行复制的命令为cp。
 假设复制源目录 为 dir1 ,目标目录为dir2。怎样才能将dir1下所有文件复制到dir2下了

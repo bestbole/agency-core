@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.house.agency.mapper.ICustomerRequireNumMapper">
+	<resultMap type="com.house.agency.entity.CustomerRequireNum" id="customerRequireNum">
+		<id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="REQUIRE_ID" property="requireId" jdbcType="VARCHAR" />
+    <result column="NUM" property="num" jdbcType="INTEGER" />
+	</resultMap>
+
+	<select id="getDataById" resultMap="customerRequireNum">
+		SELECT * FROM CUSTOMER_REQUIRE_NUM WHERE ID = #{id, jdbcType=VARCHAR}
+	</select>
+	
+	<insert id="save" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO CUSTOMER_REQUIRE_NUM
+		  (ID,
+		   REQUIRE_ID,
+		   NUM)
+		VALUES (
+		  	#{param.id, jdbcType=VARCHAR},
+		  	#{param.requireId, jdbcType=VARCHAR},
+		  	#{param.num, jdbcType=INTEGER})
+	</insert>
+	
+	<update id="update">
+		update CUSTOMER_REQUIRE_NUM
+		<set>
+      NUM = #{param.num, jdbcType=INTEGER}
+		</set>
+		where id = #{param.id, jdbcType=VARCHAR}
+	</update>
+	<update id="updateByRequireId">
+    update CUSTOMER_REQUIRE_NUM
+    <set>
+      NUM = #{param.num, jdbcType=INTEGER}
+    </set>
+    where REQUIRE_ID = #{param.requireId, jdbcType=VARCHAR}
+  </update>
+	
+	<delete id="deleteById">
+		delete from CUSTOMER_REQUIRE_NUM a where a.ID = #{id, jdbcType=VARCHAR}
+	</delete>
+	<delete id="deleteByRequireId">
+    delete from CUSTOMER_REQUIRE_NUM a where a.REQUIRE_ID = #{requireId, jdbcType=VARCHAR}
+  </delete>
+</mapper>

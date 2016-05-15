@@ -22,7 +22,7 @@ public class TestConfigure extends BaseJunitTest {
 		param.setStatus("1");
 		param.setCreateTime(new Date());
 		param.setConfKey("temp_folder");
-		param.setConfValue("E:/files/temps/");
+		param.setConfValue("/data/files/temps");
 		configureDao.save(param);
 	}
 	
@@ -39,7 +39,7 @@ public class TestConfigure extends BaseJunitTest {
 		param.setStatus("1");
 		param.setCreateTime(new Date());
 		param.setConfKey("upload_folder");
-		param.setConfValue("E:/files/images/");
+		param.setConfValue("/data/files/images");
 		configureDao.save(param);
 	}
 	
@@ -116,7 +116,7 @@ public class TestConfigure extends BaseJunitTest {
 		param.setStatus("1");
 		param.setCreateTime(new Date());
 		param.setConfKey("image_url");
-		param.setConfValue("http://127.0.0.1:8008/");
+		param.setConfValue("http://192.168.17.153:8090");
 		configureDao.save(param);
 	}
 	

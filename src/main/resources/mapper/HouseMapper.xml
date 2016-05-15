@@ -278,6 +278,77 @@
    	  order by a.CARD asc
    </select>
    
+   <sql id="sqlQueryByCustomerRequire">
+      FROM TRADE a
+    JOIN HOUSE b
+      ON a.HOUSE_ID = b.ID
+    JOIN BUILDING_UNIT c
+      ON b.BUILDING_UNIT_ID = c.ID
+    JOIN BUILDING d
+      ON c.BUILDING_ID = d.ID
+    JOIN REGION e
+      ON e.ID = d.TOWN_ID
+    JOIN REGION f
+      ON f.ID = e.PARENT_ID
+     WHERE 1=1
+      <if test="param.districtId != null and param.districtId != ''">
+        AND f.ID = #{param.districtId}
+      </if>
+      <if test="param.townId != null and param.townId != ''">
+        AND e.ID = #{param.townId}
+      </if>
+      <if test="param.buildingId != null and param.buildingId != ''">
+        AND d.ID = #{param.buildingId}
+      </if>
+      <if test="param.priceBegin != 0">
+        AND a.PRICE <![CDATA[>=]]> #{param.priceBegin}
+      </if>
+      <if test="param.priceEnd != 0">
+        AND a.PRICE <![CDATA[<=]]> #{param.priceEnd}
+      </if>
+      <if test="param.areaBegin != 0">
+        AND b.AREA <![CDATA[>=]]> #{param.areaBegin}
+      </if>
+      <if test="param.areaEnd != 0">
+        AND b.AREA <![CDATA[<=]]> #{param.areaEnd}
+      </if>
+      <if test="param.rooms != null and param.rooms != ''">
+        AND b.ROOM in (${param.rooms})
+      </if>
+   </sql>
+   <select id="countByCustomerRequire" resultType="java.lang.Integer">
+     SELECT COUNT(1) <include refid="sqlQueryByCustomerRequire"/>
+   </select>
+   <select id="queryByCustomerRequire" resultMap="houseHomeData">
+     SELECT 
+       a.ID TRADE_ID,
+       b.Id HOUSE_ID,
+       d.ID BUILDING_ID,
+       f.NAME DISTRICT_NAME, 
+       e.NAME TOWN_NAME, 
+       d.BUILDING_NAME,
+       d.BUILDING_ADDRESS, 
+       c.FLOOR BUILDING_FLOOR,
+       c.NAME FLOOR_NAME,
+       a.TITLE,
+       a.PRICE,
+       b.AREA,
+       b.ROOM,
+       b.SALOON,
+       b.TOILET,
+       b.FLOOR,
+       b.FACE,
+       b.FITMENT,
+       b.CARD,
+       b.CODE,
+       b.ENCODE,
+       a.STATUS,
+       a.RELEASE_TIME
+      <include refid="sqlQueryByCustomerRequire"/>
+      order by a.RELEASE_TIME desc
+      limit #{start, jdbcType=INTEGER}, #{end, jdbcType=INTEGER}
+   </select>
+   
    <sql id="sqlQueryHomeData">
       FROM TRADE a
     JOIN HOUSE b
@@ -336,7 +407,7 @@
       <if test="param.releaseDateEnd != null and param.releaseDateEnd != ''">
         AND to_char(a.RELEASE_TIME, 'YYYY-MM-DD') <![CDATA[<=]]> #{param.releaseDateEnd}
       </if>
-  </sql>
+   </sql>
    <select id="countHomeData" resultType="java.lang.Integer">
      SELECT COUNT(1) <include refid="sqlQueryHomeData"/>
    </select>

@@ -65,6 +65,9 @@
     <if test="param.buildingName != null and param.buildingName != ''">
       and a.BUILDING_NAME like '%${param.buildingName}%'
     </if>
+    <if test="param.status != null and param.status != ''">
+      AND a.STATUS = #{param.status}
+    </if>
 			order by a.CREATE_TIME desc
 	</select>
 	

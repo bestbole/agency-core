@@ -3,26 +3,134 @@
 <mapper namespace="com.house.agency.mapper.ICustomerRequireMapper">
 	<resultMap type="com.house.agency.entity.CustomerRequire" id="customerRequire">
 		<id column="ID" property="id" jdbcType="VARCHAR" />
-<result column="STATUS" property="status" jdbcType="VARCHAR" />
-<result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
-<result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
-<result column="REMARKS" property="remarks" jdbcType="VARCHAR" />
+		<result column="CUSTOMER_ID" property="customerId" jdbcType="VARCHAR" />
+		<result column="DISTRICT_IDS" property="districtIds" jdbcType="VARCHAR" />
+		<result column="TOWN_IDS" property="townIds" jdbcType="VARCHAR" />
+		<result column="BUILDING_IDS" property="buildingIds" jdbcType="VARCHAR" />
+    <result column="PRICE_BEGIN" property="priceBegin" jdbcType="INTEGER" />
+    <result column="PRICE_END" property="priceEnd" jdbcType="INTEGER" />
+    <result column="AREA_BEGIN" property="areaBegin" jdbcType="INTEGER" />
+    <result column="AREA_END" property="areaEnd" jdbcType="INTEGER" />
+    <result column="FLOORS" property="floors" jdbcType="VARCHAR" />
+    <result column="ROOMS" property="rooms" jdbcType="VARCHAR" />
+    <result column="SALOONS" property="saloons" jdbcType="VARCHAR" />
+    <result column="TOILETS" property="toilets" jdbcType="VARCHAR" />
+    <result column="KITCHENS" property="kitchens" jdbcType="VARCHAR" />
+    <result column="FACES" property="faces" jdbcType="VARCHAR" />
+    <result column="TYPE" property="type" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
 	</resultMap>
-
-	<sql id="sqlQuery">
-		FROM CUSTOMER_REQUIRE a where 1=1
-	</sql>
 	
+	<resultMap type="com.house.agency.data.home.CustomerRequireHomeData" id="customerRequireHomeData">
+		<result column="REQUIRE_ID" property="requireId" jdbcType="VARCHAR" />
+		<result column="DISTRICT_IDS" property="districtIds" jdbcType="VARCHAR" />
+		<result column="TOWN_IDS" property="townIds" jdbcType="VARCHAR" />
+		<result column="BUILDING_IDS" property="buildingIds" jdbcType="VARCHAR" />
+		<result column="NAME" property="name" jdbcType="VARCHAR" />
+		<result column="PHONE" property="phone" jdbcType="VARCHAR" />
+		<result column="DISTRICT_NAME" property="districtName" jdbcType="VARCHAR" />
+		<result column="TOWN_NAME" property="townName" jdbcType="VARCHAR" />
+		<result column="BUILDING_NAME" property="buildingName" jdbcType="VARCHAR" />
+		<result column="PRICE_BEGIN" property="priceBegin" jdbcType="INTEGER" />
+		<result column="PRICE_END" property="priceEnd" jdbcType="INTEGER" />
+		<result column="AREA_BEGIN" property="areaBegin" jdbcType="INTEGER" />
+		<result column="AREA_END" property="areaEnd" jdbcType="INTEGER" />
+		<result column="FLOORS" property="floors" jdbcType="VARCHAR" />
+		<result column="ROOMS" property="rooms" jdbcType="VARCHAR" />
+		<result column="SALOONS" property="saloons" jdbcType="VARCHAR" />
+		<result column="TOILETS" property="toilets" jdbcType="VARCHAR" />
+		<result column="KITCHENS" property="kitchens" jdbcType="VARCHAR" />
+		<result column="FACES" property="faces" jdbcType="VARCHAR" />
+		<result column="TYPE" property="type" jdbcType="VARCHAR" />
+		<result column="STATUS" property="status" jdbcType="VARCHAR" />
+		<result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="NUM" property="num" jdbcType="INTEGER" />
+  </resultMap>
+
 	<select id="getDataById" resultMap="customerRequire">
 		SELECT * FROM CUSTOMER_REQUIRE WHERE ID = #{id, jdbcType=VARCHAR}
 	</select>
+	<sql id="sqlQuery">
+    FROM CUSTOMER_REQUIRE
+  </sql>
 	<select id="count" resultType="java.lang.Integer">
 		SELECT COUNT(1) <include refid="sqlQuery"/>
 	</select>
 	<select id="query" resultMap="customerRequire">
-		SELECT a.* <include refid="sqlQuery"/>
+		SELECT a.*
+		  <include refid="sqlQuery"/>
 			order by a.CREATE_TIME desc limit #{start, jdbcType=INTEGER}, #{end, jdbcType=INTEGER}
 	</select>
+	
+	<select id="queryAll" resultMap="customerRequire">
+	  SELECT a.* FROM CUSTOMER_REQUIRE a order by a.CREATE_TIME asc
+	</select>
+	
+	<sql id="sqlQueryData">
+    FROM CUSTOMER_REQUIRE a JOIN CUSTOMER b ON a.CUSTOMER_ID = b.ID
+     JOIN CUSTOMER_REQUIRE_NUM c ON a.ID = c.REQUIRE_ID
+     LEFT JOIN REGION d ON a.DISTRICT_IDS = d.ID
+     LEFT JOIN REGION e ON a.TOWN_IDS = e.ID
+     LEFT JOIN BUILDING f ON a.BUILDING_IDS = f.ID
+     where 1=1
+  </sql>
+  <select id="countData" resultType="java.lang.Integer">
+    SELECT COUNT(1) <include refid="sqlQueryData"/>
+  </select>
+  <select id="queryData" resultMap="customerRequireHomeData">
+    SELECT
+      a.ID REQUIRE_ID, 
+      b.NAME,
+      b.PHONE,
+      d.NAME DISTRICT_NAME,
+      e.NAME TOWN_NAME,
+      f.BUILDING_NAME,
+      a.PRICE_BEGIN,
+      a.PRICE_END,
+      a.AREA_BEGIN,
+      a.AREA_END,
+      a.FLOORS,
+      a.ROOMS,
+      a.SALOONS,
+      a.TOILETS,
+      a.KITCHENS,
+      a.FACES,
+      a.TYPE,
+      a.STATUS,
+      a.CREATE_TIME,
+      c.NUM
+      <include refid="sqlQueryData"/>
+      order by a.CREATE_TIME desc limit #{start, jdbcType=INTEGER}, #{end, jdbcType=INTEGER}
+  </select>
+  <select id="getDataByRequireId" resultMap="customerRequireHomeData">
+    SELECT
+      a.ID REQUIRE_ID,
+      a.DISTRICT_IDS,
+      a.TOWN_IDS,
+      a.BUILDING_IDS,
+      b.NAME,
+      b.PHONE,
+      d.NAME DISTRICT_NAME,
+      e.NAME TOWN_NAME,
+      f.BUILDING_NAME,
+      a.PRICE_BEGIN,
+      a.PRICE_END,
+      a.AREA_BEGIN,
+      a.AREA_END,
+      a.FLOORS,
+      a.ROOMS,
+      a.SALOONS,
+      a.TOILETS,
+      a.KITCHENS,
+      a.FACES,
+      a.TYPE
+    FROM CUSTOMER_REQUIRE a JOIN CUSTOMER b ON a.CUSTOMER_ID = b.ID
+     LEFT JOIN REGION d ON a.DISTRICT_IDS = d.ID
+     LEFT JOIN REGION e ON a.TOWN_IDS = e.ID
+     LEFT JOIN BUILDING f ON a.BUILDING_IDS = f.ID
+     where ID = #{requireId, jdbcType=VARCHAR}
+  </select>
 	
 	<insert id="save" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO CUSTOMER_REQUIRE
@@ -63,8 +171,8 @@
 		  	#{param.faces, jdbcType=VARCHAR},
 		  	#{param.type, jdbcType=VARCHAR},
 		  	#{param.status, jdbcType=VARCHAR},
-          	#{param.createTime, jdbcType=TIMESTAMP},
-          	#{param.remarks, jdbcType=VARCHAR})
+        #{param.createTime, jdbcType=TIMESTAMP},
+        #{param.remarks, jdbcType=VARCHAR})
 	</insert>
 	
 	<update id="update">

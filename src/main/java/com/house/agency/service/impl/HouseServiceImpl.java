@@ -18,7 +18,9 @@ import com.house.agency.data.home.HouseHomeDescData;
 import com.house.agency.data.manage.HouseManageData;
 import com.house.agency.entity.House;
 import com.house.agency.page.IPage;
+import com.house.agency.page.IPagination;
 import com.house.agency.page.Page;
+import com.house.agency.page.Pager;
 import com.house.agency.param.HouseQueryParam;
 import com.house.agency.param.home.HouseHomeQueryParam;
 import com.house.agency.param.manage.HouseManageQueryParam;
@@ -161,5 +163,23 @@ public class HouseServiceImpl implements IHouseService {
 			list = houseDao.queryHomeData(param, start, end);
 		}
 		return new Page<HouseHomeData>(list, count, page, rows);
+	}
+
+	@Override
+	public IPage<HouseHomeData> queryByCustomerRequire(final HouseHomeQueryParam param, int page, int rows) {
+		int pageNo = page <= 0 ? 1 : page;
+		int pageSize = rows <= 0 ? 10 : rows;
+		return Pager.execute(new IPagination<HouseHomeData>() {
+
+			@Override
+			public int count() {
+				return houseDao.countByCustomerRequire(param);
+			}
+
+			@Override
+			public List<HouseHomeData> query(int start, int end) {
+				return houseDao.queryByCustomerRequire(param, start, end);
+			}
+		}, pageNo, pageSize);
 	}
 }

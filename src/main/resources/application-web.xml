@@ -83,6 +83,7 @@
 	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver" />
 	
 	<task:scheduled-tasks>   
-    <task:scheduled ref="taskJob" method="job1" cron="0 0/2 * * * ?"/>   
+    <!-- <task:scheduled ref="taskJob" method="job1" cron="0 0/2 * * * ?"/> -->
+    <task:scheduled ref="customerRequireNumTask" method="updateCustomerRequireNum" cron="0 0/2 * * * ?"/>  
   </task:scheduled-tasks>
 </beans>

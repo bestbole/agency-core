@@ -105,4 +105,16 @@ public class HouseDaoImpl extends BaseDao<IHouseMapper> implements IHouseDao {
 		IHouseMapper mapper = getMapper(IHouseMapper.class);
 		return mapper.queryHomeData(param, start, end);
 	}
+
+	@Override
+	public int countByCustomerRequire(HouseHomeQueryParam param) {
+		IHouseMapper mapper = getMapper(IHouseMapper.class);
+		return mapper.countByCustomerRequire(param);
+	}
+
+	@Override
+	public List<HouseHomeData> queryByCustomerRequire(HouseHomeQueryParam param, int start, int end) {
+		IHouseMapper mapper = getMapper(IHouseMapper.class);
+		return mapper.queryByCustomerRequire(param, start, end);
+	}
 }

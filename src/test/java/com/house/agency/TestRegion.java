@@ -28,7 +28,7 @@ public class TestRegion extends BaseJunitTest {
 		param.setName("深圳");
 		param.setCode("SZ");
 		param.setLevel("2");
-		param.setSeq(1);
+		param.setSort(1);
 		regionDao.save(param);
 
 	}
@@ -51,7 +51,7 @@ public class TestRegion extends BaseJunitTest {
 			param.setName(data[0]);
 			param.setCode(data[1]);
 			param.setLevel("3");
-			param.setSeq((i + 1));
+			param.setSort((i + 1));
 			regionDao.save(param);
 		}
 
@@ -70,7 +70,7 @@ public class TestRegion extends BaseJunitTest {
 			param.setName(data[0]);
 			param.setCode(data[1]);
 			param.setLevel("4");
-			param.setSeq((i + 1));
+			param.setSort((i + 1));
 			regionDao.save(param);
 		}
 	}
@@ -88,7 +88,7 @@ public class TestRegion extends BaseJunitTest {
 			param.setName(data[0]);
 			param.setCode(data[1]);
 			param.setLevel("4");
-			param.setSeq((i + 1));
+			param.setSort((i + 1));
 			regionDao.save(param);
 		}
 	}
@@ -106,7 +106,7 @@ public class TestRegion extends BaseJunitTest {
 			param.setName(data[0]);
 			param.setCode(data[1]);
 			param.setLevel("4");
-			param.setSeq((i + 1));
+			param.setSort((i + 1));
 			regionDao.save(param);
 		}
 	}
@@ -125,7 +125,7 @@ public class TestRegion extends BaseJunitTest {
 			param.setName(data[0]);
 			param.setCode(data[1]);
 			param.setLevel("4");
-			param.setSeq((i + 1));
+			param.setSort((i + 1));
 			regionDao.save(param);
 		}
 	}
@@ -144,7 +144,7 @@ public class TestRegion extends BaseJunitTest {
 			param.setName(data[0]);
 			param.setCode(data[1]);
 			param.setLevel("4");
-			param.setSeq((i + 1));
+			param.setSort((i + 1));
 			regionDao.save(param);
 		}
 	}
@@ -163,7 +163,7 @@ public class TestRegion extends BaseJunitTest {
 			param.setName(data[0]);
 			param.setCode(data[1]);
 			param.setLevel("4");
-			param.setSeq((i + 1));
+			param.setSort((i + 1));
 			regionDao.save(param);
 		}
 	}
@@ -182,7 +182,7 @@ public class TestRegion extends BaseJunitTest {
 			param.setName(data[0]);
 			param.setCode(data[1]);
 			param.setLevel("4");
-			param.setSeq((i + 1));
+			param.setSort((i + 1));
 			regionDao.save(param);
 		}
 	}
@@ -202,7 +202,7 @@ public class TestRegion extends BaseJunitTest {
 			param.setName(data[0]);
 			param.setCode(data[1]);
 			param.setLevel("4");
-			param.setSeq((i + 1));
+			param.setSort((i + 1));
 			regionDao.save(param);
 		}
 	}
@@ -222,7 +222,7 @@ public class TestRegion extends BaseJunitTest {
 			param.setName(data[0]);
 			param.setCode(data[1]);
 			param.setLevel("4");
-			param.setSeq((i + 1));
+			param.setSort((i + 1));
 			regionDao.save(param);
 		}
 	}
@@ -249,7 +249,7 @@ public class TestRegion extends BaseJunitTest {
 			return region;
 		} else {
 			String key = region.getLevel() + "_" + region.getId() + "_" + region.getParentId() + "_" + region.getName()
-					+ "_" + region.getCode() + "_" + region.getSeq();
+					+ "_" + region.getCode() + "_" + region.getSort();
 			
 			List<Region> regions = null;
 			if (index != 0) {

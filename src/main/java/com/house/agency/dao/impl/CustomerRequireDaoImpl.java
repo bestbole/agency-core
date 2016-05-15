@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import com.house.agency.dao.BaseDao;
 import com.house.agency.dao.ICustomerRequireDao;
+import com.house.agency.data.home.CustomerRequireHomeData;
 import com.house.agency.entity.CustomerRequire;
 import com.house.agency.mapper.ICustomerRequireMapper;
 import com.house.agency.param.CustomerRequireQueryParam;
@@ -48,6 +49,30 @@ public class CustomerRequireDaoImpl extends BaseDao<ICustomerRequireMapper> impl
 			int start, int end) {
 		ICustomerRequireMapper mapper = getMapper(ICustomerRequireMapper.class);
 		return mapper.query(param, start, end);
+	}
+
+	@Override
+	public int countData(CustomerRequireQueryParam param) {
+		ICustomerRequireMapper mapper = getMapper(ICustomerRequireMapper.class);
+		return mapper.countData(param);
+	}
+
+	@Override
+	public List<CustomerRequireHomeData> queryData(CustomerRequireQueryParam param, int start, int end) {
+		ICustomerRequireMapper mapper = getMapper(ICustomerRequireMapper.class);
+		return mapper.queryData(param, start, end);
+	}
+
+	@Override
+	public List<CustomerRequire> queryAll(CustomerRequireQueryParam param) {
+		ICustomerRequireMapper mapper = getMapper(ICustomerRequireMapper.class);
+		return mapper.queryAll(param);
+	}
+
+	@Override
+	public CustomerRequireHomeData getDataByRequireId(String requireId) {
+		ICustomerRequireMapper mapper = getMapper(ICustomerRequireMapper.class);
+		return mapper.getDataByRequireId(requireId);
 	}
 
 }

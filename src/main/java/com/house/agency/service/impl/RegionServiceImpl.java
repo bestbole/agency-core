@@ -107,7 +107,7 @@ public class RegionServiceImpl implements IRegionService {
 			return region;
 		} else {
 			String key = region.getLevel() + "_" + region.getId() + "_" + region.getParentId() + "_" + region.getName()
-					+ "_" + region.getCode() + "_" + region.getSeq() + "_" + region.getStatus();
+					+ "_" + region.getCode() + "_" + region.getSort() + "_" + region.getStatus();
 			
 			List<Region> regions = null;
 			if (index != 0) {
