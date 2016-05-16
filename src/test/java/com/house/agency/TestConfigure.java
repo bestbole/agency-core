@@ -137,4 +137,15 @@ public class TestConfigure extends BaseJunitTest {
 		param.setConfValue("YT:阳台,LT:凉台");
 		configureDao.save(param);
 	}
+	
+	@Test
+	public void testSaveFaces() {
+		Configure param = new Configure();
+		param.setId(UIDGeneratorUtil.getUID());
+		param.setStatus("1");
+		param.setCreateTime(new Date());
+		param.setConfKey("faces");
+		param.setConfValue("1:东,2:南,3:西,4:北");
+		configureDao.save(param);
+	}
 }

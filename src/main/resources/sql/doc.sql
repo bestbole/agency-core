@@ -281,3 +281,25 @@ export CATALINA_HOME=$CATALINA_3_HOME
 export CATALINA_BASE=$CATALINA_3_BASE
 
 Choose unique values for the 'webAppRootKey' context-param in your web.xml files!
+
+//java
+<c:forEach var="data" items="${faces}">
+Agency.map.put('${data.key}', '${data.value}');
+</c:forEach>
+Map<Integer, String> map = new HashMap<Integer, String>();  
+map.put(1, "One");  
+map.put(2, "Two");  
+<c:out value="${map[1]}"/>
+无法取到值。换成
+Map<Long, String> map = new HashMap<Long, String>();  
+map.put(1L, "One");
+即正常。
+原因是JSTL默认把数字封装成Long类型。
+另一个问题：类型转换
+
+Map<Long, String> map = new HashMap<Long, String>();
+${map[obj.id]}
+ 
+obj.id定义为int类型时，无法取到值。需要将obj.id转为Long。
+在jsp页面可以这样写${map[obj.id + 0]}
+//java

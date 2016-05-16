@@ -24,6 +24,7 @@
 		<result column="SALOON" property="saloon" jdbcType="INTEGER" />
 		<result column="TOILET" property="toilet" jdbcType="INTEGER" />
 		<result column="FLOOR" property="floor" jdbcType="INTEGER" />
+		<result column="FACE" property="face" jdbcType="INTEGER" />
 		<result column="IMAGES" property="images" jdbcType="INTEGER" />
 		<result column="RELEASE_TIME" property="releaseTime" jdbcType="TIMESTAMP" />
   </resultMap>
@@ -199,6 +200,7 @@
        b.SALOON,
        b.TOILET,
        b.FLOOR,
+       b.FACE,
        a.IMAGES,
        a.RELEASE_TIME
       <include refid="sqlQueryData"/>

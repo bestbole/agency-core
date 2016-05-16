@@ -1,6 +1,7 @@
 package com.house.agency.service.impl;
 
 import java.util.Date;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -57,6 +58,11 @@ public class ConfigureServiceImpl implements IConfigureService {
 	@Override
 	public String getValueByKey(String key) {
 		return configureDao.getValueByKey(key);
+	}
+
+	@Override
+	public Map<String, String> queryValueByKey(String key) {
+		return configureDao.queryValueByKey(key);
 	}
 
 }
