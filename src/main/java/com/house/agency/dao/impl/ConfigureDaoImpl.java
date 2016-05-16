@@ -1,6 +1,8 @@
 package com.house.agency.dao.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
@@ -53,6 +55,19 @@ public class ConfigureDaoImpl extends BaseDao<IConfigureMapper> implements IConf
 	public String getValueByKey(String key) {
 		IConfigureMapper mapper = getMapper(IConfigureMapper.class);
 		return mapper.getValueByKey(key);
+	}
+
+	@Override
+	public Map<String, String> queryValueByKey(String key) {
+		Map<String, String> map = new HashMap<String, String>();
+		IConfigureMapper mapper = getMapper(IConfigureMapper.class);
+		List<Configure> configures = mapper.queryValueByKey(key);
+		if (configures != null && configures.size() > 0) {
+			for (Configure configure : configures) {
+				map.put(configure.getConfKey(), configure.getConfValue());
+			}
+		}
+		return map;
 	}
 
 }

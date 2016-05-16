@@ -1,12 +1,14 @@
 package com.house.agency;
 
 import java.util.Date;
+import java.util.Map;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.house.agency.dao.IConfigureDao;
 import com.house.agency.entity.Configure;
+import com.house.agency.enums.ConfigureEnum;
 import com.myself.common.utils.UIDGeneratorUtil;
 
 public class TestConfigure extends BaseJunitTest {
@@ -30,6 +32,11 @@ public class TestConfigure extends BaseJunitTest {
 	public void testGetTempFolder() {
 		String value = configureDao.getValueByKey("temp_folder");
 		System.out.println("value=" + value);
+		
+		String keys = "'" + ConfigureEnum.UPLOAD_FOLDER.getValue() + "','" + ConfigureEnum.IMAGE_WIDTH.getValue() + "'";
+		Map<String, String> map = configureDao.queryValueByKey(keys);
+		System.out.println(map.size());
+		System.out.println(map.get(ConfigureEnum.UPLOAD_FOLDER.getValue()));
 	}
 	
 	@Test

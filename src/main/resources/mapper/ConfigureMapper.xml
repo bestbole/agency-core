@@ -18,6 +18,9 @@
 	<select id="getValueByKey" resultType="java.lang.String">
     SELECT CONF_VALUE FROM CONFIGURE WHERE CONF_KEY = #{confKey, jdbcType=VARCHAR}
   </select>
+  <select id="queryValueByKey" resultMap="configure">
+    SELECT CONF_KEY, CONF_VALUE FROM CONFIGURE WHERE CONF_KEY in (${confKey})
+  </select>
 	
 	<sql id="sqlQuery">
     FROM CONFIGURE a where 1=1

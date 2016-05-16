@@ -23,4 +23,6 @@ public interface IConfigureMapper {
 			@Param("start") int start, @Param("end") int end);
 	
 	String getValueByKey(@Param("confKey") String key);
+	
+	List<Configure> queryValueByKey(@Param("confKey") String key);
 }

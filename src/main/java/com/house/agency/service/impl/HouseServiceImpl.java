@@ -2,6 +2,7 @@ package com.house.agency.service.impl;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +18,7 @@ import com.house.agency.data.home.HouseHomeData;
 import com.house.agency.data.home.HouseHomeDescData;
 import com.house.agency.data.manage.HouseManageData;
 import com.house.agency.entity.House;
+import com.house.agency.enums.ConfigureEnum;
 import com.house.agency.page.IPage;
 import com.house.agency.page.IPagination;
 import com.house.agency.page.Page;
@@ -105,10 +107,32 @@ public class HouseServiceImpl implements IHouseService {
 	}
 
 	private void setList(List<HouseData> list) {
-		String path = configureDao.getValueByKey("upload_folder");
+		/*String path = configureDao.getValueByKey("upload_folder");
 		String width = configureDao.getValueByKey("image_width");
 		String height = configureDao.getValueByKey("image_height");
-		String blank = configureDao.getValueByKey("image_blank");
+		String blank = configureDao.getValueByKey("image_blank");*/
+		String uploadFolder = ConfigureEnum.UPLOAD_FOLDER.getValue();
+		String imageWidth = ConfigureEnum.IMAGE_WIDTH.getValue();
+		String imageHeight = ConfigureEnum.IMAGE_HEIGHT.getValue();
+		String imageBlank = ConfigureEnum.IMAGE_BLANK.getValue();
+		
+		StringBuilder keys = new StringBuilder("");
+		keys.append("'");
+		keys.append(uploadFolder);
+		keys.append("','");
+		keys.append(imageWidth);
+		keys.append("','");
+		keys.append(imageHeight);
+		keys.append("','");
+		keys.append(imageBlank);
+		keys.append("'");
+		
+		Map<String, String> map = configureDao.queryValueByKey(keys.toString());
+		String path = map.get(uploadFolder);
+		String width = map.get(imageWidth);
+		String height = map.get(imageHeight);
+		String blank = map.get(imageBlank);
+
 		for (int i = 0; i < list.size(); i++) {
 			HouseData houseData = list.get(i);
 			String url = houseData.getUrl();
