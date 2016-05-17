@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import com.house.agency.data.HouseInfoData;
 import com.house.agency.data.HouseData;
 import com.house.agency.data.home.HouseHomeData;
-import com.house.agency.data.home.HouseHomeDescData;
+import com.house.agency.data.home.HouseHomeInfoData;
 import com.house.agency.data.manage.HouseManageData;
 import com.house.agency.entity.House;
 import com.house.agency.param.HouseQueryParam;
@@ -36,7 +36,7 @@ public interface IHouseMapper {
 	List<HouseData> queryData(@Param("param") HouseQueryParam param,
 			@Param("start") int start, @Param("end") int end);
 
-	List<HouseHomeDescData> queryByBuildingUnitId(
+	List<HouseHomeInfoData> queryByBuildingUnitId(
 			@Param("buildingUnitId") String buildingUnitId);
 	
 	int countHomeData(@Param("param") HouseHomeQueryParam param);

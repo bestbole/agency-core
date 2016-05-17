@@ -5,7 +5,7 @@ import java.util.List;
 import com.house.agency.data.HouseData;
 import com.house.agency.data.HouseInfoData;
 import com.house.agency.data.home.HouseHomeData;
-import com.house.agency.data.home.HouseHomeDescData;
+import com.house.agency.data.home.HouseHomeInfoData;
 import com.house.agency.data.manage.HouseManageData;
 import com.house.agency.entity.House;
 import com.house.agency.param.HouseQueryParam;
@@ -32,7 +32,7 @@ public interface IHouseDao {
 
 	List<HouseData> queryData(HouseQueryParam param, int start, int end);
 
-	List<HouseHomeDescData> queryByBuildingUnitId(String buildingUnitId);
+	List<HouseHomeInfoData> queryByBuildingUnitId(String buildingUnitId);
 
 	int countHomeData(HouseHomeQueryParam param);
 

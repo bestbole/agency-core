@@ -15,7 +15,7 @@ import com.house.agency.dao.IHouseDao;
 import com.house.agency.data.HouseData;
 import com.house.agency.data.HouseInfoData;
 import com.house.agency.data.home.HouseHomeData;
-import com.house.agency.data.home.HouseHomeDescData;
+import com.house.agency.data.home.HouseHomeInfoData;
 import com.house.agency.data.manage.HouseManageData;
 import com.house.agency.entity.House;
 import com.house.agency.enums.ConfigureEnum;
@@ -156,7 +156,7 @@ public class HouseServiceImpl implements IHouseService {
 	}
 
 	@Override
-	public List<HouseHomeDescData> queryByBuildingUnitId(String buildingUnitId) {
+	public List<HouseHomeInfoData> queryByBuildingUnitId(String buildingUnitId) {
 		return houseDao.queryByBuildingUnitId(buildingUnitId);
 	}
 

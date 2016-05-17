@@ -128,12 +128,12 @@ public class TestConfigure extends BaseJunitTest {
 	}
 	
 	@Test
-	public void testSaveMatch() {
+	public void testSaveMatchs() {
 		Configure param = new Configure();
 		param.setId(UIDGeneratorUtil.getUID());
 		param.setStatus("1");
 		param.setCreateTime(new Date());
-		param.setConfKey("match");
+		param.setConfKey("matchs");
 		param.setConfValue("YT:阳台,LT:凉台");
 		configureDao.save(param);
 	}
@@ -146,6 +146,83 @@ public class TestConfigure extends BaseJunitTest {
 		param.setCreateTime(new Date());
 		param.setConfKey("faces");
 		param.setConfValue("1:东,2:南,3:西,4:北");
+		configureDao.save(param);
+	}
+	
+	@Test
+	public void testSaveRooms() {
+		Configure param = new Configure();
+		param.setId(UIDGeneratorUtil.getUID());
+		param.setStatus("1");
+		param.setCreateTime(new Date());
+		param.setConfKey("rooms");
+		param.setConfValue("1:1室,2:2室,3:3室,4:4室,5:5室");
+		configureDao.save(param);
+	}
+	
+	@Test
+	public void testSaveSaloons() {
+		Configure param = new Configure();
+		param.setId(UIDGeneratorUtil.getUID());
+		param.setStatus("1");
+		param.setCreateTime(new Date());
+		param.setConfKey("saloons");
+		param.setConfValue("1:1厅,2:2厅,3:3厅,4:4厅,5:5厅");
+		configureDao.save(param);
+	}
+	
+	@Test
+	public void testSaveToilets() {
+		Configure param = new Configure();
+		param.setId(UIDGeneratorUtil.getUID());
+		param.setStatus("1");
+		param.setCreateTime(new Date());
+		param.setConfKey("toilets");
+		param.setConfValue("1:1卫,2:2卫,3:3卫,4:4卫,5:5卫");
+		configureDao.save(param);
+	}
+	
+	@Test
+	public void testSaveFitments() {
+		Configure param = new Configure();
+		param.setId(UIDGeneratorUtil.getUID());
+		param.setStatus("1");
+		param.setCreateTime(new Date());
+		param.setConfKey("fitments");
+		param.setConfValue("1:毛坯,2:简装,3:精装");
+		configureDao.save(param);
+	}
+	
+	@Test
+	public void testSavePropertys() {
+		Configure param = new Configure();
+		param.setId(UIDGeneratorUtil.getUID());
+		param.setStatus("1");
+		param.setCreateTime(new Date());
+		param.setConfKey("propertys");
+		param.setConfValue("1:个人产权");
+		configureDao.save(param);
+	}
+	
+	@Test
+	public void testSaveBuildingType() {
+		Configure param = new Configure();
+		param.setId(UIDGeneratorUtil.getUID());
+		param.setStatus("1");
+		param.setCreateTime(new Date());
+		param.setConfKey("building_types");
+		param.setConfValue("1:住宅,2:写字楼");
+		configureDao.save(param);
+	}
+	
+	@Test
+	public void testSavePrices() {
+		Configure param = new Configure();
+		param.setId(UIDGeneratorUtil.getUID());
+		param.setStatus("1");
+		param.setCreateTime(new Date());
+		param.setConfKey("prices");
+		param.setConfValue("1-100:100万以下,100-200:100万-200万,200-300:200万-300万,300-400:300万-400万");
 		configureDao.save(param);
 	}
 }

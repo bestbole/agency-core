@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.house.agency.mapper.IHouseMapper">
 	<resultMap type="com.house.agency.entity.House" id="house" />
-	<resultMap type="com.house.agency.data.home.HouseHomeDescData" id="houseHomeDescData">
+	<resultMap type="com.house.agency.data.home.HouseHomeInfoData" id="HouseHomeInfoData">
 	  <result column="HOUSE_ID" property="houseId" jdbcType="VARCHAR" />
 	</resultMap>
 	
@@ -43,16 +43,16 @@
 		<result column="BUILDING_TYPE" property="buildingType" jdbcType="VARCHAR" />
 		<result column="BUILDING_FLOOR" property="buildingFloor" jdbcType="INTEGER" />
 		<result column="PRICE" property="price" jdbcType="INTEGER" />
-		<result column="CODE" property="code" jdbcType="VARCHAR" />
-    <result column="ENCODE" property="encode" jdbcType="VARCHAR" />
 		<result column="AREA" property="area" jdbcType="INTEGER" />
 		<result column="ROOM" property="room" jdbcType="INTEGER" />
 		<result column="SALOON" property="saloon" jdbcType="INTEGER" />
 		<result column="TOILET" property="toilet" jdbcType="INTEGER" />
 		<result column="FLOOR" property="floor" jdbcType="INTEGER" />
 		<result column="FACE" property="face" jdbcType="INTEGER" />
+		<result column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="ENCODE" property="encode" jdbcType="VARCHAR" />
 		<result column="FITMENT" property="fitment" jdbcType="INTEGER" />
-		<result column="OWNER" property="owner" jdbcType="INTEGER" />
+		<result column="PROPERTY" property="property" jdbcType="INTEGER" />
 		<result column="RELEASE_TIME" property="releaseTime" jdbcType="TIMESTAMP" />
 		<result column="CONTENT" property="content" jdbcType="VARCHAR" />
 		<result column="USERNAME" property="username" jdbcType="VARCHAR" />
@@ -243,8 +243,8 @@
        b.TOILET,
        b.FLOOR,
        b.FACE,
-       b.FITMENT,
-       b.OWNER,
+       a.FITMENT,
+       a.PROPERTY,
        a.RELEASE_TIME,
        a.CONTENT,
        g.USERNAME,
@@ -265,7 +265,7 @@
     WHERE a.ID = #{tradeId, jdbcType=VARCHAR}
    </select>
    
-   <select id="queryByBuildingUnitId" resultMap="houseHomeDescData">
+   <select id="queryByBuildingUnitId" resultMap="HouseHomeInfoData">
    	SELECT 
    	  a.ID HOUSE_ID,
    	  a.AREA,
@@ -274,7 +274,6 @@
       a.TOILET,
       a.FLOOR,
       a.FACE,
-      a.FITMENT,
       a.CARD
      FROM HOUSE a WHERE a.BUILDING_UNIT_ID = #{buildingUnitId, jdbcType=VARCHAR}
    	  order by a.CARD asc
@@ -340,7 +339,7 @@
        b.TOILET,
        b.FLOOR,
        b.FACE,
-       b.FITMENT,
+       a.FITMENT,
        b.CARD,
        b.CODE,
        b.ENCODE,
@@ -432,7 +431,7 @@
        b.TOILET,
        b.FLOOR,
        b.FACE,
-       b.FITMENT,
+       a.FITMENT,
        b.CARD,
        b.CODE,
        b.ENCODE,
