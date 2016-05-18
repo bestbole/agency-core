@@ -225,4 +225,26 @@ public class TestConfigure extends BaseJunitTest {
 		param.setConfValue("1-100:100万以下,100-200:100万-200万,200-300:200万-300万,300-400:300万-400万");
 		configureDao.save(param);
 	}
+	
+	@Test
+	public void testSaveAreas() {
+		Configure param = new Configure();
+		param.setId(UIDGeneratorUtil.getUID());
+		param.setStatus("1");
+		param.setCreateTime(new Date());
+		param.setConfKey("areas");
+		param.setConfValue("1-50:50平米以下,50-70:50-70平米,70-90:70-90平米,90-120:90-120平米,120-150:120-150平米,150-200:150-200平米");
+		configureDao.save(param);
+	}
+	
+	@Test
+	public void testSavePatterns() {
+		Configure param = new Configure();
+		param.setId(UIDGeneratorUtil.getUID());
+		param.setStatus("1");
+		param.setCreateTime(new Date());
+		param.setConfKey("patterns");
+		param.setConfValue("1:一室,2:二室,3:三室,4:四室,5:五室,5-gt:五室以上");
+		configureDao.save(param);
+	}
 }

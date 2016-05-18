@@ -48,8 +48,8 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	public User getDataByUsername(String username) {
-		return userDao.getDataByUsername(username);
+	public User getDataByAccount(String account) {
+		return userDao.getDataByAccount(account);
 	}
 
 	@Override

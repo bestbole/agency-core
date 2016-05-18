@@ -14,5 +14,5 @@ public interface IUserDao {
 	
 	int count(UserQueryParam param);
 	List<User> query(UserQueryParam param, int start, int end);
-	User getDataByUsername(String username);
+	User getDataByAccount(String account);
 }
