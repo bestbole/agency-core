@@ -134,7 +134,7 @@ public class TestConfigure extends BaseJunitTest {
 		param.setStatus("1");
 		param.setCreateTime(new Date());
 		param.setConfKey("matchs");
-		param.setConfValue("YT:阳台,LT:凉台");
+		param.setConfValue("1:阳台,2:凉台");
 		configureDao.save(param);
 	}
 	
