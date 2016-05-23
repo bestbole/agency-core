@@ -66,4 +66,19 @@ public class UserServiceImpl implements IUserService {
 		return new Page<User>(list, count, page, rows);
 	}
 
+	@Override
+	public void checkByAccount(String account) {
+		User user = userDao.getDataByAccount(account);
+		if (user != null) {
+			throw new ServiceException("账号：" + account + "已存在");
+		}
+	}
+
+	@Override
+	public void signup(User param) {
+		String account = param.getAccount();
+		checkByAccount(account);
+		save(param);
+	}
+
 }
